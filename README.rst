@@ -7,6 +7,24 @@ An open source, interactive Proto-Indo-European search tool.
 Project
 =======
 
+Features
+--------
+
+TBD
+
+Dependencies
+------------
+This project has the following dependencies:
+
+* Node.js (for `Bootstrap`_)
+
+* MongoDB
+
+* Solr
+
+These need to be installed before you can run the code in this project. See
+below for instructions.
+
 Name
 ----
 
