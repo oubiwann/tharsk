@@ -12,16 +12,28 @@ Name
 
 The following names were considered for the project:
 
-* bargo (book)
+* *bargo*: "book"
 
-* swiljāje (search)
+* *swiljāje*: "search"
 
-* φar- (seek)
+* *φar-*: "seek"
 
-* φarsk-e/o- (ask), imperative φarsk!
+* *φarsk-e/o-*: "ask" and in the imperative, *φarsk!*
 
 
 Installation
 ============
 
-Download and install node.js for your system: http://nodejs.org/#download
+#. Download and install node.js for your system: http://nodejs.org/#download
+
+#. From a terminal, check out the φarsk code:
+   ``git clone https://github.com/oubiwann/tharsk.git``
+
+#. Enter the ``tharsk`` dir and install the app: ``cd tharsk && make install``
+
+Running the Server
+==================
+
+#. In the ``tharsk`` dir, run the tharsk server: ``make start-prod``
+
+#. When you're done, shut it down: ``make stop-prod``
