@@ -1,0 +1,7 @@
+Update template:
+ * change title page
+ * change project name
+   - create a tharst.meta module
+   - define everything needed in there, e.g., project name, version, etc.
+   - update the template class to set those variables
+   - update the template to accept those variables
