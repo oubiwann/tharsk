@@ -35,7 +35,7 @@ Installation
 Running the Server
 ==================
 
-#. In the ``tharsk`` dir, run the tharsk server: ``make start-prod``
+#. In the φarsk dir, run the tharsk server: ``make start-prod``
 
 #. When you're done, shut it down: ``make stop-prod``
 
