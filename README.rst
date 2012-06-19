@@ -25,6 +25,7 @@ Installation
 ============
 
 #. Download and install node.js for your system: http://nodejs.org/#download
+   (this is only needed for `Bootstrap`_)
 
 #. From a terminal, check out the φarsk code:
    ``git clone https://github.com/oubiwann/tharsk.git``
@@ -37,3 +38,7 @@ Running the Server
 #. In the ``tharsk`` dir, run the tharsk server: ``make start-prod``
 
 #. When you're done, shut it down: ``make stop-prod``
+
+
+.. Links
+.. _Bootstrap: http://twitter.github.com/bootstrap/
