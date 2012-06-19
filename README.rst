@@ -1,3 +1,8 @@
+~~~~~~
+φarsk!
+~~~~~~
+
+An open source, interactive Proto-Indo-European search tool.
 
 Project
 =======
