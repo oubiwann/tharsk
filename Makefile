@@ -1,9 +1,10 @@
 BIN_DIR = /usr/local/bin
-HOME = $(shell echo $$HOME)
-BASE_DIR = $(HOME)/lab/lang/celtic/proto-celtic/web
+BASE_DIR = $(shell pwd)
 DEPS_DIR = $(BASE_DIR)/deps
 BOOTSTRAP_DIR = $(DEPS_DIR)/bootstrap
 KLEIN_DIR = $(DEPS_DIR)/klein
+ASSETS_DIR = $(BASE_DIR)/assets
+TEMPLATES_DIR = $(BASE_DIR)/templates
 PIP ?= pip-2.7
 TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
 
@@ -39,8 +40,16 @@ $(BIN_DIR)/recess $(BIN_DIR)/uglifyjs $(BIN_DIR)/jshint $(BIN_DIR)/lessc
 
 install: install-deps
 
-init-project: install-deps
-	#
+$(ASSETS_DIR):
+	mkdir $(ASSETS_DIR)
+	cp -r $(BOOTSTRAP_DIR)/docs/assets/* $(ASSETS_DIR)/
+
+$(TEMPLATES_DIR):
+	mkdir $(TEMPLATES_DIR)
+	cp -r $(BOOTSTRAP_DIR)/docs/examples/fluid.html $(TEMPLATES_DIR)/index.xml
+
+init-template: install-deps $(ASSETS_DIR) $(TEMPLATES_DIR)
+	git add $(ASSETS_DIR) $(TEMPLATES_DIR)
 
 run-dev:
 	$(TWISTD) -n web --class=tharsk.app.resource
