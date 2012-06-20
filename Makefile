@@ -7,6 +7,7 @@ ASSETS_DIR = $(BASE_DIR)/assets
 TEMPLATES_DIR = $(BASE_DIR)/templates
 PIP ?= pip-2.7
 TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
+LESSC ?= $(BIN_DIR)/lessc
 
 $(DEPS_DIR):
 	mkdir $(DEPS_DIR)
@@ -51,7 +52,10 @@ $(TEMPLATES_DIR):
 init-template: install-deps $(ASSETS_DIR) $(TEMPLATES_DIR)
 	git add $(ASSETS_DIR) $(TEMPLATES_DIR)
 
-run-dev:
+css:
+	$(LESSC) ./tools/less/bootstrap.less > ./assets/css/bootstrap.css
+
+run-dev: css
 	$(TWISTD) -n web --class=tharsk.app.resource
 
 start-prod:
