@@ -12,6 +12,8 @@ Version 0.1
   - good IE studies links
 * Add a teaser in the User drop-down (or comment it out)
 * Add a search form
+* Add search results route, class and template
+  - add support for paginated results
 
 Version 0.2
 ===========
