@@ -16,7 +16,7 @@
         </div><!--/span-->
         <div class="span9">
           <t:transparent t:render="topcontent" />
-          <t:transparent t:render="bottomcontent3x2" />
+          <t:transparent t:render="bottomcontentsearch" />
         </div><!--/span-->
       </div><!--/row-->
 

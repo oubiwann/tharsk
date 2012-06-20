@@ -66,6 +66,12 @@ class BottomContent3x2Template(TemplateLoader):
     templateFile = "bottomcontent3x2.xml"
 
 
+class BottomContentSearchTemplate(TemplateLoader):
+    """
+    """
+    templateFile = "bottomcontentsearch.xml"
+
+
 class MainTemplate(TemplateLoader):
     """ 
     """ 
@@ -90,6 +96,10 @@ class MainTemplate(TemplateLoader):
     @renderer
     def bottomcontent3x2(self, request, tag):
         return BottomContent3x2Template()
+
+    @renderer
+    def bottomcontentsearch(self, request, tag):
+        return BottomContentSearchTemplate()
 
     @renderer
     def jsloader(self, request, tag):
