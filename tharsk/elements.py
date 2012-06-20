@@ -43,6 +43,10 @@ class TopNavTemplate(TemplateLoader):
     def projectName(self, request, tag):
         return tag(meta.displayName)
 
+    @renderer
+    def userName(self, request, tag):
+        return tag("Anonymous")
+
 
 class SidebarTemplate(TemplateLoader):
     """
