@@ -6,6 +6,6 @@
     includes a large callout called the hero unit and three supporting pieces
     of content. Use it as a starting point to create something more unique.
     </p>
-    <p><a class="btn btn-primary btn-large">Learn more &#187;</a></p>
+    <p><a class="btn btn-success btn-large">Learn more &#187;</a></p>
   </div>
 </t:transparent>
