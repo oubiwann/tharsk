@@ -6,20 +6,24 @@ TODO
 Version 0.1
 ===========
 
-* Add simple db for PIE word list
+* Add links in the topnav
+  - create pages for the links
+  - create templates for simple page, sidbarpage, etc.
 * Rename sidebar sections in UI
 * Populate sidebar links
   - good IE studies links
 * Add a teaser in the User drop-down (or comment it out)
-* Add a search form
-* Add search results route, class and template
+* Add search results template
   - add support for paginated results
+* Add simple db for PIE word list
+
 
 Version 0.2
 ===========
 
 * Add support for authentication
 * Add support for full-text search
+
 
 Version 0.5
 ===========
@@ -29,6 +33,7 @@ Version 0.5
   - save words in a basket
   - select a basket
   - list all the words in a basket
+
 
 Version 1.0
 ===========
