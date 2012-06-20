@@ -6,10 +6,27 @@ TODO
 Version 0.1
 ===========
 
+* Add simple db for PIE word list
+* Rename sidebar sections in UI
+* Populate sidebar links
+  - good IE studies links
+* Add a teaser in the User drop-down (or comment it out)
+* Add a search form
+
+Version 0.2
+===========
+
+* Add support for authentication
+* Add support for full-text search
 
 Version 0.5
 ===========
 
+* Add support for "word baskets"
+  - create a basket for research
+  - save words in a basket
+  - select a basket
+  - list all the words in a basket
 
 Version 1.0
 ===========
