@@ -1,6 +1,3 @@
-# -*- coding: utf-8
-from datetime import datetime
-
 from twisted.python.filepath import FilePath
 from twisted.web.template import Element, XMLFile, renderer, XMLString
 
@@ -70,45 +67,3 @@ class BottomContentSearchTemplate(TemplateLoader):
     """
     """
     templateFile = "bottomcontentsearch.xml"
-
-
-class MainTemplate(TemplateLoader):
-    """ 
-    """ 
-    templateFile = "index.xml"
-
-    @renderer
-    def head(self, request, tag):
-        return HeadTemplate()    
-
-    @renderer
-    def topnav(self, request, tag):
-        return TopNavTemplate()
-
-    @renderer
-    def sidebar(self, request, tag):
-        return SidebarTemplate()
-
-    @renderer
-    def topcontent(self, request, tag):
-        return TopContentTemplate()
-
-    @renderer
-    def bottomcontent3x2(self, request, tag):
-        return BottomContent3x2Template()
-
-    @renderer
-    def bottomcontentsearch(self, request, tag):
-        return BottomContentSearchTemplate()
-
-    @renderer
-    def jsloader(self, request, tag):
-        return TemplateLoader(templateFile="jsloader.xml")
-
-    @renderer
-    def copyright(self, request, tag):
-        year = meta.startingYear
-        thisYear = datetime.now().year
-        if thisYear > year:
-            year = "%s - %s" % (year, thisYear)
-        return tag("© %s, %s" % (year, meta.author))
