@@ -1,2 +1,38 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
+  <h1>Search</h1>
+  <br/>
+  <form class="form-horizontal" name="search-form" action="/search-results">
+    <fieldset>
+      <div class="control-group">
+        <label class="control-label" for="inputSearchTerms">Terms</label>
+        <div class="controls">
+          <input type="text" class="span3" name="terms" value="ask" />
+          <span class="help-block">
+              <em>Enter a term or terms in the desired language.</em>
+          </span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="optionsLanguages">Languages</label>
+        <div class="controls">
+          <label class="checkbox">
+            <input name="lang-eng" type="checkbox" checked="checked">English</input>
+          </label>
+          <label class="checkbox">
+            <input name="lang-pie" type="checkbox">Proto-Indo-European</input>
+          </label>
+          <span class="help-block">
+              <em>Choose one or more lanuage databases to search.</em>
+          </span>
+        </div>
+      </div>
+    </fieldset>
+
+    <label/><br/>
+
+    <div class="form-actions">
+      <button type="reset" class="btn btn-danger">Clear</button>
+      <button type="submit" class="btn btn-success">Search</button>
+    </div>
+  </form>
 </t:transparent>
