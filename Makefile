@@ -1,3 +1,4 @@
+LIB = tharsk
 BIN_DIR = /usr/local/bin
 BASE_DIR = $(shell pwd)
 DEPS_DIR = $(BASE_DIR)/deps
@@ -56,10 +57,12 @@ css:
 	$(LESSC) ./tools/less/bootstrap.less > ./assets/css/bootstrap.css
 
 run-dev: css
-	$(TWISTD) -n web --class=tharsk.app.resource
+	-pyflakes $(LIB)
+	-pep8 $(LIB)
+	$(TWISTD) -n web --class=$(LIB).app.resource
 
 start-prod:
-	sudo $(TWISTD) web --port 80 --class=tharsk.app.resource
+	sudo $(TWISTD) web --port 80 --class=$(LIB).app.resource
 
 stop-prod:
 	sudo kill `sudo cat twistd.pid`
