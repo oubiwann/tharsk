@@ -11,7 +11,7 @@ class BasePage(elements.TemplateLoader):
     """
     @renderer
     def head(self, request, tag):
-        return elements.HeadTemplate()    
+        return elements.HeadTemplate()
 
     @renderer
     def isActive(self, request, tag):
@@ -55,8 +55,8 @@ class SidebarPage(BasePage):
 
 
 class MainPage(SidebarPage):
-    """ 
-    """ 
+    """
+    """
     templateFile = "index.xml"
 
     @renderer
