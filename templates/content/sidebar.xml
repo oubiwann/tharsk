@@ -1,10 +1,15 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
-      <li class="nav-header">Sidebar</li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+      <li class="nav-header">UT Austin IE Studies</li>
+      <li><a href="http://www.utexas.edu/cola/centers/lrc/ielex/">
+        The Indo-European Lexicon</a></li>
+      <li><a href="http://www.utexas.edu/cola/centers/lrc/books/">
+        Indo-European Languages and Historical Linguistics</a></li>
+      <li><a href="http://www.utexas.edu/cola/centers/lrc/ietexts/">
+        Early Indo-European Texts</a></li>
+      <li><a href="http://www.utexas.edu/cola/centers/lrc/eieol/">
+        Early Indo-European Online Courses</a></li>
       <li class="nav-header">Sidebar</li>
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
