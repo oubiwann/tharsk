@@ -7,8 +7,8 @@ Version 0.1
 ===========
 
 * Add links in the topnav
-  - create pages for the links
   - create templates for simple page, sidbarpage, etc.
+  - create render methods for "content" (there's no "topcontent", etc.)
 * Rename sidebar sections in UI
 * Populate sidebar links
   - good IE studies links
