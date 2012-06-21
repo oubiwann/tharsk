@@ -26,6 +26,8 @@ Version 0.1
 * Add simple db for PIE word list
   - add support for simple search
   - update the paginated template to accept search results
+* Add a caveats page for explaining various Unicode substitutions made for
+  various unsupported dicritical marks
 
 
 Version 0.2
@@ -33,6 +35,13 @@ Version 0.2
 
 * Add support for authentication
 * Add support for full-text search
+
+
+Version 0.3
+===========
+* Added Anlgo-Saxon dictionary
+  - scrape from here: http://www.utexas.edu/cola/centers/lrc/books/asd/dict-A.html
+  - parse HTML (it's well-ordered)
 
 
 Version 0.5
