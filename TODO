@@ -10,8 +10,19 @@ Version 0.1
 * Populate sidebar links
   - good IE studies links
 * Add a teaser ("coming soon!") in the User drop-down (or comment it out)
+* Update search page
+  - include a drop-down in the search for choosing which language the search
+    term is in (maybe copy the user menu in the upper-right?)
+  - add an option for selecting which language in the results will be the first
+    one
+  - add options for selecting which languages to show in the results
+  - add disabled checkboxes for languages that aren't supported yet
 * Add search results template
-  - add support for paginated (fake) results
+  - add support for paging through some fake data (4 entries per page, 3 pages)
+  - add support for identifying the current page
+  - select the appropriate pagination number (e.g., set class="active")
+  - implement the logic for "prev" and "next"
+  - fill table data via external (fake) data source (not hard-coded HTML)
 * Add simple db for PIE word list
   - add support for simple search
   - update the paginated template to accept search results
