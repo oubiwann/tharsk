@@ -9,6 +9,8 @@ from tharsk import elements, meta
 class BasePage(elements.TemplateLoader):
     """
     """
+    templateFile = "base.xml"
+
     @renderer
     def head(self, request, tag):
         return elements.HeadTemplate()
@@ -28,8 +30,12 @@ class BasePage(elements.TemplateLoader):
         return elements.TopNavTemplate()
 
     @renderer
-    def jsloader(self, request, tag):
-        return elements.TemplateLoader(templateFile="jsloader.xml")
+    def sidebar(self, request, tag):
+        return tag
+
+    @renderer
+    def content(self, request, tag):
+        return tag
 
     @renderer
     def copyright(self, request, tag):
@@ -39,11 +45,9 @@ class BasePage(elements.TemplateLoader):
             year = "%s - %s" % (year, thisYear)
         return tag("© %s, %s" % (year, meta.author))
 
-
-class SimplePage(BasePage):
-    """
-    A page that has only one area of main content.
-    """
+    @renderer
+    def jsloader(self, request, tag):
+        return elements.TemplateLoader(templateFile="jsloader.xml")
 
 
 class SidebarPage(BasePage):
@@ -51,40 +55,40 @@ class SidebarPage(BasePage):
     """
     @renderer
     def sidebar(self, request, tag):
-        return elements.SidebarTemplate()
+        return elements.TemplateLoader(templateFile="content/sidebar.xml")
 
 
 class MainPage(SidebarPage):
     """
     """
-    templateFile = "index.xml"
-
     @renderer
-    def topcontent(self, request, tag):
-        return elements.TopContentTemplate()
+    def content(self, request, tag):
+        return [
+            elements.TemplateLoader(templateFile="content/hero.xml"),
+            #elements.TemplateLoader(templateFile="content/bottom3x2.xml"),
+            elements.TemplateLoader(templateFile="search/form.xml"),
+            ]
 
+
+class AboutPage(SidebarPage):
+    """
+    """
     @renderer
-    def bottomcontent3x2(self, request, tag):
-        return elements.BottomContent3x2Template()
+    def content(self, request, tag):
+        return elements.TemplateLoader(templateFile="content/about.xml")
 
+
+class ContactPage(SidebarPage):
+    """
+    """
     @renderer
-    def bottomcontentsearch(self, request, tag):
-        return elements.BottomContentSearchTemplate()
+    def content(self, request, tag):
+        return elements.TemplateLoader(templateFile="content/contact.xml")
 
 
-class AboutPage(MainPage):
+class SearchResultsPage(SidebarPage):
     """
     """
-    templateFile = "index.xml"
-
-
-class ContactPage(MainPage):
-    """
-    """
-    templateFile = "index.xml"
-
-
-class SearchResultsPage(MainPage):
-    """
-    """
-    templateFile = "index.xml"
+    @renderer
+    def content(self, request, tag):
+        return elements.TemplateLoader(templateFile="search/results.xml")

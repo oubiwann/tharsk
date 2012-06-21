@@ -40,27 +40,3 @@ class TopNavTemplate(TemplateLoader):
     @renderer
     def userName(self, request, tag):
         return tag("Anonymous")
-
-
-class SidebarTemplate(TemplateLoader):
-    """
-    """
-    templateFile = "sidebar.xml"
-
-
-class TopContentTemplate(TemplateLoader):
-    """
-    """
-    templateFile = "topcontent.xml"
-
-
-class BottomContent3x2Template(TemplateLoader):
-    """
-    """
-    templateFile = "bottomcontent3x2.xml"
-
-
-class BottomContentSearchTemplate(TemplateLoader):
-    """
-    """
-    templateFile = "bottomcontentsearch.xml"
