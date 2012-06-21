@@ -1,5 +1,5 @@
 from twisted.python.filepath import FilePath
-from twisted.web.template import Element, XMLFile, renderer, XMLString
+from twisted.web.template import Element, XMLFile, renderer
 
 from tharsk import meta
 
@@ -11,14 +11,11 @@ class TemplateLoader(Element):
 
     def __init__(self, loader=None, templateFile=None):
         super(TemplateLoader, self).__init__(loader=loader)
-        # XXX the commented out line fails; see
-        # https://github.com/twisted/klein/issues/3
-        #self.loader = XMLFile(FilePath('templates/index.xml'))
         if templateFile:
             self.templateFile = templateFile
         template = FilePath(
-            "%s/%s" % (self.templateDir, self.templateFile)).getContent()
-        self.loader = XMLString(template)
+            "%s/%s" % (self.templateDir, self.templateFile))
+        self.loader = XMLFile(template.path)
 
 
 class HeadTemplate(TemplateLoader):
