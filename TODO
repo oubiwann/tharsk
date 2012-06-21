@@ -6,16 +6,15 @@ TODO
 Version 0.1
 ===========
 
-* Add links in the topnav
-  - create templates for simple page, sidbarpage, etc.
-  - create render methods for "content" (there's no "topcontent", etc.)
 * Rename sidebar sections in UI
 * Populate sidebar links
   - good IE studies links
-* Add a teaser in the User drop-down (or comment it out)
+* Add a teaser ("coming soon!") in the User drop-down (or comment it out)
 * Add search results template
-  - add support for paginated results
+  - add support for paginated (fake) results
 * Add simple db for PIE word list
+  - add support for simple search
+  - update the paginated template to accept search results
 
 
 Version 0.2
