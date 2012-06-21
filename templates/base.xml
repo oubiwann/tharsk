@@ -15,8 +15,7 @@
           <t:transparent t:render="sidebar" />
         </div><!--/span-->
         <div class="span9">
-          <t:transparent t:render="topcontent" />
-          <t:transparent t:render="bottomcontentsearch" />
+          <t:transparent t:render="content" />
         </div><!--/span-->
       </div><!--/row-->
 
