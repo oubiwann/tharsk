@@ -1,4 +1,3 @@
-from twisted.python import log
 from twisted.web.static import File
 
 from klein import route
@@ -12,17 +11,17 @@ def root(request):
 
 
 @route("/about")
-def root(request):
+def about(request):
     return pages.AboutPage()
 
 
 @route("/contact")
-def root(request):
+def contact(request):
     return pages.ContactPage()
 
 
 @route("/search-results")
-def root(request):
+def searchResults(request):
     return pages.SearchResultsPage()
 
 
