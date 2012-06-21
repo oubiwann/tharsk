@@ -1,5 +1,5 @@
 from twisted.python.filepath import FilePath
-from twisted.web.template import Element, XMLFile, renderer
+from twisted.web.template import Element, XMLFile, renderer, tags
 
 from tharsk import meta
 
@@ -34,9 +34,27 @@ class TopNavTemplate(TemplateLoader):
     templateFile = "topnav.xml"
 
     @renderer
-    def projectName(self, request, tag):
-        return tag(meta.displayName)
+    def navData(self, request, tag):
+        """
+        """
+        tag.fillSlots(
+            projectName=meta.displayName,
+            userName="Anonymous",
+            )
+        return tag
 
     @renderer
-    def userName(self, request, tag):
-        return tag("Anonymous")
+    def navLinks(self, request, tag):
+        """
+        """
+        currentPath = request.path
+        links = [("Home", "/"), ("About", "/about"), ("Contact", "/contact")]
+        elements = []
+        for text, url in links:
+            cssClass = ""
+            if url == currentPath:
+                cssClass = "active"
+            elements.append(
+                tags.li(tags.a(text, href=url), class_=cssClass),
+                )
+        return tag(elements)

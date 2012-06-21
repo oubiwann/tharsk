@@ -16,16 +16,6 @@ class BasePage(elements.TemplateLoader):
         return elements.HeadTemplate()
 
     @renderer
-    def isActive(self, request, tag):
-        """
-        Elements that need to set their class as "active" (e.g., li elements
-        used in nav menus) can call this to find out if the current page is the
-        one that they link to, and should thus be set as "active."
-        """
-        # XXX add an implementation for this
-        return tag("")
-
-    @renderer
     def topnav(self, request, tag):
         return elements.TopNavTemplate()
 
