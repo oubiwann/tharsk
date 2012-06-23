@@ -1,8 +1,32 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <div>
     <h1>About</h1>
+    <h3>Impetus and Usage</h3>
     <p>
     This needs to be filled in!
+    </p>
+    <h3>Technology</h3>
+    <p>
+      This site is a running instance of the
+      <a href="https://github.com/oubiwann/tharsk">φarsk</a> project, which is
+      built upon and/or makes use of the following technologies:
+    </p>
+    <ul>
+      <li>The <a href="https://github.com/twisted/klein">klein</a> micro-web
+      framework, which is built using
+      <a href="http://twistedmatrix.com">Twisted</a> for async HTTP and
+      <a href="http://werkzeug.pocoo.org/">werkzeug</a> for URL-routing.</li>
+      <li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a> for
+      widgets and styling (<a href="http://lesscss.org/">LESS</a>-based CSS
+      management).</li>
+      <li><a href="">MongoDB</a> for storage, using an
+      <a href="https://github.com/fiorix/mongo-async-python-driver">async
+      driver</a> for it.</li>
+    </ul>
+    <p>
+      If you would like to run your own copy of this application, see the
+      README on the <a href="https://github.com/oubiwann/tharsk">project
+      page</a>.
     </p>
   </div>
 </t:transparent>
