@@ -16,9 +16,9 @@ Dependencies
 ------------
 This project has the following dependencies:
 
-* Node.js (for `Bootstrap`_)
+* `Node.js`_ (for `Bootstrap`_)
 
-* MongoDB
+* `MongoDB`_
 
 * Solr
 
@@ -45,6 +45,11 @@ Installation
 #. Download and install node.js for your system: http://nodejs.org/#download
    (this is only needed for `Bootstrap`_)
 
+#. Download and install MongoDB for your system:
+   http://www.mongodb.org/downloads. For most, copying the contents of the
+   downloaded folder's ``bin/*`` sub-directory to ``/usr/local/bin`` will
+   suffice.
+
 #. From a terminal, check out the φarsk code:
    ``git clone https://github.com/oubiwann/tharsk.git``
 
@@ -59,4 +64,6 @@ Running the Server
 
 
 .. Links
+.. _Node.js: http://nodejs.org/#download
 .. _Bootstrap: http://twitter.github.com/bootstrap/
+.. _MongoDB: http://www.mongodb.org/downloads
