@@ -29,6 +29,9 @@
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
+      <li class="nav-header">Other Resources</li>
+      <li><a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">
+        Codes for the Representation of Names of Languages</a></li>
 
     </ul>
   </div><!--/.well -->
