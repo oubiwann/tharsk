@@ -28,6 +28,10 @@ Version 0.1
   - update the paginated template to accept search results
 * Add a caveats page for explaining various Unicode substitutions made for
   various unsupported dicritical marks
+* Convert the JS loads to a deferred to ease with page load times
+* Add a "Dictionaries" section in the top left
+  - add new page classes for each dictionary language
+  - add a vertical A-Z tab list for entries
 
 
 Version 0.2
