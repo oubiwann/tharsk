@@ -1,7 +1,7 @@
 from twisted.python.filepath import FilePath
 from twisted.web.template import Element, XMLFile, renderer, tags
 
-from tharsk import meta
+from tharsk import const, meta
 
 
 class TemplateLoader(Element):
@@ -49,12 +49,7 @@ class TopNavTemplate(TemplateLoader):
         """
         """
         currentPath = request.path
-        links = [
-            ("Home", "/"),
-            ("Search", "/search"),
-            ("Dictionaries", "/dictionaries"),
-            ("About", "/about"),
-            ("Contact", "/contact")]
+        links = const.topNavLinks
         elements = []
         for text, url in links:
             cssClass = ""
