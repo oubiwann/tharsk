@@ -2,39 +2,44 @@ from twisted.web.static import File
 
 from klein import route
 
-from tharsk import pages
+from tharsk import const, pages
 
 
-@route("/")
+@route(const.urls["root"])
 def root(request):
     return pages.MainPage()
 
 
-@route("/search")
+@route(const.urls["search"])
 def search(request):
     return pages.SearchPage()
 
 
-@route("/search-results")
+@route(const.urls["search-results"])
 def searchResults(request):
     return pages.SearchResultsPage()
 
 
-@route("/dictionaries")
+@route(const.urls["dictionaries"])
 def dictionaries(request):
     return pages.DictionariesPage()
 
 
-@route("/about")
+@route(const.urls["dictionary"])
+def dictionary(request, dictionary="eng-pie"):
+    return pages.DictionaryPage(dictionary)
+
+
+@route(const.urls["about"])
 def about(request):
     return pages.AboutPage()
 
 
-@route("/contact")
+@route(const.urls["contact"])
 def contact(request):
     return pages.ContactPage()
 
 
-@route("/assets/")
+@route(const.urls["assets"])
 def assets(request):
-    return File("./assets")
+    return File(const.assetsDirectory)
