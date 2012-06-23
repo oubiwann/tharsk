@@ -105,7 +105,7 @@ class DictionaryFragment(BaseFragment):
         """
         dictName = utils.getDictionaryName(os.path.basename(request.path))
         tag.fillSlots(
-            rootURL=self.getRootURL(request, tag),
+            rootURL=const.urls["root"],
             breadcrumbDivider=const.breadcrumbDivider,
             dictionaryName=dictName,
             dictionariesURL=const.urls["dictionaries"],
