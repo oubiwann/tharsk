@@ -15,11 +15,6 @@ urls = {
     }
 
 
-assetsDirectory = "./assets"
-breadcrumbDivider = "/"
-databaseName = "tharsk"
-databasePIECollection = 
-
 topNavLinks = [
             ("Home", urls["root"]),
             ("Search", urls["search"]),
@@ -28,7 +23,7 @@ topNavLinks = [
             ("Contact", urls["contact"])]
 
 
-langMapper = {
+langCodeMapper = {
     "eng": "English",
     "pie": "Proto-Indo-European",
     "pcl": "Proto-Celtic",
@@ -47,7 +42,17 @@ langMapper = {
     }
 
 
+langMapper = dict([(y, x) for x, y in langCodeMapper.items()])
+
+
 dictionaries = [
-    "eng-pie",
-    "pie-eng",
+    "%s-%s" % (langMapper["English"], langMapper["Proto-Indo-European"]),
+    "%s-%s" % (langMapper["Proto-Indo-European"], langMapper["English"]),
     ]
+
+
+assetsDirectory = "./assets"
+breadcrumbDivider = "/"
+databaseName = "tharsk"
+databasePIECollection = langMapper["Proto-Indo-European"]
+databaseEngCollection = langMapper["English"]
