@@ -1,11 +1,15 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <div class="hero-unit">
-    <h1>Hello, world!</h1>
+    <h1>Tuandeφarxskomos!</h1>
+    <br/>
     <p>
-    This is a template for a simple marketing or informational website. It
-    includes a large callout called the hero unit and three supporting pieces
-    of content. Use it as a starting point to create something more unique.
+    Or, to use a more modern turn of phrase, "Greetings!"
     </p>
-    <p><a class="btn btn-success btn-large">Learn more &#187;</a></p>
+    <p>
+    Welcome to φarsk: an open source, interactive Proto-Indo-European search
+    tool. With φarsk, you can search for words or phrases in all the supported
+    languages, or you can browse the dictionaries at your liesure.
+    </p>
+    <p><a class="btn btn-success btn-large" href="/about">Learn more &#187;</a></p>
   </div>
 </t:transparent>
