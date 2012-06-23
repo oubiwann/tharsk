@@ -1,6 +1,42 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
-  <div>
-    <h1><t:transparent t:render="dictionaryName"/> Dictionary</h1>
+  <div t:render="dictionaryData">
+
+    <ul class="breadcrumb">
+      <li>
+        <a><t:attr name="href"><t:slot name="rootURL"/></t:attr>
+        Home</a> 
+        <span class="divider"><t:slot name="breadcrumbDivider"/></span>
+      </li>
+      <li>
+        <a><t:attr name="href"><t:slot name="dictionariesURL"/></t:attr>
+        Dictionaries</a>
+        <span class="divider"><t:slot name="breadcrumbDivider"/></span>
+      </li>
+      <li class="active">
+        <t:slot name="dictionaryName"/> Dictionary
+      </li>
+    </ul>
+
+    <h1><t:slot name="dictionaryName"/> Dictionary</h1>
+    <br/><br/>
     <div t:render="dictionary"/>
+      <div class="tabbable tabs-left">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#lA" data-toggle="tab">a</a></li>
+          <li><a href="#lB" data-toggle="tab">b</a></li>
+          <li><a href="#lC" data-toggle="tab">c</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="lA">
+            <p>I'm in Section A.</p>
+          </div>
+          <div class="tab-pane" id="lB">
+            <p>Howdy, I'm in Section B.</p>
+          </div>
+          <div class="tab-pane" id="lC">
+            <p>What up girl, this is Section C.</p>
+          </div>
+        </div>
+      </div> <!-- /tabbable -->
   </div>
 </t:transparent>
