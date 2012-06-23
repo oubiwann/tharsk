@@ -4,7 +4,7 @@ from tharsk import const
 def getDictionaryName(dictionary):
     srcLang, destLang = dictionary.split("-")
     return "%s to %s" % (
-        const.langMapper[srcLang], const.langMapper[destLang])
+        const.langCodeMapper[srcLang], const.langCodeMapper[destLang])
 
 
 def getDictionaryNames():
