@@ -5,7 +5,8 @@ from tharsk import meta
 
 
 class TemplateLoader(Element):
-
+    """
+    """
     templateDir = "templates"
     templateFile = ""
 
@@ -48,7 +49,11 @@ class TopNavTemplate(TemplateLoader):
         """
         """
         currentPath = request.path
-        links = [("Home", "/"), ("About", "/about"), ("Contact", "/contact")]
+        links = [
+            ("Home", "/"),
+            ("Search", "/search"),
+            ("About", "/about"),
+            ("Contact", "/contact")]
         elements = []
         for text, url in links:
             cssClass = ""

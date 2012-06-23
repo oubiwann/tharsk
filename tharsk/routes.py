@@ -20,6 +20,11 @@ def contact(request):
     return pages.ContactPage()
 
 
+@route("/search")
+def search(request):
+    return pages.SearchPage()
+
+
 @route("/search-results")
 def searchResults(request):
     return pages.SearchResultsPage()

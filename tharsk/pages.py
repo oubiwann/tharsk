@@ -60,6 +60,14 @@ class MainPage(SidebarPage):
             ]
 
 
+class SearchPage(SidebarPage):
+    """
+    """
+    @renderer
+    def content(self, request, tag):
+        return elements.TemplateLoader(templateFile="search/form.xml")
+
+
 class AboutPage(SidebarPage):
     """
     """
