@@ -48,7 +48,7 @@ Installation
 #. From a terminal, check out the φarsk code:
    ``git clone https://github.com/oubiwann/tharsk.git``
 
-#. Enter the φarsk dir and install the app: ``cd tharsk && make install``
+#. Enter the φarsk dir and install the app: ``cd tharsk && make install-deps``
 
 Running the Server
 ==================
