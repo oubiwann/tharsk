@@ -16,6 +16,7 @@ urls = {
 
 
 assetsDirectory = "./assets"
+breadcrumbDivider = "/"
 
 
 topNavLinks = [
