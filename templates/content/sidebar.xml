@@ -1,6 +1,17 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
+      <li class="nav-header">Proto-Indo-European on Wikipedia</li>
+      <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_language">
+        Overview</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_phonology">
+        Phonology</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_verbs">
+        Verbs</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_nouns">
+        Nouns</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_pronouns">
+        Pronouns</a></li>
       <li class="nav-header">UT Austin IE Studies</li>
       <li><a href="http://www.utexas.edu/cola/centers/lrc/ielex/">
         The Indo-European Lexicon</a></li>
@@ -14,13 +25,11 @@
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
+      <li class="nav-header">Related Online Dictionaries</li>
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
       <li><a href="#">Link</a></li>
-      <li class="nav-header">Sidebar</li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+
     </ul>
-  </div><!--/.well -->   
+  </div><!--/.well -->
 </t:transparent>
