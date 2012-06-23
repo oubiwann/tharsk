@@ -2931,7 +2931,7 @@ input[type="submit"].btn.btn-mini {
 }
 .tabs-left > .nav-tabs > li > a,
 .tabs-right > .nav-tabs > li > a {
-  min-width: 74px;
+  min-width: 16px;
   margin-right: 0;
   margin-bottom: 3px;
 }
