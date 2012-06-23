@@ -68,6 +68,22 @@ class SearchPage(SidebarPage):
         return elements.TemplateLoader(templateFile="search/form.xml")
 
 
+class SearchResultsPage(SidebarPage):
+    """
+    """
+    @renderer
+    def content(self, request, tag):
+        return elements.TemplateLoader(templateFile="search/results.xml")
+
+
+class DictionariesPage(SidebarPage):
+    """
+    """
+    @renderer
+    def content(self, request, tag):
+        return elements.TemplateLoader(templateFile="dictionaries/list.xml")
+
+
 class AboutPage(SidebarPage):
     """
     """
@@ -82,11 +98,3 @@ class ContactPage(SidebarPage):
     @renderer
     def content(self, request, tag):
         return elements.TemplateLoader(templateFile="content/contact.xml")
-
-
-class SearchResultsPage(SidebarPage):
-    """
-    """
-    @renderer
-    def content(self, request, tag):
-        return elements.TemplateLoader(templateFile="search/results.xml")

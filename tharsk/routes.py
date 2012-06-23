@@ -10,16 +10,6 @@ def root(request):
     return pages.MainPage()
 
 
-@route("/about")
-def about(request):
-    return pages.AboutPage()
-
-
-@route("/contact")
-def contact(request):
-    return pages.ContactPage()
-
-
 @route("/search")
 def search(request):
     return pages.SearchPage()
@@ -28,6 +18,21 @@ def search(request):
 @route("/search-results")
 def searchResults(request):
     return pages.SearchResultsPage()
+
+
+@route("/dictionaries")
+def dictionaries(request):
+    return pages.DictionariesPage()
+
+
+@route("/about")
+def about(request):
+    return pages.AboutPage()
+
+
+@route("/contact")
+def contact(request):
+    return pages.ContactPage()
 
 
 @route("/assets/")

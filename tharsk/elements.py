@@ -52,6 +52,7 @@ class TopNavTemplate(TemplateLoader):
         links = [
             ("Home", "/"),
             ("Search", "/search"),
+            ("Dictionaries", "/dictionaries"),
             ("About", "/about"),
             ("Contact", "/contact")]
         elements = []
