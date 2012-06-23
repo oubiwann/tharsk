@@ -17,7 +17,8 @@ urls = {
 
 assetsDirectory = "./assets"
 breadcrumbDivider = "/"
-
+databaseName = "tharsk"
+databasePIECollection = 
 
 topNavLinks = [
             ("Home", urls["root"]),
@@ -30,6 +31,19 @@ topNavLinks = [
 langMapper = {
     "eng": "English",
     "pie": "Proto-Indo-European",
+    "pcl": "Proto-Celtic",
+    "pgm": "Proto-Germanic",
+    "san": "Sanskrit",
+    "peo": "Old Persian",
+    "grc": "Ancient Greek",
+    "lat": "Latin",
+    "ave": "Avestan",
+    "pem": "Middle Persian",
+    "gal": "Gaulish",
+    "sga": "Old Irish",
+    "mga": "Middle Irish",
+    "ang": "Anglo-Saxon",
+    "non": "Old Norse",
     }
 
 
