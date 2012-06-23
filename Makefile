@@ -15,7 +15,7 @@ $(DEPS_DIR):
 
 $(KLEIN_DIR):
 	git clone https://github.com/twisted/klein.git $(KLEIN_DIR)
-	$(PIP) install $(KLEIN_DIR)
+	sudo $(PIP) install $(KLEIN_DIR)
 
 $(BOOTSTRAP_DIR):
 	git clone https://github.com/twitter/bootstrap.git $(BOOTSTRAP_DIR)
