@@ -1,7 +1,9 @@
+import os.path
+
 from twisted.python.filepath import FilePath
 from twisted.web.template import Element, XMLFile, renderer, tags
 
-from tharsk import const, meta
+from tharsk import const, meta, utils
 
 
 class TemplateLoader(Element):
@@ -19,7 +21,7 @@ class TemplateLoader(Element):
         self.loader = XMLFile(template.path)
 
 
-class HeadTemplate(TemplateLoader):
+class HeadFragment(TemplateLoader):
     """
     """
     templateFile = "head.xml"
@@ -29,7 +31,7 @@ class HeadTemplate(TemplateLoader):
         return tag("%s :: %s" % (meta.displayName, meta.description))
 
 
-class TopNavTemplate(TemplateLoader):
+class TopNavFragment(TemplateLoader):
     """
     """
     templateFile = "topnav.xml"
@@ -59,3 +61,36 @@ class TopNavTemplate(TemplateLoader):
                 tags.li(tags.a(text, href=url), class_=cssClass),
                 )
         return tag(elements)
+
+
+class DictionariesFragment(TemplateLoader):
+    """
+    """
+    templateFile = "dictionaries/list.xml"
+
+    @renderer
+    def dictionaries(self, request, tag):
+        """
+        """
+        elements = []
+        for dictionary in const.dictionaries:
+            name = utils.getDictionaryName(dictionary)
+            url = const.urls["dictionary"].replace(
+                const.urlParams["dictionary"], dictionary)
+            elements.append(
+                tags.li(tags.a(name, href=url)))
+        return tag(elements)
+
+
+class DictionaryFragment(TemplateLoader):
+    """
+    """
+    templateFile = "dictionaries/main.xml"
+
+    @renderer
+    def dictionaryName(self, request, tag):
+        return utils.getDictionaryName(os.path.basename(request.path))
+
+    @renderer
+    def dictionary(self, request, tag):
+        return tag

@@ -13,11 +13,11 @@ class BasePage(elements.TemplateLoader):
 
     @renderer
     def head(self, request, tag):
-        return elements.HeadTemplate()
+        return elements.HeadFragment()
 
     @renderer
     def topnav(self, request, tag):
-        return elements.TopNavTemplate()
+        return elements.TopNavFragment()
 
     @renderer
     def sidebar(self, request, tag):
@@ -81,7 +81,19 @@ class DictionariesPage(SidebarPage):
     """
     @renderer
     def content(self, request, tag):
-        return elements.TemplateLoader(templateFile="dictionaries/list.xml")
+        return elements.DictionariesFragment()
+
+
+class DictionaryPage(SidebarPage):
+    """
+    """
+    def __init__(self, dictionary):
+        super(DictionaryPage, self).__init__()
+        self.dictionary = dictionary
+
+    @renderer
+    def content(self, request, tag):
+        return elements.DictionaryFragment()
 
 
 class AboutPage(SidebarPage):

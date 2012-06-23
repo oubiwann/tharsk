@@ -1,8 +1,6 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <div>
-    <h1>Dictionaries</h1>
-    <ul>
-      <t:transparent t:render="dictionaries"/>
-    </ul>
+    <h1><t:transparent t:render="dictionaryName"/> Dictionary</h1>
+    <div t:render="dictionary"/>
   </div>
 </t:transparent>
