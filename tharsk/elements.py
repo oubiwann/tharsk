@@ -21,7 +21,15 @@ class TemplateLoader(Element):
         self.loader = XMLFile(template.path)
 
 
-class HeadFragment(TemplateLoader):
+class BaseFragment(TemplateLoader):
+    """
+    """
+    @renderer
+    def getRootURL(self, request, tag):
+        return const.urls["root"]
+
+
+class HeadFragment(BaseFragment):
     """
     """
     templateFile = "head.xml"
@@ -31,7 +39,7 @@ class HeadFragment(TemplateLoader):
         return tag("%s :: %s" % (meta.displayName, meta.description))
 
 
-class TopNavFragment(TemplateLoader):
+class TopNavFragment(BaseFragment):
     """
     """
     templateFile = "topnav.xml"
@@ -63,7 +71,7 @@ class TopNavFragment(TemplateLoader):
         return tag(elements)
 
 
-class DictionariesFragment(TemplateLoader):
+class DictionariesFragment(BaseFragment):
     """
     """
     templateFile = "dictionaries/list.xml"
@@ -82,15 +90,24 @@ class DictionariesFragment(TemplateLoader):
         return tag(elements)
 
 
-class DictionaryFragment(TemplateLoader):
+class DictionaryFragment(BaseFragment):
     """
     """
     templateFile = "dictionaries/main.xml"
 
     @renderer
-    def dictionaryName(self, request, tag):
-        return utils.getDictionaryName(os.path.basename(request.path))
+    def dictionary(self, request, tag):
+        return tag
 
     @renderer
-    def dictionary(self, request, tag):
+    def dictionaryData(self, request, tag):
+        """
+        """
+        dictName = utils.getDictionaryName(os.path.basename(request.path))
+        tag.fillSlots(
+            rootURL=self.getRootURL(request, tag),
+            breadcrumbDivider=const.breadcrumbDivider,
+            dictionaryName=dictName,
+            dictionariesURL=const.urls["dictionaries"],
+            )
         return tag
