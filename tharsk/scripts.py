@@ -22,8 +22,8 @@ class ImportProtoCeltic(Script):
         super(ImportProtoCeltic, self).run()
         scraper = pdf.ProtoCelticPDFScraper(
             self.filename,
-            skip_startswith=["Proto-Celtic"],
-            skip_in=["of 103"])
+            skipStartsWith=["Proto-Celtic"],
+            skipIn=["of 103"])
         print scraper.run()
 
 
