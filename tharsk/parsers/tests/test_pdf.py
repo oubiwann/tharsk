@@ -1,3 +1,4 @@
+# -*- coding: utf-8
 import unittest
 
 from tharsk.parsers import pdf 
@@ -44,4 +45,23 @@ class CSVConverterTestCase(unittest.TestCase):
     def test_format_row(self):
         result = self.converter.format_row("tharsk", "to ask")
         expected = '"tharsk", "to ask"\n'
+        self.assertEqual(result, expected)
+
+
+class WordPermutationsTestCase(unittest.TestCase):
+    """
+    """
+    def setUp(self):
+        self.scraper = pdf.ProtoCelticPDFScraper(None)
+
+    def test_getPermutationsInitial(self):
+        word = "*(s)tano"
+        result = self.scraper.getWordPermutations(word, "location")
+        expected = ['*tano', '*stano']
+        self.assertEqual(result, expected)
+
+    def test_getPermutationsInitialUnicode(self):
+        word = "*(s)tanā-"
+        result = self.scraper.getWordPermutations(word, "location")
+        expected = ['*tan\xc4\x81-', '*stan\xc4\x81-']
         self.assertEqual(result, expected)
