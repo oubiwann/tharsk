@@ -61,6 +61,11 @@ class BaseConverter(TextConverter):
     def concat_line(self, line):
         return "".join(line[x] for x in sorted(line.keys()))
 
+    def format_row(self, *items):
+        return (
+            self.process_first_item(items[0]) + 
+            self.process_second_item(items[1]))
+
     def is_line_start(self, line):
         pass
 
@@ -98,11 +103,11 @@ class BaseConverter(TextConverter):
 class TabbedConverter(BaseConverter):
     """
     """
-    def process_first_item(self, line):
-        return line.ljust(40, " ")
+    def process_first_item(self, item):
+        return item.ljust(40, " ")
 
-    def process_second_item(self, line):
-        return "%s\n" % line
+    def process_second_item(self, item):
+        return "%s\n" % item
 
 
 class CSVConverter(BaseConverter):
@@ -286,11 +291,14 @@ class ProtoCelticPDFScraper(PDFScraper):
         except ValueError:
             if len(field1.split(splitter)) > 2:
                 field1 = field1.replace('"', "")
-                return '"FIXME: %s", "%s"' % (field1, field2)
+                return self.device.format_row("FIXME: %s" % field1, field2)
         except Exception, err:
             import pdb;pdb.set_trace()
-        return '"%s", "%s"\n"%s", "%s"' % (
-            field1a.strip(), field2, field1b.strip(), field2)
+        #return '"%s", "%s"\n"%s", "%s"' % (
+        #    field1a.strip(), field2, field1b.strip(), field2)
+        return "%s%s" % (
+            self.device.format_row(field1a.strip(), field2),
+            self.device.format_row(field1b.strip(), field2))
 
     def post_process(self):
         output = super(ProtoCelticPDFScraper, self).post_process()
@@ -304,5 +312,5 @@ class ProtoCelticPDFScraper(PDFScraper):
                 for splitter in splitters:
                     if splitter in field1:
                         line = self.split_line(splitter, field1, field2)
-            processed += line + "\n"
+            processed += line.strip() + "\n"
         return processed
