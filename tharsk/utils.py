@@ -1,4 +1,4 @@
-import csv, codecs, cStringIO
+import csv, codecs, cStringIO, itertools
 
 from tharsk import const
 
@@ -12,6 +12,14 @@ def getDictionaryName(dictionary):
 def getDictionaryNames():
     for dictionary in const.dictionaries:
         yield getDictionaryName(dictionary)
+
+
+def getPermutations(iterable):
+    permutations = []
+    for i in xrange(len((iterable))):
+        results = itertools.combinations(iterable, i+1)
+        permutations.extend(results)
+    return permutations
 
 
 class UTF8Recoder(object):
