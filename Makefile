@@ -47,6 +47,8 @@ $(BIN_DIR)/lessc:
 install-deps: $(DEPS_DIR) $(KLEIN_DIR) $(BOOTSTRAP_DIR) $(TXMONGO_DIR) \
 $(BIN_DIR)/recess $(BIN_DIR)/uglifyjs $(BIN_DIR)/jshint $(BIN_DIR)/lessc
 	cd $(BOOTSTRAP_DIR) && make
+	sudo $(PIP) install pdfminer
+	sudo $(PIP) install stemming
 
 install: install-deps
 
@@ -77,7 +79,7 @@ stop-prod:
 
 import-proto-celtic:
 	@$(PYTHON) -c "from $(LIB).scripts import ImportProtoCeltic; \
-	ipc = ImportProtoCeltic();ipc.run()"
+	ipc = ImportProtoCeltic();ipc.run()|uniq"
 
 check:
 	@$(TRIAL) $(LIB)

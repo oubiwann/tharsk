@@ -20,10 +20,16 @@ This project has the following dependencies:
 
 * `MongoDB`_
 
-* Solr
-
 These need to be installed before you can run the code in this project. See
 below for instructions.
+
+Some of the utilities for building searchable content make use of the following
+additional libraries:
+
+* `stemming`_
+
+* `pdfminer`_
+
 
 Name
 ----
@@ -55,6 +61,7 @@ Installation
 
 #. Enter the φarsk dir and install the app: ``cd tharsk && make install-deps``
 
+
 Running the Server
 ==================
 
@@ -67,3 +74,5 @@ Running the Server
 .. _Node.js: http://nodejs.org/#download
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _MongoDB: http://www.mongodb.org/downloads
+.. _stemming: http://pypi.python.org/pypi/stemming/1.0
+.. _pdfminer: http://pypi.python.org/pypi/pdfminer/20110515
