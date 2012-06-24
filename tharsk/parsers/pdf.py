@@ -301,9 +301,6 @@ class ProtoCelticPDFScraper(PDFScraper):
             has_two_fields = two_fields.match(line)
             if has_two_fields:
                 field1, field2 = has_two_fields.groups()
-                if field2 in ["sheep"]:
-                    #import pdb;pdb.set_trace()
-                    pass
                 for splitter in splitters:
                     if splitter in field1:
                         line = self.split_line(splitter, field1, field2)
