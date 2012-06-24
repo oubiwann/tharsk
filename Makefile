@@ -10,6 +10,7 @@ TEMPLATES_DIR = $(BASE_DIR)/templates
 PIP ?= pip-2.7
 PYTHON ?= python2.7
 TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
+TRIAL ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/trial
 LESSC ?= $(BIN_DIR)/lessc
 
 $(DEPS_DIR):
@@ -75,5 +76,8 @@ stop-prod:
 	sudo kill `sudo cat twistd.pid`
 
 import-proto-celtic:
-	@$(PYTHON) -c "from tharsk.scripts import ImportProtoCeltic; \
+	@$(PYTHON) -c "from $(LIB).scripts import ImportProtoCeltic; \
 	ipc = ImportProtoCeltic();ipc.run()"
+
+check:
+	@$(TRIAL) $(LIB)
