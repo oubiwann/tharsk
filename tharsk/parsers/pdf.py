@@ -9,9 +9,15 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfparser import PDFDocument, PDFParser
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 
+from tharsk import utils
+
 
 class BaseConverter(TextConverter):
     """
+    A Base converter for use by other custom converters.
+
+    Note that the "native" code style is used for this class (underscores, not
+    studly caps).
     """
     def __init__(self, resource_manager, output_fh, skip_startswith=[],
                  skip_in=[], is_line_start=None, clean_term=None,
@@ -63,7 +69,7 @@ class BaseConverter(TextConverter):
 
     def format_row(self, *items):
         return (
-            self.process_first_item(items[0]) + 
+            self.process_first_item(items[0]) +
             self.process_second_item(items[1]))
 
     def is_line_start(self, line):
@@ -102,6 +108,7 @@ class BaseConverter(TextConverter):
 
 class TabbedConverter(BaseConverter):
     """
+    A custom convter for space separation of values.
     """
     def process_first_item(self, item):
         return item.ljust(40, " ")
@@ -112,6 +119,7 @@ class TabbedConverter(BaseConverter):
 
 class CSVConverter(BaseConverter):
     """
+    A custom converter that produces CSV output.
     """
     def process_first_item(self, line):
         return '"%s", ' % line
@@ -125,24 +133,24 @@ class PDFScraper(object):
     """
     converter = TabbedConverter
 
-    def __init__(self, filename, skip_startswith=None, skip_in=None):
+    def __init__(self, filename, skipStartsWith=None, skipIn=None):
         self.filename = filename
         rsrc = PDFResourceManager()
         self.outfp = StringIO()
         self.device = self.converter(
             rsrc, self.outfp, codec="utf-8", laparams=LAParams(),
-            skip_startswith=skip_startswith or [], skip_in=skip_in or [],
-            is_line_start=self.is_line_start, clean_term=self.clean_term,
-            pre_process_line=self.pre_process_line)
+            skip_startswith=skipStartsWith or [], skip_in=skipIn or [],
+            is_line_start=self.isLineStart, clean_term=self.cleanTerm,
+            pre_process_line=self.preProcessLine)
         self.interpreter = PDFPageInterpreter(rsrc, self.device)
 
-    def is_line_start(self, line):
+    def isLineStart(self, line):
         return False
 
-    def clean_term(self, line):
+    def cleanTerm(self, line):
         return line
 
-    def pre_process_line(self, line):
+    def preProcessLine(self, line):
         return line
 
     def prepare(self):
@@ -157,17 +165,17 @@ class PDFScraper(object):
         self.device.close()
         self.source.close()
 
-    def post_process(self):
+    def postProcess(self):
         return self.outfp.getvalue()
 
     def run(self):
         self.prepare()
-        #for i, page in enumerate(list(self.doc.get_pages())[70:71]):
+        #for i, page in enumerate(list(self.doc.get_pages())[0:1]):
         for i, page in enumerate(self.doc.get_pages()):
             if page is not None:
                 self.interpreter.process_page(page)
         self.finish()
-        return self.post_process()
+        return self.postProcess()
 
 
 class ProtoCelticPDFScraper(PDFScraper):
@@ -177,10 +185,10 @@ class ProtoCelticPDFScraper(PDFScraper):
     converter.column1_head = "pcl"
     converter.column2_head = "eng"
 
-    def is_line_start(self, line):
+    def isLineStart(self, line):
         return line.strip().startswith("*")
 
-    def pre_process_line(self, line):
+    def preProcessLine(self, line):
         line = line.replace("*kom-reigo-,", "*kom-reigo-")
         line = line.replace("(?, or < Lat.?)", "")
         line = line.replace("(?; LW??)", "")
@@ -282,10 +290,10 @@ class ProtoCelticPDFScraper(PDFScraper):
             line = line[0] + line[2:]
         return line.strip()
 
-    def clean_term(self, line):
+    def cleanTerm(self, line):
         return line.strip()
 
-    def split_line(self, splitter, field1, field2):
+    def splitLine(self, splitter, field1, field2):
         try:
             field1a, field1b = field1.split(splitter)
         except ValueError:
@@ -294,23 +302,57 @@ class ProtoCelticPDFScraper(PDFScraper):
                 return self.device.format_row("FIXME: %s" % field1, field2)
         except Exception, err:
             import pdb;pdb.set_trace()
-        #return '"%s", "%s"\n"%s", "%s"' % (
-        #    field1a.strip(), field2, field1b.strip(), field2)
-        return "%s%s" % (
+        output = "%s%s" % (
             self.device.format_row(field1a.strip(), field2),
             self.device.format_row(field1b.strip(), field2))
+        output += self.splitPermutations(field1a, field2)
+        output += self.splitPermutations(field1b, field2)
+        return output
 
-    def post_process(self):
-        output = super(ProtoCelticPDFScraper, self).post_process()
+    def getWordPermutations(self, field1):
+        """
+        """
+        # Split by opening and closing parens. Note that the word parts at the
+        # odd indices will always be the mandatory word parts, and the even
+        # indices will mark the optional word parts.
+        parts = re.split(r"[()]", field1)
+        # non-optional word parts
+        requireds = [(n, x) for n, x in enumerate(parts) if not n % 2]
+        permutations = ["".join([x for n, x in requireds])]
+        optionals = [(n, x) for n, x in enumerate(parts) if n % 2]
+        for optionalArrangement in utils.getPermutations(optionals):
+            newParts = sorted(list(requireds) + list(optionalArrangement))
+            newWord = "".join([x for n, x in newParts])
+            permutations.append(newWord)
+        return permutations
+
+    def splitPermutations(self, field1, field2):
+        permutations = self.getWordPermutations(field1)
+        output = ""
+        for word in permutations:
+            output += self.device.format_row(word, field2)
+        return output
+        
+    def postProcess(self):
+        output = super(ProtoCelticPDFScraper, self).postProcess()
         processed = '"pcl", "eng"\n'
         splitters = [" / ", ", ", " // ", " < ", " > ", "; ", " >> ", " << "]
-        two_fields = re.compile('"(.*)", "(.*)"')
+        twoFields = re.compile('"(.*)", "(.*)"')
+        hasProcessed = False
         for line in output.split("\n"):
-            has_two_fields = two_fields.match(line)
-            if has_two_fields:
-                field1, field2 = has_two_fields.groups()
+            hasTwoFields = twoFields.match(line)
+            if hasTwoFields:
+                field1, field2 = hasTwoFields.groups()
                 for splitter in splitters:
                     if splitter in field1:
-                        line = self.split_line(splitter, field1, field2)
-            processed += line.strip() + "\n"
+                        line += "\n" + self.splitLine(splitter, field1, field2)
+                        hasProcessed = True
+                if not hasProcessed:
+                    line += "\n" + self.splitPermutations(field1, field2)
+                    hasProcessed = True
+                hasProcessed = True
+            hasProcessed = False
+            if not hasProcessed:
+                processed += line.strip() + "\n"
+            hasProcessed = False
         return processed
