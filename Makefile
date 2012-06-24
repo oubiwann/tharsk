@@ -8,6 +8,7 @@ TXMONGO_DIR = $(DEPS_DIR)/txmongo
 ASSETS_DIR = $(BASE_DIR)/assets
 TEMPLATES_DIR = $(BASE_DIR)/templates
 PIP ?= pip-2.7
+PYTHON ?= python2.7
 TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
 LESSC ?= $(BIN_DIR)/lessc
 
@@ -72,3 +73,7 @@ start-prod:
 
 stop-prod:
 	sudo kill `sudo cat twistd.pid`
+
+import-proto-celtic:
+	@$(PYTHON) -c "from tharsk.scripts import ImportProtoCeltic; \
+	ipc = ImportProtoCeltic();ipc.run()"
