@@ -1,6 +1,7 @@
 <t:transparent xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
+
       <li class="nav-header">Proto-Indo-European on Wikipedia</li>
       <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_language">
         Overview</a></li>
@@ -12,6 +13,7 @@
         Nouns</a></li>
       <li><a href="http://en.wikipedia.org/wiki/Proto-Indo-European_pronouns">
         Pronouns</a></li>
+
       <li class="nav-header">UT Austin IE Studies</li>
       <li><a href="http://www.utexas.edu/cola/centers/lrc/ielex/">
         The Indo-European Lexicon</a></li>
@@ -21,14 +23,14 @@
         Early Indo-European Texts</a></li>
       <li><a href="http://www.utexas.edu/cola/centers/lrc/eieol/">
         Early Indo-European Online Courses</a></li>
-      <li class="nav-header">Sidebar</li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+
       <li class="nav-header">Related Online Dictionaries</li>
+      <li><a href="http://www.koeblergerhard.de/idgwbhin.html">
+        PIE Etymological Dictionar (Köbler, Gerhard; .pdf files)</a></li>
+      <li><a href="http://www.dil.ie/search-all.asp">
+        electronic Dictionary of the Irish Language (eDIL; includes Old Irish)</a></li>
       <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
-      <li><a href="#">Link</a></li>
+
       <li class="nav-header">Other Resources</li>
       <li><a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">
         Codes for the Representation of Names of Languages</a></li>
