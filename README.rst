@@ -35,7 +35,7 @@ Name
 ----
 
 The following names were considered for the project (taken from the first
-word list imported into the application: Proto-Celtic):
+word list imported into the application, Proto-Celtic):
 
 * *bargo*: "book"
 
