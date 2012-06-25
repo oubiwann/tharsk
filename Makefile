@@ -86,5 +86,13 @@ proto-celtic-add-keywords:
 	@$(PYTHON) -c "from $(LIB).scripts import AddProtoCelticKeywordsScript; \
 	updater = AddProtoCelticKeywordsScript();updater.run()"
 
+proto-celtic-import:
+	@$(PYTHON) -c "from $(LIB).scripts import ImportProtCelticDictionary; \
+	importer = ImportProtCelticDictionary();importer.run()"
+
+proto-celtic-export:
+	@$(PYTHON) -c "from $(LIB).scripts import ExportProtCelticDictionary; \
+	exporter = ExportProtCelticDictionary();exporter.run()"
+
 check:
 	@$(TRIAL) $(LIB)
