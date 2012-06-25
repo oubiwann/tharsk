@@ -42,20 +42,12 @@ Version 0.1
 
   - fill table data via external (fake) data source (not hard-coded HTML)
 
-* Add simple db for PIE word list
-
-  - add support for simple search
-
-  - update the paginated template to accept search results
-
 * Add a caveats page for explaining various Unicode substitutions made for
   various unsupported dicritical marks
 
 * Convert the JS loads to a deferred to ease with page load times
 
 * Add a "Dictionaries" section in the top left
-
-  - add new page classes for each dictionary language
 
   - add a vertical A-Z tab list for entries
 
