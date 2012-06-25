@@ -122,7 +122,7 @@ class CSVConverter(BaseConverter):
     A custom converter that produces CSV output.
     """
     def process_first_item(self, line):
-        return '"%s", ' % line
+        return '"%s"; ' % line
 
     def process_second_item(self, line):
         return '"%s"\n' % line
@@ -225,6 +225,7 @@ class ProtoCelticPDFScraper(PDFScraper):
         line = line.replace("(CB)", "")
         line = line.replace("(B)", "")
         line = line.replace("(Br.)", "")
+        line = line.replace("(G.)", "")
         line = line.replace("(PBr.)", "")
         line = line.replace("(PBr.???)", "")
         line = line.replace("(PBr.) < PCl. *?", "")
