@@ -77,9 +77,14 @@ start-prod:
 stop-prod:
 	sudo kill `sudo cat twistd.pid`
 
-import-proto-celtic:
-	@$(PYTHON) -c "from $(LIB).scripts import ImportProtoCeltic; \
-	ipc = ImportProtoCeltic();ipc.run()|uniq"
+proto-celtic-parse-wordlist:
+	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlistScript; \
+	parser = ParseProtoCelticWordlistScript();parser.run()"| \
+	uniq > ./sources/pcl-eng.csv
+
+proto-celtic-add-keywords:
+	@$(PYTHON) -c "from $(LIB).scripts import AddProtoCelticKeywordsScript; \
+	updater = AddProtoCelticKeywordsScript();updater.run()"
 
 check:
 	@$(TRIAL) $(LIB)
