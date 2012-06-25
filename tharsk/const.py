@@ -54,5 +54,6 @@ dictionaries = [
 assetsDirectory = "./assets"
 breadcrumbDivider = "/"
 databaseName = "tharsk"
-databasePIECollection = langMapper["Proto-Indo-European"]
-databaseEngCollection = langMapper["English"]
+databasePCLtoENGCollection = "%s_%s" % (
+    langMapper["Proto-Celtic"],
+    langMapper["English"])
