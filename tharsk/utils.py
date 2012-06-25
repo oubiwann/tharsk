@@ -16,6 +16,19 @@ def getDictionaryNames():
         yield getDictionaryName(dictionary)
 
 
+def getStems(wordList):
+    stems = []
+    punctuation = '!@#$%^&*()=+?.,<>";:'
+    skipWords = [""]
+    pattern = re.compile('[%s]' % punctuation)
+    for word in wordList:
+        if word in skipWords:
+            continue
+        word = pattern.sub("", word)
+        stems.append(stem(word))
+    return set(stems)
+
+
 def getPermutations(iterable):
     permutations = []
     for i in xrange(len((iterable))):
