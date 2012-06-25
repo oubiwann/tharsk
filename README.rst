@@ -10,7 +10,11 @@ Project
 Features
 --------
 
-TBD
+Current features include:
+
+* TBD
+
+Features currently underdevelopment can be viewed in the `TODO`_ file.
 
 Dependencies
 ------------
@@ -77,3 +81,4 @@ Running the Server
 .. _MongoDB: http://www.mongodb.org/downloads
 .. _stemming: http://pypi.python.org/pypi/stemming/1.0
 .. _pdfminer: http://pypi.python.org/pypi/pdfminer/20110515
+.. _TODO: tharsk/blob/master/TODO.rst
