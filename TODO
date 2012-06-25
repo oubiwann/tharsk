@@ -5,10 +5,11 @@ TODO
 
 Version 0.1
 ===========
-
-* Rename sidebar sections in UI
-* Populate sidebar links
-  - good IE studies links
+* Create a custom stemmer for proto-celtic words
+  - remove * from search
+  - allow users to "th" instead of the "theta" character
+  - same for all other non-ASCII characters
+* Add a collection drop before the proto-celtic import
 * Add a teaser ("coming soon!") in the User drop-down (or comment it out)
 * Update search page
   - include a drop-down in the search for choosing which language the search
