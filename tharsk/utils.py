@@ -56,11 +56,13 @@ class UnicodeReader(object):
     A CSV reader which will iterate over lines in the CSV file "f", which is
     encoded in the given encoding.
     """
-    def __init__(self, f, encoding="utf-8", **kwds):
+    def __init__(self, filename, encoding="utf-8", **kwds):
+        f = open(filename)
         dialect = csv.Sniffer().sniff(f.read(1024))
         f.seek(0)
         f = UTF8Recoder(f, encoding)
         self.reader = csv.DictReader(f, dialect=dialect, **kwds)
+        self.stream = f
 
     def next(self):
         row = self.reader.next()
@@ -76,14 +78,18 @@ class UnicodeReader(object):
     def fieldnames(self):
         return self.reader.fieldnames
 
+    def close(self):
+        self.stream.close()
 
-class UnicodeWriter:
+
+class UnicodeWriter(object):
     """
     A CSV writer which will write rows to CSV file "f",
     which is encoded in the given encoding.
     """
-    def __init__(self, f, fieldnames, dialect=csv.excel, encoding="utf-8",
+    def __init__(self, filename, fieldnames, dialect=csv.excel, encoding="utf-8",
                  **kwds):
+        f = open(filename, "w")
         # Redirect output to a queue
         self.queue = cStringIO.StringIO()
         self.writer = csv.DictWriter(
@@ -111,3 +117,6 @@ class UnicodeWriter:
 
     def writeheader(self):
         self.writer.writeheader()
+
+    def close(self):
+        self.stream.close()
