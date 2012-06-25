@@ -14,17 +14,32 @@ class Script(object):
         pass
 
 
-class ImportProtoCeltic(Script):
+class ParseProtoCelticWordlistScript(Script):
     """
     """
     filename = "./sources/ProtoCelticEnglishWordlist.pdf"
     def run(self):
-        super(ImportProtoCeltic, self).run()
+        super(ParseProtoCelticWordlistScript, self).run()
         scraper = pdf.ProtoCelticPDFScraper(
             self.filename,
             skipStartsWith=["Proto-Celtic"],
             skipIn=["of 103"])
         print scraper.run()
+
+
+class AddProtoCelticKeywordsScript(Script):
+    inFile = open("./sources/pcl-eng.csv")
+    outFile = open("./sources/pcl-eng-keywords.csv", "w")
+    def run(self):
+        super(AddProtoCelticKeywordsScript, self).run()
+        reader = utils.UnicodeReader(self.inFile)
+        fieldnames = reader.fieldnames + ["see-also", "keywords"]
+        writer = utils.UnicodeWriter(self.outFile, fieldnames)
+        writer.writeheader()
+        for row in reader:
+            row["keywords"] = ",".join(utils.getStems(row["eng"].split()))
+            row["see-also"] = ""
+            writer.writerow(row)
 
 
 class TwistedScript(Script):
