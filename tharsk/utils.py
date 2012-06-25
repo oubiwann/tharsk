@@ -1,4 +1,6 @@
-import csv, codecs, cStringIO, itertools
+import csv, codecs, cStringIO, itertools, re
+
+from stemming.porter2 import stem
 
 from tharsk import const
 
@@ -41,16 +43,25 @@ class UnicodeReader(object):
     A CSV reader which will iterate over lines in the CSV file "f", which is
     encoded in the given encoding.
     """
-    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
+    def __init__(self, f, encoding="utf-8", **kwds):
+        dialect = csv.Sniffer().sniff(f.read(1024))
+        f.seek(0)
         f = UTF8Recoder(f, encoding)
-        self.reader = csv.reader(f, dialect=dialect, **kwds)
+        self.reader = csv.DictReader(f, dialect=dialect, **kwds)
 
     def next(self):
         row = self.reader.next()
-        return [unicode(s, "utf-8") for s in row]
+        try:
+            return dict([(key, unicode(val, "utf-8")) for key, val in row.items()])
+        except:
+            import pdb;pdb.set_trace()
 
     def __iter__(self):
         return self
+
+    @property
+    def fieldnames(self):
+        return self.reader.fieldnames
 
 
 class UnicodeWriter:
@@ -58,15 +69,19 @@ class UnicodeWriter:
     A CSV writer which will write rows to CSV file "f",
     which is encoded in the given encoding.
     """
-    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
+    def __init__(self, f, fieldnames, dialect=csv.excel, encoding="utf-8",
+                 **kwds):
         # Redirect output to a queue
         self.queue = cStringIO.StringIO()
-        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
+        self.writer = csv.DictWriter(
+            self.queue, fieldnames, dialect=dialect, **kwds)
         self.stream = f
         self.encoder = codecs.getincrementalencoder(encoding)()
 
     def writerow(self, row):
-        self.writer.writerow([s.encode("utf-8") for s in row])
+        data = dict([(key, val.encode("utf-8")) for key, val in row.items()])
+        #self.writer.writerow([s.encode("utf-8") for s in row])
+        self.writer.writerow(data)
         # Fetch UTF-8 output from the queue ...
         data = self.queue.getvalue()
         data = data.decode("utf-8")
@@ -80,3 +95,6 @@ class UnicodeWriter:
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
+
+    def writeheader(self):
+        self.writer.writeheader()
