@@ -49,6 +49,7 @@ $(BIN_DIR)/recess $(BIN_DIR)/uglifyjs $(BIN_DIR)/jshint $(BIN_DIR)/lessc
 	cd $(BOOTSTRAP_DIR) && make
 	sudo $(PIP) install pdfminer
 	sudo $(PIP) install stemming
+	sudo $(PIP) install BeautifulSoup
 
 install: install-deps
 
@@ -96,3 +97,6 @@ proto-celtic-export:
 
 check:
 	@$(TRIAL) $(LIB)
+
+python:
+	$(PYTHON)
