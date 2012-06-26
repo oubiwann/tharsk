@@ -34,6 +34,8 @@ additional libraries:
 
 * `pdfminer`_
 
+* `BeautifulSoup`_
+
 
 Name
 ----
@@ -82,3 +84,4 @@ Running the Server
 .. _stemming: http://pypi.python.org/pypi/stemming/1.0
 .. _pdfminer: http://pypi.python.org/pypi/pdfminer/20110515
 .. _TODO: tharsk/blob/master/TODO.rst
+.. _BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/
