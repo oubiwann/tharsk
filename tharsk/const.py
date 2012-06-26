@@ -39,6 +39,7 @@ langCodeMapper = {
     "mga": "Middle Irish",
     "ang": "Anglo-Saxon",
     "non": "Old Norse",
+    "gla": "Scottish Gaelic",
     }
 
 
