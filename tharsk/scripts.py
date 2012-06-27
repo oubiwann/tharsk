@@ -9,6 +9,7 @@ import txmongo.filter
 from tharsk import const, utils
 from tharsk.models import db
 from tharsk.utils import unicsv
+from tharsk.utils.parsers import html
 from tharsk.utils.parsers import pdf
 
 
@@ -49,6 +50,19 @@ class AddProtoCelticKeywordsScript(Script):
             row["keywords"] = ",".join(utils.getStems(row["eng"].split()))
             row["see-also"] = ""
             writer.writerow(row)
+
+
+class ParseGaelicDictionaryHTMLScript(Script):
+    """
+    """
+    inFilename = "./sources/macbains.html"
+    outFilename = "./sources/macbains.csv"
+
+    def run(self):
+        super(ParseGaelicDictionaryHTMLScript, self).run()
+        scraper = html.HTMLScraper(self.inFilename, self.outFilename)
+        scraper.run()
+        print "Saved results to %s." % self.outFilename
 
 
 class TwistedScript(Script):
