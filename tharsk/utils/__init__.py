@@ -17,15 +17,16 @@ def getDictionaryNames():
         yield getDictionaryName(dictionary)
 
 
-def getStems(wordList):
+def getStems(wordList, skipWords=[], caseInsensitive=True):
     stems = []
     punctuation = '!@#$%^&*()=+?.,<>";:'
-    skipWords = [""]
     pattern = re.compile('[%s]' % punctuation)
     for word in wordList:
         if word in skipWords:
             continue
         word = pattern.sub("", word)
+        if caseInsensitive:
+            word = word.lower()
         stems.append(stem(word))
     return set(stems)
 
