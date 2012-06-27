@@ -2,7 +2,8 @@ from twisted.web.static import File
 
 from klein import route
 
-from tharsk import const, pages
+from tharsk import const
+from tharsk.views import pages
 
 
 @route(const.urls["root"])

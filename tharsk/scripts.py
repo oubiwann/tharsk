@@ -6,8 +6,10 @@ from twisted.python import log
 import txmongo
 import txmongo.filter
 
-from tharsk import const, db, utils
-from tharsk.parsers import pdf
+from tharsk import const, utils
+from tharsk.models import db
+from tharsk.utils import unicsv
+from tharsk.utils.parsers import pdf
 
 
 class Script(object):
@@ -21,6 +23,7 @@ class ParseProtoCelticWordlistScript(Script):
     """
     """
     filename = "./sources/ProtoCelticEnglishWordlist.pdf"
+
     def run(self):
         super(ParseProtoCelticWordlistScript, self).run()
         scraper = pdf.ProtoCelticPDFScraper(
@@ -31,13 +34,16 @@ class ParseProtoCelticWordlistScript(Script):
 
 
 class AddProtoCelticKeywordsScript(Script):
+    """
+    """
     inFile = "./sources/pcl-eng.csv"
     outFile = "./sources/pcl-eng-keywords.csv", "w"
+
     def run(self):
         super(AddProtoCelticKeywordsScript, self).run()
-        reader = utils.UnicodeReader(self.inFile)
+        reader = unicsv.UnicodeReader(self.inFile)
         fieldnames = reader.fieldnames + ["see-also", "keywords"]
-        writer = utils.UnicodeWriter(self.outFile, fieldnames)
+        writer = unicsv.UnicodeWriter(self.outFile, fieldnames)
         writer.writeheader()
         for row in reader:
             row["keywords"] = ",".join(utils.getStems(row["eng"].split()))
@@ -98,7 +104,7 @@ class ImportProtCelticDictionary(TwistedScript):
 
         def loadData(database):
             d = threads.deferToThread(
-                lambda: utils.UnicodeReader(self.csvFile))
+                lambda: unicsv.UnicodeReader(self.csvFile))
             d.addCallback(insertData, database)
             return d
 
@@ -118,7 +124,7 @@ class ExportProtCelticDictionary(TwistedScript):
     """
     """
     def doExport(self):
-        
+
         def logResults(docs):
             for doc in docs:
                 log.msg(

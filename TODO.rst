@@ -14,6 +14,10 @@ Version 0.1
 
   - same for all other non-ASCII characters
 
+  - remove dashes
+
+  - allow substring searches
+
 * Add a collection drop before the proto-celtic import
 
 * Add a teaser ("coming soon!") in the User drop-down (or comment it out)

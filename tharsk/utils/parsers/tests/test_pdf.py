@@ -1,7 +1,7 @@
 # -*- coding: utf-8
 import unittest
 
-from tharsk.parsers import pdf 
+from tharsk.parsers import pdf
 
 
 class TabbedConverterTestCase(unittest.TestCase):
