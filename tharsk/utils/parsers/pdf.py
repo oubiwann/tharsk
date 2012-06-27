@@ -2,7 +2,6 @@
 from collections import defaultdict
 from cStringIO import StringIO
 import re
-import sys
 
 from pdfminer.converter import LTChar, TextConverter
 from pdfminer.layout import LAParams
@@ -43,7 +42,7 @@ class BaseConverter(TextConverter):
         return children
 
     def index_children(self):
-        lines = defaultdict(lambda : {})
+        lines = defaultdict(lambda: {})
         for child in self.get_children():
             self.child_counter += 1
             if child and isinstance(child, LTChar):
@@ -51,9 +50,6 @@ class BaseConverter(TextConverter):
                 line = lines[int(-y)]
                 line[x] = child.get_text().encode(self.codec)
         return lines
-
-    def process_line(self, line):
-        return line
 
     def skip_text(self, text):
         for pattern in self.skip_startswith:
@@ -302,7 +298,9 @@ class ProtoCelticPDFScraper(PDFScraper):
                 field1 = field1.replace('"', "")
                 return self.device.format_row("FIXME: %s" % field1, field2)
         except Exception, err:
-            import pdb;pdb.set_trace()
+            print err
+            import pdb
+            pdb.set_trace()
         output = "%s%s" % (
             self.device.format_row(field1a.strip(), field2),
             self.device.format_row(field1b.strip(), field2))
@@ -333,7 +331,7 @@ class ProtoCelticPDFScraper(PDFScraper):
         for word in permutations:
             output += self.device.format_row(word, field2)
         return output
-        
+
     def postProcess(self):
         output = super(ProtoCelticPDFScraper, self).postProcess()
         processed = '"pcl", "eng"\n'

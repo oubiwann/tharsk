@@ -3,7 +3,8 @@ from datetime import datetime
 
 from twisted.web.template import renderer
 
-from tharsk import elements, meta
+from tharsk import meta
+from tharsk.views import elements
 
 
 class BasePage(elements.TemplateLoader):

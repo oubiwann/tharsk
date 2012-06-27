@@ -1,40 +1,6 @@
-import csv, codecs, cStringIO, itertools, re
-
-from stemming.porter2 import stem
-
-from tharsk import const
-
-
-def getDictionaryName(dictionary):
-    srcLang, destLang = dictionary.split("-")
-    return "%s to %s" % (
-        const.langCodeMapper[srcLang], const.langCodeMapper[destLang])
-
-
-def getDictionaryNames():
-    for dictionary in const.dictionaries:
-        yield getDictionaryName(dictionary)
-
-
-def getStems(wordList):
-    stems = []
-    punctuation = '!@#$%^&*()=+?.,<>";:'
-    skipWords = [""]
-    pattern = re.compile('[%s]' % punctuation)
-    for word in wordList:
-        if word in skipWords:
-            continue
-        word = pattern.sub("", word)
-        stems.append(stem(word))
-    return set(stems)
-
-
-def getPermutations(iterable):
-    permutations = []
-    for i in xrange(len((iterable))):
-        results = itertools.combinations(iterable, i+1)
-        permutations.extend(results)
-    return permutations
+import codecs
+import csv
+import cStringIO
 
 
 class UTF8Recoder(object):
@@ -67,9 +33,12 @@ class UnicodeReader(object):
     def next(self):
         row = self.reader.next()
         try:
-            return dict([(key, unicode(val, "utf-8")) for key, val in row.items()])
-        except:
-            import pdb;pdb.set_trace()
+            return dict(
+                [(key, unicode(val, "utf-8")) for key, val in row.items()])
+        except Exception, err:
+            print err
+            import pdb
+            pdb.set_trace()
 
     def __iter__(self):
         return self
@@ -87,8 +56,8 @@ class UnicodeWriter(object):
     A CSV writer which will write rows to CSV file "f",
     which is encoded in the given encoding.
     """
-    def __init__(self, filename, fieldnames, dialect=csv.excel, encoding="utf-8",
-                 **kwds):
+    def __init__(self, filename, fieldnames, dialect=csv.excel,
+                 encoding="utf-8", **kwds):
         f = open(filename, "w")
         # Redirect output to a queue
         self.queue = cStringIO.StringIO()
