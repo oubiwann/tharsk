@@ -49,6 +49,7 @@ langMapper = dict([(y, x) for x, y in langCodeMapper.items()])
 dictionaries = [
     "%s-%s" % (langMapper["English"], langMapper["Proto-Celtic"]),
     "%s-%s" % (langMapper["Proto-Celtic"], langMapper["English"]),
+    "%s-%s" % (langMapper["Scottish Gaelic"], langMapper["English"]),
     ]
 
 
