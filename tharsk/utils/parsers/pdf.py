@@ -127,18 +127,18 @@ class CSVConverter(BaseConverter):
 class PDFScraper(object):
     """
     """
-    converter = TabbedConverter
+    converterClass = TabbedConverter
 
     def __init__(self, filename, skipStartsWith=None, skipIn=None):
         self.filename = filename
         rsrc = PDFResourceManager()
         self.outfp = StringIO()
-        self.device = self.converter(
+        self.converter = self.converterClass(
             rsrc, self.outfp, codec="utf-8", laparams=LAParams(),
             skip_startswith=skipStartsWith or [], skip_in=skipIn or [],
             is_line_start=self.isLineStart, clean_term=self.cleanTerm,
             pre_process_line=self.preProcessLine)
-        self.interpreter = PDFPageInterpreter(rsrc, self.device)
+        self.interpreter = PDFPageInterpreter(rsrc, self.converter)
 
     def isLineStart(self, line):
         return False
@@ -158,7 +158,7 @@ class PDFScraper(object):
         self.doc.initialize('')
 
     def finish(self):
-        self.device.close()
+        self.converter.close()
         self.source.close()
 
     def postProcess(self):
@@ -177,9 +177,8 @@ class PDFScraper(object):
 class ProtoCelticPDFScraper(PDFScraper):
     """
     """
-    converter = CSVConverter
-    converter.column1_head = "pcl"
-    converter.column2_head = "eng"
+    converterClass = CSVConverter
+    converterClass.fields = ["pcl", "eng"]
 
     def isLineStart(self, line):
         return line.strip().startswith("*")
@@ -296,14 +295,14 @@ class ProtoCelticPDFScraper(PDFScraper):
         except ValueError:
             if len(field1.split(splitter)) > 2:
                 field1 = field1.replace('"', "")
-                return self.device.format_row("FIXME: %s" % field1, field2)
+                return self.converter.format_row("FIXME: %s" % field1, field2)
         except Exception, err:
             print err
             import pdb
             pdb.set_trace()
         output = "%s%s" % (
-            self.device.format_row(field1a.strip(), field2),
-            self.device.format_row(field1b.strip(), field2))
+            self.converter.format_row(field1a.strip(), field2),
+            self.converter.format_row(field1b.strip(), field2))
         output += self.splitPermutations(field1a, field2)
         output += self.splitPermutations(field1b, field2)
         return output
@@ -329,12 +328,12 @@ class ProtoCelticPDFScraper(PDFScraper):
         permutations = self.getWordPermutations(field1)
         output = ""
         for word in permutations:
-            output += self.device.format_row(word, field2)
+            output += self.converter.format_row(word, field2)
         return output
 
     def postProcess(self):
         output = super(ProtoCelticPDFScraper, self).postProcess()
-        processed = '"pcl", "eng"\n'
+        processed = '"%s", "%s"\n' % self.converter.fields
         splitters = [" / ", ", ", " // ", " < ", " > ", "; ", " >> ", " << "]
         twoFields = re.compile('"(.*)", "(.*)"')
         hasProcessed = False

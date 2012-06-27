@@ -19,6 +19,7 @@ class HTMLScraper(object):
     """
     """
     converterClass = CSVConverter
+    converterClass.fields = ["gla", "eng"]
 
     def __init__(self, inFilename, outFilename=""):
         self.inFilename = inFilename
@@ -38,7 +39,7 @@ class HTMLScraper(object):
             open(self.inFilename).read(),
             convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
 
-    def run(self, filename=""):
+    def run(self, filename="", doPrint=False):
         if not filename:
             termsTags = self.getParsedHTML().findAll("dt")
             #import pdb;pdb.set_trace()
