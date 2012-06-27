@@ -13,6 +13,11 @@ TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
 TRIAL ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/trial
 LESSC ?= $(BIN_DIR)/lessc
 
+clean:
+	rm -rf dist/ build/ MANIFEST *.egg-info
+	rm -rf _trial_temp/ CHECK_THIS_BEFORE_UPLOAD.txt twistd.log
+	find ./ -name "*.py[co]" -exec rm {} \;
+
 $(DEPS_DIR):
 	mkdir $(DEPS_DIR)
 
@@ -80,20 +85,24 @@ stop-prod:
 
 proto-celtic-parse-wordlist:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlistScript; \
-	parser = ParseProtoCelticWordlistScript();parser.run()"| \
+	script = ParseProtoCelticWordlistScript();script.run()"| \
 	uniq > ./sources/pcl-eng.csv
 
 proto-celtic-add-keywords:
 	@$(PYTHON) -c "from $(LIB).scripts import AddProtoCelticKeywordsScript; \
-	updater = AddProtoCelticKeywordsScript();updater.run()"
+	script = AddProtoCelticKeywordsScript();script.run()"
 
 proto-celtic-import:
 	@$(PYTHON) -c "from $(LIB).scripts import ImportProtCelticDictionary; \
-	importer = ImportProtCelticDictionary();importer.run()"
+	script = ImportProtCelticDictionary();script.run()"
 
 proto-celtic-export:
 	@$(PYTHON) -c "from $(LIB).scripts import ExportProtCelticDictionary; \
-	exporter = ExportProtCelticDictionary();exporter.run()"
+	script = ExportProtCelticDictionary();script.run()"
+
+gaelic-parse-dictionary:
+	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionaryHTMLScript; \
+	script = ParseGaelicDictionaryHTMLScript();script.run()"
 
 check:
 	@$(TRIAL) $(LIB)
