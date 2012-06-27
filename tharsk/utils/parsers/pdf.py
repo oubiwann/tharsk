@@ -9,6 +9,7 @@ from pdfminer.pdfparser import PDFDocument, PDFParser
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 
 from tharsk import utils
+from tharsk.utils.parsers import mixins
 
 
 class BaseConverter(TextConverter):
@@ -19,19 +20,19 @@ class BaseConverter(TextConverter):
     studly caps).
     """
     def __init__(self, resource_manager, output_fh, skip_startswith=[],
-                 skip_in=[], is_line_start=None, clean_term=None,
-                 pre_process_line=None, *args, **kwargs):
+                 skip_in=[], isLineStart=None, cleanTerm=None,
+                 preProcessLine=None, *args, **kwargs):
         super(BaseConverter, self).__init__(
             resource_manager, output_fh, *args, **kwargs)
         self.skip_startswith = skip_startswith
         self.skip_in = skip_in
-        if not is_line_start:
-            is_line_start = lambda self, x: False
-        self.is_line_start = is_line_start
-        if clean_term:
-            self.clean_term = clean_term
-        if pre_process_line:
-            self.pre_process_line = pre_process_line
+        if not isLineStart:
+            isLineStart = lambda self, x: False
+        self.isLineStart = isLineStart
+        if cleanTerm:
+            self.cleanTerm = cleanTerm
+        if preProcessLine:
+            self.preProcessLine = preProcessLine
         self.child_counter = 0
         self.line_counter = 0
 
@@ -60,68 +61,27 @@ class BaseConverter(TextConverter):
                 return True
         return False
 
-    def concat_line(self, line):
-        return "".join(line[x] for x in sorted(line.keys()))
 
-    def format_row(self, *items):
-        return (
-            self.process_first_item(items[0]) +
-            self.process_second_item(items[1]))
-
-    def is_line_start(self, line):
-        pass
-
-    def pre_process_line(self, line):
-        return line
-
-    def clean_term(self, line):
-        return line
-
-    def process_first_item(self, line):
-        pass
-
-    def process_second_item(self, line):
-        pass
-
-    def process_line(self, line):
-        if self.skip_text(line):
-            return
-        line = self.clean_term(line)
-        if self.is_line_start(line):
-            line = self.process_first_item(line)
-        else:
-            line = self.process_second_item(line)
-        self.outfp.write(line)
-
+class FormattedConverter(BaseConverter, mixins.BaseFormatter):
+    """
+    """
     def end_page(self, i):
         lines = self.index_children()
         for key in sorted(lines.keys()):
             self.line_counter += 1
-            line = self.concat_line(lines[key])
-            line = self.pre_process_line(line)
-            self.process_line(line)
+            line = self.concatLine(lines[key])
+            line = self.preProcessLine(line)
+            self.processLine(line)
 
 
-class TabbedConverter(BaseConverter):
+class TabbedConverter(FormattedConverter, mixins.TabbedFormatter):
     """
-    A custom convter for space separation of values.
     """
-    def process_first_item(self, item):
-        return item.ljust(40, " ")
-
-    def process_second_item(self, item):
-        return "%s\n" % item
 
 
-class CSVConverter(BaseConverter):
+class CSVConverter(FormattedConverter, mixins.CustomCSVFormatter):
     """
-    A custom converter that produces CSV output.
     """
-    def process_first_item(self, line):
-        return '"%s"; ' % line
-
-    def process_second_item(self, line):
-        return '"%s"\n' % line
 
 
 class PDFScraper(object):
@@ -136,8 +96,8 @@ class PDFScraper(object):
         self.converter = self.converterClass(
             rsrc, self.outfp, codec="utf-8", laparams=LAParams(),
             skip_startswith=skipStartsWith or [], skip_in=skipIn or [],
-            is_line_start=self.isLineStart, clean_term=self.cleanTerm,
-            pre_process_line=self.preProcessLine)
+            isLineStart=self.isLineStart, cleanTerm=self.cleanTerm,
+            preProcessLine=self.preProcessLine)
         self.interpreter = PDFPageInterpreter(rsrc, self.converter)
 
     def isLineStart(self, line):
@@ -178,7 +138,7 @@ class ProtoCelticPDFScraper(PDFScraper):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = ["pcl", "eng"]
+    converterClass.fields = ("pcl", "eng")
 
     def isLineStart(self, line):
         return line.strip().startswith("*")
@@ -295,14 +255,14 @@ class ProtoCelticPDFScraper(PDFScraper):
         except ValueError:
             if len(field1.split(splitter)) > 2:
                 field1 = field1.replace('"', "")
-                return self.converter.format_row("FIXME: %s" % field1, field2)
+                return self.converter.formatRow("FIXME: %s" % field1, field2)
         except Exception, err:
             print err
             import pdb
             pdb.set_trace()
         output = "%s%s" % (
-            self.converter.format_row(field1a.strip(), field2),
-            self.converter.format_row(field1b.strip(), field2))
+            self.converter.formatRow(field1a.strip(), field2),
+            self.converter.formatRow(field1b.strip(), field2))
         output += self.splitPermutations(field1a, field2)
         output += self.splitPermutations(field1b, field2)
         return output
@@ -328,12 +288,15 @@ class ProtoCelticPDFScraper(PDFScraper):
         permutations = self.getWordPermutations(field1)
         output = ""
         for word in permutations:
-            output += self.converter.format_row(word, field2)
+            output += self.converter.formatRow(word, field2)
         return output
 
     def postProcess(self):
         output = super(ProtoCelticPDFScraper, self).postProcess()
-        processed = '"%s", "%s"\n' % self.converter.fields
+        try:
+            processed = '"%s", "%s"\n' % self.converter.fields
+        except:
+            import pdb;pdb.set_trace()
         splitters = [" / ", ", ", " // ", " < ", " > ", "; ", " >> ", " << "]
         twoFields = re.compile('"(.*)", "(.*)"')
         hasProcessed = False
