@@ -66,7 +66,7 @@ Version 0.2
 
 * Add support for authentication
 
-* Add the PIE word list from here: 
+* Add the PIE word list from here:
 
   - http://www.utexas.edu/cola/centers/lrc/ielex/PokornyMaster-X.html
 
