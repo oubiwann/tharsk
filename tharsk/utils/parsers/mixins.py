@@ -35,7 +35,6 @@ class BaseFormatter(object):
         self.outfp.write(line)
 
 
-
 class TabbedFormatter(BaseFormatter):
     """
     A custom convter for space separation of values.

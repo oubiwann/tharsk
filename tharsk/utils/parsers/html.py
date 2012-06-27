@@ -2,7 +2,6 @@
 from BeautifulSoup import BeautifulSoup
 from BeautifulSoup import BeautifulStoneSoup
 
-from tharsk import const
 from tharsk import utils
 from tharsk.utils import unicsv
 from tharsk.utils.parsers import mixins
@@ -80,4 +79,5 @@ class HTMLScraper(object):
             try:
                 self.converter.writer.writerow(row)
             except:
-                import pdb;pdb.set_trace()
+                import pdb
+                pdb.set_trace()

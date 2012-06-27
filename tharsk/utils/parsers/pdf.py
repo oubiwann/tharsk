@@ -296,7 +296,8 @@ class ProtoCelticPDFScraper(PDFScraper):
         try:
             processed = '"%s", "%s"\n' % self.converter.fields
         except:
-            import pdb;pdb.set_trace()
+            import pdb
+            pdb.set_trace()
         splitters = [" / ", ", ", " // ", " < ", " > ", "; ", " >> ", " << "]
         twoFields = re.compile('"(.*)", "(.*)"')
         hasProcessed = False
