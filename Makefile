@@ -85,8 +85,8 @@ stop-prod:
 
 proto-celtic-parse-wordlist:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlistScript; \
-	script = ParseProtoCelticWordlistScript();script.run()"| \
-	uniq > ./sources/pcl-eng.csv
+	script = ParseProtoCelticWordlistScript();script.run()"
+#uniq > ./sources/pcl-eng.csv
 
 proto-celtic-add-keywords:
 	@$(PYTHON) -c "from $(LIB).scripts import AddProtoCelticKeywordsScript; \
