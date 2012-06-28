@@ -37,19 +37,24 @@ class ParseProtoCelticWordlistScript(Script):
 class AddProtoCelticKeywordsScript(Script):
     """
     """
-    inFile = "./sources/pcl-eng.csv"
-    outFile = "./sources/pcl-eng-keywords.csv", "w"
+    inFilename = "./sources/pcl-eng.csv"
+    outFilename = "./sources/pcl-eng-keywords.csv"
 
     def run(self):
         super(AddProtoCelticKeywordsScript, self).run()
-        reader = unicsv.UnicodeReader(self.inFile)
-        fieldnames = reader.fieldnames + ["see-also", "keywords"]
-        writer = unicsv.UnicodeWriter(self.outFile, fieldnames)
+        reader = unicsv.UnicodeReader(self.inFilename)
+        fieldnames = reader.fieldnames + [
+            "see-also", "pcl-keywords", "eng-keywords"]
+        writer = unicsv.UnicodeWriter(self.outFilename, fieldnames)
         writer.writeheader()
         for row in reader:
-            row["keywords"] = ",".join(utils.getStems(row["eng"].split()))
             row["see-also"] = ""
+            row["pcl-keywords"] = ",".join(
+                utils.getPCLStems(row["pcl"].split()))
+            row["eng-keywords"] = ",".join(
+                utils.getStems(row["eng"].split()))
             writer.writerow(row)
+        print "Saved results to %s." % self.outFilename
 
 
 class ParseGaelicDictionaryHTMLScript(Script):
