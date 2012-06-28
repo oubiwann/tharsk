@@ -13,11 +13,11 @@ def getConnection():
     return d
 
 
-def getDatabase():
+def getDatabase(dbName="test"):
     """
     """
     def _cbGetDatabase(conn):
-        return getattr(conn, const.databaseName)
+        return getattr(conn, dbName)
 
     d = getConnection()
     d.addCallback(_cbGetDatabase)
