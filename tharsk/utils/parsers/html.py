@@ -3,6 +3,7 @@ from BeautifulSoup import BeautifulSoup
 from BeautifulSoup import BeautifulStoneSoup
 
 from tharsk import utils
+from tharsk.models import collection
 from tharsk.utils import unicsv
 from tharsk.utils.parsers import mixins
 
@@ -20,8 +21,7 @@ class HTMLScraper(object):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = (
-        "gla", "eng", "see-also", "gla-keywords", "eng-keywords")
+    converterClass.fields = collection.ScottishGaelicDictionaryV1.fields
 
     def __init__(self, inFilename, outFilename=""):
         self.inFilename = inFilename
