@@ -76,9 +76,7 @@ the command given below. However, beware:
 
   This will DELETE ALL YOUR DATA! All φarsk data will be dropped and recreated!
 
-You've been warned. Here's how you do it::
-
-  $ make init-db
+You've been warned. Here's how you do it: ``make init-db``
 
 
 Running the Server
