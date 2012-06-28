@@ -100,6 +100,10 @@ proto-celtic-export:
 	@$(PYTHON) -c "from $(LIB).scripts import ExportProtCelticDictionary; \
 	script = ExportProtCelticDictionary();script.run()"
 
+proto-celtic-alphabet:
+	@$(PYTHON) -c "from $(LIB).scripts import ListProtCelticAlphabet; \
+	script = ListProtCelticAlphabet();script.run()"
+
 gaelic-parse-dictionary:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionaryHTMLScript; \
 	script = ParseGaelicDictionaryHTMLScript();script.run()"

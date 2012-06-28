@@ -3,10 +3,8 @@ import sys
 from twisted.internet import reactor, threads
 from twisted.python import log
 
-import txmongo
-import txmongo.filter
-
 from tharsk import const, utils
+from tharsk.controllers import retrieve
 from tharsk.models import collection
 from tharsk.utils import unicsv
 from tharsk.utils.parsers import html, pdf
@@ -99,9 +97,9 @@ class ImportProtCelticDictionary(TwistedScript):
         model = collection.ProtoCelticDictionaryV1()
 
         def indexEntries(ids):
-            keyList = (txmongo.filter.ASCENDING("keywords") +
-                       txmongo.filter.ASCENDING("pcl"))
-            sortFields = txmongo.filter.sort(keyList)
+            keyList = (model.filter.ASCENDING("keywords") +
+                       model.filter.ASCENDING("pcl"))
+            sortFields = model.filter.sort(keyList)
             d = model.collection.create_index(sortFields)
             d.addErrback(self.logError)
             d.addCallback(self.logResult)
@@ -157,8 +155,7 @@ class ExportProtCelticDictionary(TwistedScript):
             A Twisted callback function.
             """
             fields = {"eng": 1, "pcl": 1, "_id": 0}
-            filter = txmongo.filter.sort(txmongo.filter.ASCENDING("eng"))
-            d = model.collection.find(fields=fields, filter=filter)
+            d = model.find(fields, sortField="eng")
             d.addErrback(self.logError)
             d.addCallback(logResults)
             return d
@@ -172,3 +169,23 @@ class ExportProtCelticDictionary(TwistedScript):
         d = self.doExport()
         d.addCallback(self.stop)
         super(ExportProtCelticDictionary, self).run()
+
+
+class ListProtCelticAlphabet(TwistedScript):
+    """
+    """
+    def getAlphabet(self):
+
+        def logResults(letters):
+            letters = "".join([x.encode("utf-8") for x in letters])
+            log.msg("Proto-Celtic alphabet: %s" % letters)
+
+        model = collection.ProtoCelticDictionaryV1()
+        d = retrieve.getAlphabet(model, "pcl")
+        d.addCallback(logResults)
+        return d
+
+    def run(self):
+        d = self.getAlphabet()
+        d.addCallback(self.stop)
+        super(ListProtCelticAlphabet, self).run()
