@@ -93,6 +93,7 @@ Version 0.1
 
   - https://github.com/yasound/double-metaphone
 
+* Replace getPCLStems with getUnicodeStems
 
 Version 0.2
 ===========
