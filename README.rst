@@ -36,6 +36,9 @@ additional libraries:
 
 * `BeautifulSoup`_
 
+These will be installed for you when you run ``make install-deps`` (see below
+for more info).
+
 
 Name
 ----
