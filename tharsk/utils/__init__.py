@@ -64,7 +64,7 @@ def getStems(wordList, skipWords=[], caseInsensitive=True):
     return [x for x in sorted(list(set(stems))) if x]
 
 
-def getPCLStems(wordList, skipWords=[], caseInsensitive=True):
+def getUnicodeStems(wordList, skipWords=[], caseInsensitive=True):
     """
     A dumb stemmer for Proto-Celtic words.
 

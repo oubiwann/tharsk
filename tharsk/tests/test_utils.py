@@ -26,19 +26,19 @@ class UtilsTestCase(unittest.TestCase):
                     ('a', 'b', 'c')]
         self.assertEqual(results, expected)
 
-    def test_getPCLStemsNoPunctuation(self):
+    def test_getUnicodeStemsNoPunctuation(self):
         wordList = "*(o)bb-nod".split()
-        results = utils.getPCLStems(wordList)
+        results = utils.getUnicodeStems(wordList)
         self.assertEqual(results, ['nod', 'obb', 'obb-nod'])
 
-    def test_getPCLStemsWithPunctuation(self):
+    def test_getUnicodeStemsWithPunctuation(self):
         wordList = "*(o)bb-nod-e/o".split()
-        results = utils.getPCLStems(wordList)
+        results = utils.getUnicodeStems(wordList)
         self.assertEqual(results, ['eo', 'nod', 'obb', 'obb-nod-eo'])
 
-    def test_getPCLStemsWithUnicode(self):
+    def test_getUnicodeStemsWithUnicode(self):
         wordList = "*(ande-)stād-(ī-tu-)".split()
-        results = [x.encode("utf-8") for x in utils.getPCLStems(wordList)]
+        results = [x.encode("utf-8") for x in utils.getUnicodeStems(wordList)]
         self.assertEqual(
             results,
             ['and', 'ande-stad-i-tu-', 'ande-stād-ī-tu-', 'i', 'stad', 'stād',

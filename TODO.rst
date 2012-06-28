@@ -95,6 +95,7 @@ Version 0.1
 
 * Replace getPCLStems with getUnicodeStems
 
+
 Version 0.2
 ===========
 

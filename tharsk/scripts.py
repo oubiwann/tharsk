@@ -46,7 +46,7 @@ class AddProtoCelticKeywordsScript(Script):
         for row in reader:
             row["see-also"] = ""
             row["pcl-keywords"] = ",".join(
-                utils.getPCLStems(row["pcl"].split()))
+                utils.getUnicodeStems(row["pcl"].split()))
             row["eng-keywords"] = ",".join(
                 utils.getStems(row["eng"].split()))
             writer.writerow(row)
