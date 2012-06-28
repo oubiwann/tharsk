@@ -7,10 +7,9 @@ import txmongo
 import txmongo.filter
 
 from tharsk import const, utils
-from tharsk.models import db
+from tharsk.models import collection
 from tharsk.utils import unicsv
-from tharsk.utils.parsers import html
-from tharsk.utils.parsers import pdf
+from tharsk.utils.parsers import html, pdf
 
 
 class Script(object):
@@ -43,8 +42,7 @@ class AddProtoCelticKeywordsScript(Script):
     def run(self):
         super(AddProtoCelticKeywordsScript, self).run()
         reader = unicsv.UnicodeReader(self.inFilename)
-        fieldnames = reader.fieldnames + [
-            "see-also", "pcl-keywords", "eng-keywords"]
+        fieldnames = collection.ProtoCelticDictionaryV1.fields
         writer = unicsv.UnicodeWriter(self.outFilename, fieldnames)
         writer.writeheader()
         for row in reader:
@@ -97,38 +95,40 @@ class ImportProtCelticDictionary(TwistedScript):
 
     def doImport(self):
 
-        def indexEntries(ids, collection):
+        # instantiate the collection model
+        model = collection.ProtoCelticDictionaryV1()
+
+        def indexEntries(ids):
             keyList = (txmongo.filter.ASCENDING("keywords") +
                        txmongo.filter.ASCENDING("pcl"))
             sortFields = txmongo.filter.sort(keyList)
-            d = collection.create_index(sortFields)
+            d = model.collection.create_index(sortFields)
             d.addErrback(self.logError)
             d.addCallback(self.logResult)
             return d
 
-        def insertData(csvReader, database):
-            collection = getattr(
-                database, const.databasePCLtoENGCollection)
+        def insertData(csvReader):
             data = []
             log.msg("Preparing to iterate the CSV file ...")
             for row in csvReader:
                 rowData = row
-                rowData["keywords"] = row["keywords"].split(",")
+                rowData["pcl-keywords"] = row["pcl-keywords"].split(",")
+                rowData["eng-keywords"] = row["eng-keywords"].split(",")
                 data.append(rowData)
             log.msg("Finished iterating the CSV file.")
-            d = collection.insert(data)
+            d = model.collection.insert(data)
             d.addErrback(self.logError)
-            d.addCallback(indexEntries, collection)
+            d.addCallback(indexEntries)
             return d
 
         def loadData(database):
             d = threads.deferToThread(
                 lambda: unicsv.UnicodeReader(self.csvFile))
-            d.addCallback(insertData, database)
+            d.addCallback(insertData)
             return d
 
         # get the database and load the data from a csv reader
-        d = db.getDatabase()
+        d = model.getDB()
         d.addCallback(loadData)
         d.addErrback(self.logError)
         return d
@@ -144,6 +144,8 @@ class ExportProtCelticDictionary(TwistedScript):
     """
     def doExport(self):
 
+        model = collection.ProtoCelticDictionaryV1()
+
         def logResults(docs):
             for doc in docs:
                 log.msg(
@@ -154,16 +156,14 @@ class ExportProtCelticDictionary(TwistedScript):
             """
             A Twisted callback function.
             """
-            collection = getattr(
-                database, const.databasePCLtoENGCollection)
             fields = {"eng": 1, "pcl": 1, "_id": 0}
             filter = txmongo.filter.sort(txmongo.filter.ASCENDING("eng"))
-            d = collection.find(fields=fields, filter=filter)
+            d = model.collection.find(fields=fields, filter=filter)
             d.addErrback(self.logError)
             d.addCallback(logResults)
             return d
 
-        d = db.getDatabase()
+        d = model.getDB()
         d.addCallback(query)
         d.addErrback(self.logError)
         return d
