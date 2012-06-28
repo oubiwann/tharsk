@@ -1,3 +1,5 @@
+import txmongo.filter
+
 from tharsk import const
 from tharsk.models import db
 
@@ -9,6 +11,8 @@ class CollectionModel(object):
     name = ""
     fields = tuple()
     _db = None
+    filter = txmongo.filter
+
 
     @property
     def db(self):
@@ -31,6 +35,16 @@ class CollectionModel(object):
         if not self._db:
             raise exceptions.DatabaseUndefined
         return getattr(self._db, self.name)
+
+    def getAscendingFilter(self, fields, sortField):
+        return self.filter.sort(self.filter.ASCENDING(sortField))
+
+    def find(self, fields, sortField="", order="asc", **kwargs):
+        if not kwargs.has_key("filter"):
+            if order == "asc":
+                kwargs["filter"] = self.getAscendingFilter(
+                    fields, sortField)
+        return self.collection.find(fields=fields, **kwargs)
 
 
 class ProtoCelticDictionaryV1(CollectionModel):
