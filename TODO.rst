@@ -79,6 +79,16 @@ Version 0.1
   - come up with an algorithm for determining rank based on number of search
     terms, number of matches, etc.
 
+  - consider how often the query terms appear in the document
+
+  - how long is the document? (ration of matches to length):w
+
+  - how close together the terms are in the document
+
+  - do these occur in the term itself? or just the definition?
+
+  - http://www.postgresql.org/docs/8.3/static/textsearch-controls.html#TEXTSEARCH-RANKING
+
 * Add soundex search support?
 
   - https://github.com/yasound/double-metaphone
