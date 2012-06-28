@@ -181,7 +181,7 @@ class ListProtCelticAlphabet(TwistedScript):
             log.msg("Proto-Celtic alphabet: %s" % letters)
 
         model = collection.ProtoCelticDictionaryV1()
-        d = retrieve.getAlphabet(model, "pcl")
+        d = retrieve.getAlphabet(model)
         d.addCallback(logResults)
         return d
 
