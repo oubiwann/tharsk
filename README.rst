@@ -71,6 +71,15 @@ Installation
 
 #. Enter the φarsk dir and install the app: ``cd tharsk && make install-deps``
 
+If you would like to re-create the database from sources, you can do that with
+the command given below. However, beware:
+
+  This will DELETE ALL YOUR DATA! All φarsk data will be dropped and recreated!
+
+You've been warned. Here's how you do it::
+
+  $ make init-db
+
 
 Running the Server
 ==================
