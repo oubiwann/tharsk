@@ -76,6 +76,7 @@ Version 0.2
 
   - update the search page
 
+* Add ranking capabilities to full text search
 
 Version 0.3
 ===========
