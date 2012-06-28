@@ -108,6 +108,12 @@ gaelic-parse-dictionary:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionaryHTMLScript; \
 	script = ParseGaelicDictionaryHTMLScript();script.run()"
 
+gaelic-import:
+	@$(PYTHON) -c "from $(LIB).scripts import ImportGaelicDictionary; \
+	script = ImportGaelicDictionary();script.run()"
+
+init-db: proto-celtic-import gaelic-import
+
 check:
 	@$(TRIAL) $(LIB)
 
