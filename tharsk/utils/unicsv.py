@@ -32,9 +32,15 @@ class UnicodeReader(object):
 
     def next(self):
         row = self.reader.next()
+        items = []
         try:
-            return dict(
-                [(key, unicode(val, "utf-8")) for key, val in row.items()])
+            for key, val in row.items():
+                if isinstance(val, list):
+                    val = [unicode(x, "utf-8") for x in val]
+                else:
+                    val = unicode(val, "utf-8")
+                items.append((key, val))
+            return dict(items)
         except Exception, err:
             print err
             import pdb
