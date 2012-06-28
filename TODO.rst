@@ -47,7 +47,7 @@ Version 0.1
   - fill table data via external (fake) data source (not hard-coded HTML)
 
 * Add a caveats page for explaining various Unicode substitutions made for
-  various unsupported dicritical marks
+  various unsupported diacritical marks
 
 * Convert the JS loads to a deferred to ease with page load times
 
@@ -67,6 +67,21 @@ Version 0.1
     form for displaying english-order word-lists
 
 * Create import script for MacBain's .csv file.
+
+* Add a command line tool for searching.
+
+  - is mapreduce going to be appropriate here?
+
+* Maybe add primitive ranking support?
+
+  - will need to query the appropriate keywords field, counting matches
+
+  - come up with an algorithm for determining rank based on number of search
+    terms, number of matches, etc.
+
+* Add soundex search support?
+
+  - https://github.com/yasound/double-metaphone
 
 
 Version 0.2
