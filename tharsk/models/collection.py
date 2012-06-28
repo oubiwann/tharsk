@@ -9,6 +9,7 @@ class CollectionModel(object):
     """
     dbName = "tharsk"
     name = ""
+    langCode = ""
     fields = tuple()
     _db = None
     filter = txmongo.filter
@@ -50,7 +51,8 @@ class CollectionModel(object):
 class ProtoCelticDictionaryV1(CollectionModel):
     """
     """
-    name = "%s_dictionary" % const.langMapper["Proto-Celtic"]
+    langCode = const.langMapper["Proto-Celtic"]
+    name = "%s_dictionary" % langCode
     fields = (
         const.langMapper["Proto-Celtic"],
         const.langMapper["English"],
@@ -63,7 +65,8 @@ class ProtoCelticDictionaryV1(CollectionModel):
 class ScottishGaelicDictionaryV1(CollectionModel):
     """
     """
-    name = "%s_dictionary" % const.langMapper["Scottish Gaelic"]
+    langCode = const.langMapper["Scottish Gaelic"]
+    name = "%s_dictionary" % langCode
     fields = (
         const.langMapper["Scottish Gaelic"],
         const.langMapper["English"],
@@ -71,3 +74,10 @@ class ScottishGaelicDictionaryV1(CollectionModel):
         "%s-keywords" % const.langMapper["Scottish Gaelic"],
         "%s-keywords" % const.langMapper["English"]
         )
+
+
+def dictionaryFactoryV1(identifier):
+    if ProtoCelticDictionaryV1.langCode in identifier:
+        return ProtoCelticDictionaryV1()
+    elif ScottishGaelicDictionaryV1.langCode in identifier:
+        return ScottishGaelicDictionaryV1()
