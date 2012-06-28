@@ -61,6 +61,14 @@ Version 0.1
 
   - it needs to be tested (searching for words via stemming)
 
+* Populate controllers.retrieve
+
+  - move code out of ExportProtCelticDictionary (script) and into a general
+    form for displaying english-order word-lists
+
+* Create import script for MacBain's .csv file.
+
+
 Version 0.2
 ===========
 
