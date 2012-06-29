@@ -14,7 +14,6 @@ class CollectionModel(object):
     _db = None
     filter = txmongo.filter
 
-
     @property
     def db(self):
         if not self._db:
@@ -22,7 +21,6 @@ class CollectionModel(object):
         return self._db
 
     def getDB(self):
-
         def setDatabase(database):
             self._db = database
             return database
