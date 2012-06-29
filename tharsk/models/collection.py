@@ -38,12 +38,23 @@ class CollectionModel(object):
     def getAscendingFilter(self, fields, sortField):
         return self.filter.sort(self.filter.ASCENDING(sortField))
 
-    def find(self, fields, sortField="", order="asc", **kwargs):
-        if not kwargs.has_key("filter"):
+    def find(self, fields={}, sortField="", order="asc", **kwargs):
+        if not kwargs.has_key("filter") and sortField:
             if order == "asc":
                 kwargs["filter"] = self.getAscendingFilter(
                     fields, sortField)
         return self.collection.find(fields=fields, **kwargs)
+
+    def text_search(self, sort="alpha", order="asc", *terms):
+        """
+        Search takes advantage of stemming. It stems the input terms and
+        matches those against the *_keywords_* indices.
+
+        "order" can be "asc" or "desc"
+
+        "sort" is "alpha" by default. The other acceped value is "rank" but
+        this is not yet implemented.
+        """
 
 
 class ProtoCelticDictionaryV1(CollectionModel):
