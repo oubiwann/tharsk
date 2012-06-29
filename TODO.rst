@@ -2,11 +2,8 @@
 TODO
 ~~~~
 
-
 Version 0.1
 ===========
-
-* Add a collection drop before the proto-celtic import
 
 * Add a teaser ("coming soon!") in the User drop-down (or comment it out)
 
