@@ -53,6 +53,12 @@ Version 0.1
 
 * Create import script for MacBain's .csv file.
 
+* Add a search method to the base CollectionModel
+
+  - stem search terms (inputs)
+
+  - query the *_keywords_* indices appropriately
+
 * Add a command line tool for searching.
 
   - is mapreduce going to be appropriate here?
