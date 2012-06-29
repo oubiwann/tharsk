@@ -6,18 +6,6 @@ TODO
 Version 0.1
 ===========
 
-* Create a custom stemmer for proto-celtic words
-
-  - remove * from search
-
-  - allow users to "th" instead of the "theta" character
-
-  - same for all other non-ASCII characters
-
-  - remove dashes
-
-  - allow substring searches
-
 * Add a collection drop before the proto-celtic import
 
 * Add a teaser ("coming soon!") in the User drop-down (or comment it out)
@@ -72,6 +60,27 @@ Version 0.1
 
   - is mapreduce going to be appropriate here?
 
+
+Version 0.2
+===========
+
+* Add support for authentication
+
+* Add the PIE word list from here:
+
+  - http://www.utexas.edu/cola/centers/lrc/ielex/PokornyMaster-X.html
+
+  - parse the HTML
+
+  - convert to .csv
+
+  - Create import script for the .csv file.
+
+  - update the dictionaries
+
+  - update the search page
+
+
 * Maybe add primitive ranking support?
 
   - will need to query the appropriate keywords field, counting matches
@@ -93,25 +102,6 @@ Version 0.1
 
   - https://github.com/yasound/double-metaphone
 
-* Replace getPCLStems with getUnicodeStems
-
-
-Version 0.2
-===========
-
-* Add support for authentication
-
-* Add the PIE word list from here:
-
-  - http://www.utexas.edu/cola/centers/lrc/ielex/PokornyMaster-X.html
-
-  - parse the HTML
-
-  - update the dictionaries
-
-  - update the search page
-
-* Add ranking capabilities to full text search
 
 Version 0.3
 ===========
@@ -122,10 +112,12 @@ Version 0.3
 
   - parse HTML (it's well-ordered)
 
+
 Version 0.4
 ===========
 
 * ?
+
 
 Version 0.5
 ===========
@@ -140,25 +132,30 @@ Version 0.5
 
   - list all the words in a basket
 
+
 Version 0.6
 ===========
 
 * ?
+
 
 Version 0.7
 ===========
 
 * ?
 
+
 Version 0.8
 ===========
 
 * ?
 
+
 Version 0.9
 ===========
 
 * ?
+
 
 Version 1.0
 ===========
