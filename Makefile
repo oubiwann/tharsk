@@ -1,7 +1,7 @@
 LIB = tharsk
 BIN_DIR = /usr/local/bin
 BASE_DIR = $(shell pwd)
-USER = $(shell $$USER)
+USER = $$USER
 DEPS_DIR = $(BASE_DIR)/deps
 BOOTSTRAP_DIR = $(DEPS_DIR)/bootstrap
 KLEIN_DIR = $(DEPS_DIR)/klein
@@ -112,6 +112,14 @@ gaelic-parse-dictionary:
 gaelic-import:
 	@$(PYTHON) -c "from $(LIB).scripts import ImportGaelicDictionary; \
 	script = ImportGaelicDictionary();script.run()"
+
+pie-parse-wordlist:
+	@$(PYTHON) -c "from $(LIB).scripts import ParsePIEWordlist; \
+	script = ParsePIEWordlist();script.run()"
+
+pie-import:
+	@$(PYTHON) -c "from $(LIB).scripts import ImportPIEWordlist; \
+	script = ImportPIEWordlist();script.run()"
 
 start-mongo:
 	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
