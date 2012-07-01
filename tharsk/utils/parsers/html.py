@@ -21,7 +21,7 @@ class HTMLScraper(object):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = collection.ScottishGaelicDictionaryV1.fields
+    converterClass.fields = tuple()
 
     def __init__(self, inFilename, outFilename=""):
         self.inFilename = inFilename
@@ -62,10 +62,44 @@ class HTMLScraper(object):
             goodStems.append(stem)
         return ", ".join([x for x in goodStems if x])
 
+
+class GaelicEtymologicalDictionaryHTMLScraper(HTMLScraper):
+    """
+    """
+    converterClass = CSVConverter
+    converterClass.fields = collection.ScottishGaelicDictionaryV1.fields
+
     def run(self, doPrint=False):
         self.converter.writer.writeheader()
         termsTags = self.getParsedHTML().findAll("dt")
         for dt in termsTags:
+            dd = dt.findNextSibling()
+            self.stripTags(dd)
+            gla = self.fixUp(dt.getText(" "))
+            eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
+            row = {self.converter.fields[0]: gla,
+                   self.converter.fields[1]: eng,
+                   self.converter.fields[2]: "",
+                   self.converter.fields[3]: self.getStems(gla),
+                   self.converter.fields[4]: self.getStems(eng),
+                   }
+            try:
+                self.converter.writer.writerow(row)
+            except:
+                import pdb
+                pdb.set_trace()
+
+
+class ProtoIndoEuropeanWordListHTMLScraper(HTMLScraper):
+    """
+    """
+    converterClass = CSVConverter
+    converterClass.fields = collection.ScottishGaelicDictionaryV1.fields
+
+    def run(self, doPrint=False):
+        self.converter.writer.writeheader()
+        rowTags = self.getParsedHTML().findAll("tr")
+        for tr in rowTags:
             dd = dt.findNextSibling()
             self.stripTags(dd)
             gla = self.fixUp(dt.getText(" "))

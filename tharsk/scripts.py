@@ -61,7 +61,22 @@ class ParseGaelicDictionaryHTMLScript(Script):
 
     def run(self):
         super(ParseGaelicDictionaryHTMLScript, self).run()
-        scraper = html.HTMLScraper(self.inFilename, self.outFilename)
+        scraper = html.GaelicEtymologicalDictionaryHTMLScraper(
+            self.inFilename, self.outFilename)
+        scraper.run()
+        print "Saved results to %s." % self.outFilename
+
+
+class ParsePIEWordListHTMLScript(Script):
+    """
+    """
+    inFilename = "./sources/pokorny-pie.html"
+    outFilename = "./sources/pokorny-pie.csv"
+
+    def run(self):
+        super(ParsePIEWordListHTMLScript, self).run()
+        scraper = html.ProtoIndoEuropeanWordListHTMLScraper(
+            self.inFilename, self.outFilename)
         scraper.run()
         print "Saved results to %s." % self.outFilename
 
