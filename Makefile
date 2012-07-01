@@ -1,6 +1,7 @@
 LIB = tharsk
 BIN_DIR = /usr/local/bin
 BASE_DIR = $(shell pwd)
+USER = $(shell $$USER)
 DEPS_DIR = $(BASE_DIR)/deps
 BOOTSTRAP_DIR = $(DEPS_DIR)/bootstrap
 KLEIN_DIR = $(DEPS_DIR)/klein
@@ -111,6 +112,11 @@ gaelic-parse-dictionary:
 gaelic-import:
 	@$(PYTHON) -c "from $(LIB).scripts import ImportGaelicDictionary; \
 	script = ImportGaelicDictionary();script.run()"
+
+start-mongo:
+	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
+	sudo mkdir -p /usr/local/var/mongodb
+	sudo chown $(USER) /usr/local/var/mongodb
 
 init-db: proto-celtic-import gaelic-import
 
