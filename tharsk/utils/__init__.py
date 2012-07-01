@@ -85,3 +85,21 @@ def getPermutations(iterable):
         results = itertools.combinations(iterable, i + 1)
         permutations.extend(results)
     return permutations
+
+
+def getWordPermutations(field1):
+    """
+    """
+    # Split by opening and closing parens. Note that the word parts at the
+    # odd indices will always be the mandatory word parts, and the even
+    # indices will mark the optional word parts.
+    parts = re.split(r"[()]", field1)
+    # non-optional word parts
+    requireds = [(n, x) for n, x in enumerate(parts) if not n % 2]
+    permutations = ["".join([x for n, x in requireds])]
+    optionals = [(n, x) for n, x in enumerate(parts) if n % 2]
+    for optionalArrangement in getPermutations(optionals):
+        newParts = sorted(list(requireds) + list(optionalArrangement))
+        newWord = "".join([x for n, x in newParts])
+        permutations.append(newWord)
+    return permutations

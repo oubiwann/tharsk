@@ -54,3 +54,15 @@ class UtilsTestCase(unittest.TestCase):
         text = "ÓçóûàäèìðôüÁáéñõùâæêîòöúþ"
         results = utils.normalizeUnicode(text)
         self.assertEquals(results, "OcouaaeithouAaenouaaeeioouth")
+
+    def test_getPermutationsInitial(self):
+        word = "*(s)tano"
+        result = utils.getWordPermutations(word)
+        expected = ['*tano', '*stano']
+        self.assertEqual(result, expected)
+
+    def test_getPermutationsInitialUnicode(self):
+        word = "*(s)tanā-"
+        result = utils.getWordPermutations(word)
+        expected = ['*tan\xc4\x81-', '*stan\xc4\x81-']
+        self.assertEqual(result, expected)

@@ -267,25 +267,8 @@ class ProtoCelticPDFScraper(PDFScraper):
         output += self.splitPermutations(field1b, field2)
         return output
 
-    def getWordPermutations(self, field1):
-        """
-        """
-        # Split by opening and closing parens. Note that the word parts at the
-        # odd indices will always be the mandatory word parts, and the even
-        # indices will mark the optional word parts.
-        parts = re.split(r"[()]", field1)
-        # non-optional word parts
-        requireds = [(n, x) for n, x in enumerate(parts) if not n % 2]
-        permutations = ["".join([x for n, x in requireds])]
-        optionals = [(n, x) for n, x in enumerate(parts) if n % 2]
-        for optionalArrangement in utils.getPermutations(optionals):
-            newParts = sorted(list(requireds) + list(optionalArrangement))
-            newWord = "".join([x for n, x in newParts])
-            permutations.append(newWord)
-        return permutations
-
     def splitPermutations(self, field1, field2):
-        permutations = self.getWordPermutations(field1)
+        permutations = utils.getWordPermutations(field1)
         output = ""
         for word in permutations:
             output += self.converter.formatRow(word, field2)

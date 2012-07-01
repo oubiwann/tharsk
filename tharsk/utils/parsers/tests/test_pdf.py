@@ -46,22 +46,3 @@ class CSVConverterTestCase(unittest.TestCase):
         result = self.converter.formatRow("tharsk", "to ask")
         expected = '"tharsk"; "to ask"\n'
         self.assertEqual(result, expected)
-
-
-class WordPermutationsTestCase(unittest.TestCase):
-    """
-    """
-    def setUp(self):
-        self.scraper = pdf.ProtoCelticPDFScraper(None)
-
-    def test_getPermutationsInitial(self):
-        word = "*(s)tano"
-        result = self.scraper.getWordPermutations(word)
-        expected = ['*tano', '*stano']
-        self.assertEqual(result, expected)
-
-    def test_getPermutationsInitialUnicode(self):
-        word = "*(s)tanā-"
-        result = self.scraper.getWordPermutations(word)
-        expected = ['*tan\xc4\x81-', '*stan\xc4\x81-']
-        self.assertEqual(result, expected)
