@@ -85,8 +85,24 @@ class ScottishGaelicDictionaryV1(CollectionModel):
         )
 
 
+class ProtoIndoEuropeanDictionaryV1(CollectionModel):
+    """
+    """
+    landCode = const.langMapper["Proto-Indo-European"]
+    name = "%s_dictionary" % langCode
+    fields = (
+        const.langMapper["Proto-Indo-European"],
+        const.langMapper["English"],
+        "see-also",
+        "%s-keywords" % const.langMapper["Proto-Indo-European"],
+        "%s-keywords" % const.langMapper["English"]
+        )
+
+
 def dictionaryFactoryV1(identifier):
     if ProtoCelticDictionaryV1.langCode in identifier:
         return ProtoCelticDictionaryV1()
+    elif ScottishGaelicDictionaryV1.langCode in identifier:
+        return ScottishGaelicDictionaryV1()
     elif ScottishGaelicDictionaryV1.langCode in identifier:
         return ScottishGaelicDictionaryV1()
