@@ -44,10 +44,12 @@ class HTMLScraper(object):
             if subTag.name in bannedTags:
                 subTag.hidden = True
 
-    def getParsedHTML(self):
+    def getParsedHTML(self, convertEntities=True):
+        kwargs = {}
+        if convertEntities:
+            kwargs.update({"convertEntities": BeautifulStoneSoup.ALL_ENTITIES})
         return BeautifulSoup(
-            open(self.inFilename).read(),
-            convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
+            open(self.inFilename).read(), **kwargs)
 
     @staticmethod
     def getStems(html):
@@ -89,7 +91,7 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
                 pdb.set_trace()
 
 
-class ProtoIndoEuropeanWordListScraper(HTMLScraper):
+class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
     """
     """
     converterClass = CSVConverter
@@ -97,20 +99,29 @@ class ProtoIndoEuropeanWordListScraper(HTMLScraper):
 
     def run(self, doPrint=False):
         self.converter.writer.writeheader()
-        rowTags = self.getParsedHTML().findAll("tr")
+        rowTags = self.getParsedHTML(convertEntities=False).findAll("tr")
+        print len(rowTags)
         for tr in rowTags:
-            dd = dt.findNextSibling()
-            self.stripTags(dd)
-            gla = self.fixUp(dt.getText(" "))
-            eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
-            row = {self.converter.fields[0]: gla,
-                   self.converter.fields[1]: eng,
-                   self.converter.fields[2]: "",
-                   self.converter.fields[3]: self.getStems(gla),
-                   self.converter.fields[4]: self.getStems(eng),
-                   }
-            try:
-                self.converter.writer.writerow(row)
-            except:
-                import pdb
-                pdb.set_trace()
+            cellTags = tr.findAll("td")
+            # if page tag, skip
+            # if term tag, 
+            # if see also tag, 
+            # if definition tag, 
+            for td in cellTags:
+                pass
+
+            #dd = dt.findNextSibling()
+            #self.stripTags(dd)
+            #gla = self.fixUp(dt.getText(" "))
+            #eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
+            #row = {self.converter.fields[0]: gla,
+            #       self.converter.fields[1]: eng,
+            #       self.converter.fields[2]: "",
+            #       self.converter.fields[3]: self.getStems(gla),
+            #       self.converter.fields[4]: self.getStems(eng),
+            #       }
+            #try:
+            #    self.converter.writer.writerow(row)
+            #except:
+            #    import pdb
+            #    pdb.set_trace()
