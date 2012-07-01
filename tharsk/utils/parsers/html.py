@@ -21,7 +21,6 @@ class HTMLScraper(object):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = tuple()
 
     def __init__(self, inFilename, outFilename=""):
         self.inFilename = inFilename
@@ -63,7 +62,7 @@ class HTMLScraper(object):
         return ", ".join([x for x in goodStems if x])
 
 
-class GaelicEtymologicalDictionaryHTMLScraper(HTMLScraper):
+class GaelicEtymologicalDictionaryScraper(HTMLScraper):
     """
     """
     converterClass = CSVConverter
@@ -90,11 +89,11 @@ class GaelicEtymologicalDictionaryHTMLScraper(HTMLScraper):
                 pdb.set_trace()
 
 
-class ProtoIndoEuropeanWordListHTMLScraper(HTMLScraper):
+class ProtoIndoEuropeanWordListScraper(HTMLScraper):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = collection.ScottishGaelicDictionaryV1.fields
+    converterClass.fields = collection.ProtoIndoEuropeanDictionaryV1.fields
 
     def run(self, doPrint=False):
         self.converter.writer.writeheader()

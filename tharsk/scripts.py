@@ -17,7 +17,7 @@ class Script(object):
         pass
 
 
-class ParseProtoCelticWordlistScript(Script):
+class ParseProtoCelticWordlist(Script):
     """
     """
     filename = "./sources/ProtoCelticEnglishWordlist.pdf"
@@ -31,7 +31,7 @@ class ParseProtoCelticWordlistScript(Script):
         print scraper.run()
 
 
-class AddProtoCelticKeywordsScript(Script):
+class AddProtoCelticKeywords(Script):
     """
     """
     inFilename = "./sources/pcl-eng.csv"
@@ -53,7 +53,7 @@ class AddProtoCelticKeywordsScript(Script):
         print "Saved results to %s." % self.outFilename
 
 
-class ParseGaelicDictionaryHTMLScript(Script):
+class ParseGaelicDictionary(Script):
     """
     """
     inFilename = "./sources/macbains.html"
@@ -61,21 +61,21 @@ class ParseGaelicDictionaryHTMLScript(Script):
 
     def run(self):
         super(ParseGaelicDictionaryHTMLScript, self).run()
-        scraper = html.GaelicEtymologicalDictionaryHTMLScraper(
+        scraper = html.GaelicEtymologicalDictionaryScraper(
             self.inFilename, self.outFilename)
         scraper.run()
         print "Saved results to %s." % self.outFilename
 
 
-class ParsePIEWordListHTMLScript(Script):
+class ParsePIEWordlist(Script):
     """
     """
     inFilename = "./sources/pokorny-pie.html"
     outFilename = "./sources/pokorny-pie.csv"
 
     def run(self):
-        super(ParsePIEWordListHTMLScript, self).run()
-        scraper = html.ProtoIndoEuropeanWordListHTMLScraper(
+        super(ParsePIEWordlistHTMLScript, self).run()
+        scraper = html.ProtoIndoEuropeanWordlistScraper(
             self.inFilename, self.outFilename)
         scraper.run()
         print "Saved results to %s." % self.outFilename

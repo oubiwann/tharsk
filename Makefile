@@ -85,13 +85,13 @@ stop-prod:
 	sudo kill `sudo cat twistd.pid`
 
 proto-celtic-parse-wordlist:
-	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlistScript; \
-	script = ParseProtoCelticWordlistScript();script.run()"
+	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlist; \
+	script = ParseProtoCelticWordlist();script.run()"
 #uniq > ./sources/pcl-eng.csv
 
 proto-celtic-add-keywords:
 	@$(PYTHON) -c "from $(LIB).scripts import AddProtoCelticKeywordsScript; \
-	script = AddProtoCelticKeywordsScript();script.run()"
+	script = AddProtoCelticKeywords();script.run()"
 
 proto-celtic-import:
 	@$(PYTHON) -c "from $(LIB).scripts import ImportProtCelticDictionary; \
@@ -106,8 +106,8 @@ proto-celtic-alphabet:
 	script = ListProtCelticAlphabet();script.run()"
 
 gaelic-parse-dictionary:
-	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionaryHTMLScript; \
-	script = ParseGaelicDictionaryHTMLScript();script.run()"
+	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionary; \
+	script = ParseGaelicDictionary();script.run()"
 
 gaelic-import:
 	@$(PYTHON) -c "from $(LIB).scripts import ImportGaelicDictionary; \
