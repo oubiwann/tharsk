@@ -37,7 +37,7 @@ class HTMLScraper(object):
         return text
 
     @staticmethod
-    def stripTags(tag, bannedTags=["dd", "a"]):
+    def stripTags(tag, bannedTags=["dd", "td", "a"]):
         if tag.name in bannedTags:
             tag.hidden = True
         for subTag in tag.findAll():
@@ -102,13 +102,21 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
         rowTags = self.getParsedHTML(convertEntities=False).findAll("tr")
         print len(rowTags)
         for tr in rowTags:
-            cellTags = tr.findAll("td")
-            # if page tag, skip
-            # if term tag, 
-            # if see also tag, 
-            # if definition tag, 
-            for td in cellTags:
-                pass
+            # skip the first cell, which is page numbers from Pokorny's PIE
+            # dictionary
+
+            cells = tr.findAll("td")
+            if len(cells) == 0:
+                continue
+            terms, seeAlsos, definition = cells[1:]
+            #for term in terms.findAll("span"):
+            #    print "term:", term.text.encode("utf-8")
+
+            #for seeAlso in seeAlsos.findAll("span"):
+            #    print "see also:", seeAlso.text.encode("utf-8")
+
+            #self.stripTags(definition)
+            #print "definition:", definition
 
             #dd = dt.findNextSibling()
             #self.stripTags(dd)
