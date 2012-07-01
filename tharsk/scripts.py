@@ -60,7 +60,7 @@ class ParseGaelicDictionary(Script):
     outFilename = "./sources/macbains.csv"
 
     def run(self):
-        super(ParseGaelicDictionaryHTMLScript, self).run()
+        super(ParseGaelicDictionary, self).run()
         scraper = html.GaelicEtymologicalDictionaryScraper(
             self.inFilename, self.outFilename)
         scraper.run()
@@ -74,11 +74,11 @@ class ParsePIEWordlist(Script):
     outFilename = "./sources/pokorny-pie.csv"
 
     def run(self):
-        super(ParsePIEWordlistHTMLScript, self).run()
+        super(ParsePIEWordlist, self).run()
         scraper = html.ProtoIndoEuropeanWordlistScraper(
             self.inFilename, self.outFilename)
         scraper.run()
-        print "Saved results to %s." % self.outFilename
+        #print "Saved results to %s." % self.outFilename
 
 
 class TwistedScript(Script):
