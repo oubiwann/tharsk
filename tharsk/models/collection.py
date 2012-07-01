@@ -88,7 +88,7 @@ class ScottishGaelicDictionaryV1(CollectionModel):
 class ProtoIndoEuropeanDictionaryV1(CollectionModel):
     """
     """
-    landCode = const.langMapper["Proto-Indo-European"]
+    langCode = const.langMapper["Proto-Indo-European"]
     name = "%s_dictionary" % langCode
     fields = (
         const.langMapper["Proto-Indo-European"],
