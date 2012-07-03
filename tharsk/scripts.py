@@ -78,7 +78,7 @@ class ParsePIEWordlist(Script):
         scraper = html.ProtoIndoEuropeanWordlistScraper(
             self.inFilename, self.outFilename)
         scraper.run()
-        #print "Saved results to %s." % self.outFilename
+        print "Saved results to %s." % self.outFilename
 
 
 class TwistedScript(Script):

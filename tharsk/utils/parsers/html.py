@@ -52,7 +52,7 @@ class HTMLScraper(object):
             open(self.inFilename).read(), **kwargs)
 
     @staticmethod
-    def getStems(html):
+    def getStems(html, asString=False):
         parsed = BeautifulSoup(html)
         text = parsed.getText(" ")
         goodStems = []
@@ -61,7 +61,10 @@ class HTMLScraper(object):
             if len(stem) == 1:
                 continue
             goodStems.append(stem)
-        return ", ".join([x for x in goodStems if x])
+        result = [x for x in goodStems if x]
+        if asString:
+            result = ",".join(result)
+        return result
 
 
 class GaelicEtymologicalDictionaryScraper(HTMLScraper):
@@ -81,8 +84,8 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
             row = {self.converter.fields[0]: gla,
                    self.converter.fields[1]: eng,
                    self.converter.fields[2]: "",
-                   self.converter.fields[3]: self.getStems(gla),
-                   self.converter.fields[4]: self.getStems(eng),
+                   self.converter.fields[3]: self.getStems(gla, asString=True),
+                   self.converter.fields[4]: self.getStems(eng, asString=True),
                    }
             try:
                 self.converter.writer.writerow(row)
@@ -102,34 +105,35 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
         rowTags = self.getParsedHTML(convertEntities=False).findAll("tr")
         print len(rowTags)
         for tr in rowTags:
-            # skip the first cell, which is page numbers from Pokorny's PIE
-            # dictionary
-
             cells = tr.findAll("td")
             if len(cells) == 0:
                 continue
+            # skip the first cell, which is page numbers from Pokorny's PIE
+            # dictionary
             terms, seeAlsos, definition = cells[1:]
-            #for term in terms.findAll("span"):
-            #    print "term:", term.text.encode("utf-8")
-
-            #for seeAlso in seeAlsos.findAll("span"):
-            #    print "see also:", seeAlso.text.encode("utf-8")
-
-            #self.stripTags(definition)
-            #print "definition:", definition
-
-            #dd = dt.findNextSibling()
-            #self.stripTags(dd)
-            #gla = self.fixUp(dt.getText(" "))
-            #eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
-            #row = {self.converter.fields[0]: gla,
-            #       self.converter.fields[1]: eng,
-            #       self.converter.fields[2]: "",
-            #       self.converter.fields[3]: self.getStems(gla),
-            #       self.converter.fields[4]: self.getStems(eng),
-            #       }
-            #try:
-            #    self.converter.writer.writerow(row)
-            #except:
-            #    import pdb
-            #    pdb.set_trace()
+            pieTerms = []
+            for term in terms.findAll("span"):
+                pieTerms.append(term.text)
+                pieTerms.extend(utils.getWordPermutations(term.text))
+            # we're going to add these to the keywords too
+            pieSeeAlsos = [x.text for x in seeAlsos.findAll("span")]
+            # clean up definitions text
+            self.stripTags(definition)
+            # put it all together
+            for pie in pieTerms:
+                pieStems = self.getStems(pie)
+                [pieStems.extend(self.getStems(x)) for x in pieSeeAlsos]
+                eng = unicode(self.fixUp(str(definition)).decode("utf-8"))
+                row = {
+                    self.converter.fields[0]: pie,
+                    self.converter.fields[1]: eng,
+                    self.converter.fields[2]: ", ".join(pieSeeAlsos),
+                    self.converter.fields[3]: ", ".join(pieStems),
+                    self.converter.fields[4]: self.getStems(
+                        eng, asString=True),
+                    }
+                try:
+                    self.converter.writer.writerow(row)
+                except Exception, err:
+                    import pdb
+                    pdb.set_trace()
