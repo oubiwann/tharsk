@@ -2,6 +2,15 @@
 TODO
 ~~~~
 
+Tasks
+=====
+
+* Change the getStems calls in the PIE scraper to getUnicodeStems
+
+  - check to make sure that the Proto-Celtic and gaelic dictionary scrapers are
+    doing the right thing with that, too
+
+
 Version 0.1
 ===========
 
