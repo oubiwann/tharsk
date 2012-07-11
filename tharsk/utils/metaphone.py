@@ -1,29 +1,18 @@
 #!python
 #coding= utf-8
-# This script implements the Double Metaphone algorithm (c) 1998, 1999 by Lawrence Philips
-# it was translated to Python from the C source written by Kevin Atkinson (http://aspell.net/metaphone/)
-# By Andrew Collins - January 12, 2007 who claims no rights to this work
+# This script implements the Double Metaphone algorithm (c) 1998, 1999 by
+# Lawrence Philips it was translated to Python from the C source written by
+# Kevin Atkinson (http://aspell.net/metaphone/) By Andrew Collins - January 12,
+# 2007 who claims no rights to this work
 # http://atomboy.isa-geek.com/plone/Members/acoil/programing/double-metaphone
-# Tested with Python 2.4.3
-# Updated Feb 14, 2007 - Found a typo in the 'gh' section
-# Updated Dec 17, 2007 - Bugs fixed in 'S', 'Z', and 'J' sections. Thanks Chris Leong!
-# Updated 2009-03-05 by Matthew Somerville - Various bug fixes against the reference C++ implementation.
-
-"""
->>> dm(u'aubrey')
-('APR', '')
->>> dm(u'richard')
-('RXRT', 'RKRT')
->>> dm(u'katherine') == dm(u'catherine')
-True
->>> dm(u'Bartoš'), dm(u'Bartosz'), dm(u'Bartosch'), dm(u'Bartos')
-(('PRT', ''), ('PRTS', 'PRTX'), ('PRTX', ''), ('PRTS', ''))
-"""
-
+# Tested with Python 2.4.3 Updated Feb 14, 2007 - Found a typo in the 'gh'
+# section Updated Dec 17, 2007 - Bugs fixed in 'S', 'Z', and 'J' sections.
+# Thanks Chris Leong!  Updated 2009-03-05 by Matthew Somerville - Various bug
+# fixes against the reference C++ implementation.
 import unicodedata
 
 
-def dm(st):
+def doublemetaphone(st):
     """dm(string) -> (string, string or '')
     returns the double metaphone codes for given string - always a tuple
     there are no checks done on the input string, but it should be a single word or name."""
