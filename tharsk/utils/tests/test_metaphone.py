@@ -7,11 +7,11 @@ from tharsk.utils.metaphone import doublemetaphone
 class MetaphoneTestCase(unittest.TestCase):
     """
     """
-    def test_single_result(self):
+    def test_singleResult(self):
         result = doublemetaphone(u"aubrey")
         self.assertEquals(result, ('APR', ''))
 
-    def test_double_result(self):
+    def test_doubleResult(self):
         result = doublemetaphone(u"richard")
         self.assertEquals(result, ('RXRT', 'RKRT'))
 
@@ -23,7 +23,7 @@ class MetaphoneTestCase(unittest.TestCase):
             doublemetaphone(u"katherine"),
             doublemetaphone(u"catherine"))
 
-    def test_similar_names(self):
+    def test_similarNames(self):
         result = doublemetaphone("Bartoš")
         self.assertEquals(result, ('PRTS', ''))
         result = doublemetaphone(u"Bartosz")
@@ -33,11 +33,11 @@ class MetaphoneTestCase(unittest.TestCase):
         result = doublemetaphone(u"Bartos")
         self.assertEquals(result, ('PRTS', ''))
 
-    def test_with_punctuation(self):
+    def test_withPunctuation(self):
         result = doublemetaphone("*(o)bb-nod-e/o")
         self.assertEquals(result, ('PNT', ''))
 
-    def test_non_english_unicode(self):
+    def test_nonEnglishUnicode(self):
         result = doublemetaphone("*(ande-)stād-(ī-tu-)")
         self.assertEquals(result, ('NTSTTT', ''))
 
