@@ -3,6 +3,7 @@ import unittest
 
 from tharsk.utils.metaphone import doublemetaphone
 
+
 class MetaphoneTestCase(unittest.TestCase):
     """
     """
@@ -31,3 +32,14 @@ class MetaphoneTestCase(unittest.TestCase):
         self.assertEquals(result, ('PRTX', ''))
         result = doublemetaphone(u"Bartos")
         self.assertEquals(result, ('PRTS', ''))
+
+    def test_with_punctuation(self):
+        result = doublemetaphone("*(o)bb-nod-e/o")
+        self.assertEquals(result, ('PNT', ''))
+
+    def test_non_english_unicode(self):
+        result = doublemetaphone("*(ande-)stād-(ī-tu-)")
+        self.assertEquals(result, ('NTSTTT', ''))
+
+
+        
