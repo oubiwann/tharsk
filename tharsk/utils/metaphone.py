@@ -1,29 +1,67 @@
-#!python
-#coding= utf-8
+# -*- coding: utf-8 -*-
+"""
+The original Metaphone algorithm was published in 1990 as an improvement over
+the Soundex algorithm. Like Soundex, it was limited to English-only use. The
+Metaphone algorithm does not produce phonetic representations of an input word
+or name; rather, the output is an intentionally approximate phonetic
+representation. The approximate encoding is necessary to account for the way
+speakers vary their pronunciations and misspell or otherwise vary words and
+names they are trying to spell. 
+
+The Double Metaphone phonetic encoding algorithm is the second generation of
+the Metaphone algorithm. Its implementation was described in the June 2000
+issue of C/C++ Users Journal. It makes a number of fundamental design
+improvements over the original Metaphone algorithm.
+
+It is called "Double" because it can return both a primary and a secondary code
+for a string; this accounts for some ambiguous cases as well as for multiple
+variants of surnames with common ancestry. For example, encoding the name
+"Smith" yields a primary code of SM0 and a secondary code of XMT, while the
+name "Schmidt" yields a primary code of XMT and a secondary code of SMT--both
+have XMT in common.
+
+Double Metaphone tries to account for myriad irregularities in English of
+Slavic, Germanic, Celtic, Greek, French, Italian, Spanish, Chinese, and other
+origin. Thus it uses a much more complex ruleset for coding than its
+predecessor; for example, it tests for approximately 100 different contexts of
+the use of the letter C alone.
+"""
 # This script implements the Double Metaphone algorithm (c) 1998, 1999 by
 # Lawrence Philips it was translated to Python from the C source written by
 # Kevin Atkinson (http://aspell.net/metaphone/) By Andrew Collins - January 12,
 # 2007 who claims no rights to this work
 # http://atomboy.isa-geek.com/plone/Members/acoil/programing/double-metaphone
-# Tested with Python 2.4.3 Updated Feb 14, 2007 - Found a typo in the 'gh'
-# section Updated Dec 17, 2007 - Bugs fixed in 'S', 'Z', and 'J' sections.
-# Thanks Chris Leong!  Updated 2009-03-05 by Matthew Somerville - Various bug
-# fixes against the reference C++ implementation.
+# Updated 2007-02-14 - Found a typo in the 'gh' section
+# Updated 2007-12-17 - Bugs fixed in 'S', 'Z', and 'J' sections (Chris Leong)
+# Updated 2009-03-05 - Various bug fixes against the reference C++
+#                      implementation (Matthew Somerville)
+# Updated 2012-07-11 - Fixed long lines, added more docs, changed function name
+#                      (Duncan McGreggor)
 import unicodedata
 
 
 def doublemetaphone(st):
-    """dm(string) -> (string, string or '')
-    returns the double metaphone codes for given string - always a tuple
-    there are no checks done on the input string, but it should be a single word or name."""
+    """
+    dm(string) -> (string, string or '') returns the double metaphone codes
+    for given string - always a tuple there are no checks done on the input
+    string, but it should be a single word or name.
+    """
     vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
     st = st.decode('utf-8', 'ignore')
-    st = ''.join((c for c in unicodedata.normalize('NFD', st) if unicodedata.category(c) != 'Mn'))
-    st = st.upper()  # st is short for string. I usually prefer descriptive over short, but this var is used a lot!
-    is_slavo_germanic = (st.find('W') > -1 or st.find('K') > -1 or st.find('CZ') > -1 or st.find('WITZ') > -1)
+    st = ''.join((c for c in unicodedata.normalize('NFD', st)
+                  if unicodedata.category(c) != 'Mn'))
+    # st is short for string. I usually prefer descriptive over short, but this
+    # var is used a lot!
+    st = st.upper()
+    is_slavo_germanic = (
+        st.find('W') > -1
+        or st.find('K') > -1
+        or st.find('CZ') > -1
+        or st.find('WITZ') > -1)
     length = len(st)
     first = 2
-    st = '-' * first + st + '------'  # so we can index beyond the begining and end of the input string
+    # so we can index beyond the begining and end of the input string
+    st = '-' * first + st + '------'
     last = first + length - 1
     pos = first     # pos is short for position
     pri = sec = ''  # primary and secondary metaphone codes
@@ -38,11 +76,14 @@ def doublemetaphone(st):
     while pos <= last:
         #print str(pos) + '\t' + st[pos]
         ch = st[pos]  # ch is short for character
-        # nxt (short for next characters in metaphone code) is set to  a tuple of the next characters in
-        # the primary and secondary codes and how many characters to move forward in the string.
-        # the secondary code letter is given only when it is different than the primary.
-        # This is just a trick to make the code easier to write and read.
-        nxt = (None, 1)  # default action is to add nothing and move to next char
+        # nxt (short for next characters in metaphone code) is set to  a tuple
+        # of the next characters in the primary and secondary codes and how
+        # many characters to move forward in the string.  the secondary code
+        # letter is given only when it is different than the primary.  This is
+        # just a trick to make the code easier to write and read.
+
+        # default action is to add nothing and move to next char
+        nxt = (None, 1)
         if ch in vowels:
             nxt = (None, 1)
             if pos == first:  # all init vowels now map to 'A'
