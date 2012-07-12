@@ -1,7 +1,7 @@
 LIB = tharsk
 BIN_DIR = /usr/local/bin
 BASE_DIR = $(shell pwd)
-USER = $$USER
+USER = $(shell echo $$USER)
 DEPS_DIR = $(BASE_DIR)/deps
 BOOTSTRAP_DIR = $(DEPS_DIR)/bootstrap
 KLEIN_DIR = $(DEPS_DIR)/klein
@@ -94,16 +94,16 @@ proto-celtic-add-keywords:
 	script = AddProtoCelticKeywords();script.run()"
 
 proto-celtic-import:
-	@$(PYTHON) -c "from $(LIB).scripts import ImportProtCelticDictionary; \
-	script = ImportProtCelticDictionary();script.run()"
+	@$(PYTHON) -c "from $(LIB).scripts import ImportProtoCelticDictionary; \
+	script = ImportProtoCelticDictionary();script.run()"
 
 proto-celtic-export:
-	@$(PYTHON) -c "from $(LIB).scripts import ExportProtCelticDictionary; \
-	script = ExportProtCelticDictionary();script.run()"
+	@$(PYTHON) -c "from $(LIB).scripts import ExportProt0CelticDictionary; \
+	script = ExportProtoCelticDictionary();script.run()"
 
 proto-celtic-alphabet:
-	@$(PYTHON) -c "from $(LIB).scripts import ListProtCelticAlphabet; \
-	script = ListProtCelticAlphabet();script.run()"
+	@$(PYTHON) -c "from $(LIB).scripts import ListProtoCelticAlphabet; \
+	script = ListProtoCelticAlphabet();script.run()"
 
 gaelic-parse-dictionary:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionary; \
@@ -122,9 +122,10 @@ pie-import:
 	script = ImportPIEWordlist();script.run()"
 
 start-mongo:
-	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
+	echo "User: $(USER)"
 	sudo mkdir -p /usr/local/var/mongodb
 	sudo chown $(USER) /usr/local/var/mongodb
+	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
 
 init-db: proto-celtic-import gaelic-import
 
