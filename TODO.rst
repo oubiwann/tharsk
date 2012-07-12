@@ -70,6 +70,31 @@ Version 0.1
 
 * Add a command line tool for searching.
 
+  - convert service to use Twisted plugin
+
+  - enable subcommands for twisted plugin
+
+  - add subcommand to support listing supported dictionaries with command line
+    tool
+
+  - add subcommand to support generating word lists with command line tool
+
+    . this should include a word-list exporter/displayer
+
+    . do one for each supported dictionary, sorted by each language
+
+    . consolidate logic for wordlist exporters
+
+  - add subcommand to support generating word lists with command line tool
+
+    . add a search subcommand with options for ordering field
+
+    . fields to include in results
+
+    . what language to search
+
+    . whether to use the metaphone index
+
   - is mapreduce going to be appropriate here?
 
 
