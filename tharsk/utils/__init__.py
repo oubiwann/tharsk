@@ -120,8 +120,7 @@ class TharskLogObserver(log.FileLogObserver):
         fmtDict = {'system': eventDict['system'], 'text': text.replace("\n", "\n\t")}
         msgStr = log._safeFormat("[%(system)s] %(text)s\n", fmtDict)
         data = timeStr + " " + msgStr
-        import pdb;pdb.set_trace()
-        util.untilConcludes(self.write, data.decode("utf-8"))
+        util.untilConcludes(self.write, data)
         util.untilConcludes(self.flush)  # Hoorj!
 
 
