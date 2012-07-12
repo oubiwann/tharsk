@@ -110,7 +110,7 @@ class TwistedScript(Script):
         log.msg(failure)
 
 
-class ImportProtCelticDictionary(TwistedScript):
+class ImportProtoCelticDictionary(TwistedScript):
     """
     """
     csvFile = "./sources/pcl-eng-keywords.csv"
@@ -187,7 +187,7 @@ class ImportProtCelticDictionary(TwistedScript):
     def run(self):
         d = self.doImport()
         d.addCallback(self.stop)
-        super(ImportProtCelticDictionary, self).run()
+        super(ImportProtoCelticDictionary, self).run()
 
 
 class ExportProtoCelticDictionary(TwistedScript):
@@ -204,20 +204,23 @@ class ExportProtoCelticDictionary(TwistedScript):
             if len(docs) == 0:
                 log.msg("Query returned no documents.")
             for doc in docs:
+                print doc
                 if self.sortLang == "eng":
-                    msg = u"English: %s; Proto-Celtic: " % (
-                        doc["eng"], doc["pcl"].encode("utf-8"))
+                    pcl = doc["pcl"].encode("utf-8")
+                    msg = (u"English: " + doc["eng"]  + u"; Proto-Celtic: " +
+                           pcl)
                 else:
-                    msg = u"Proto-Celtic: %s; English: " % (
+                    msg = u"Proto-Celtic: %s; English: %s\n" % (
                         doc["pcl"].encode("utf-8"), doc["eng"])
-                log.msg(msg)
+                #log.msg(msg)
+                print msg
 
         def query(database):
             """
             A Twisted callback function.
             """
             fields = {"eng": 1, "pcl": 1, "_id": 0}
-            d = model.find(fields, sortField=self.sortField)
+            d = model.find(fields, sortField=self.sortLang)
             d.addErrback(self.logError)
             d.addCallback(logResults)
             return d
@@ -230,10 +233,10 @@ class ExportProtoCelticDictionary(TwistedScript):
     def run(self):
         d = self.doExport()
         d.addCallback(self.stop)
-        super(ExportProtCelticDictionary, self).run()
+        super(ExportProtoCelticDictionary, self).run()
 
 
-class ListProtCelticAlphabet(TwistedScript):
+class ListProtoCelticAlphabet(TwistedScript):
     """
     """
     def getAlphabet(self):
@@ -250,4 +253,23 @@ class ListProtCelticAlphabet(TwistedScript):
     def run(self):
         d = self.getAlphabet()
         d.addCallback(self.stop)
-        super(ListProtCelticAlphabet, self).run()
+        super(ListProtoCelticAlphabet, self).run()
+
+
+class Wordlist(TwistedScript):
+    """
+    """
+    def __init__(self, options):
+        self.options = options
+
+    def run(self):
+        dictionary = self.options.subOptions["dictionary"]
+        sortLang, other = dictionary.split("-")
+        # if we ever support non-English translations, this logic will have to
+        # change...
+        [mainLang] = [x for x in [sortLang, other] if x != "eng"]
+        if mainLang == "pie":
+            exporter = ExportProtoIndoEuropeanDictionary(sortLang)
+        elif mainLang == "pcl":
+            exporter = ExportProtoCelticDictionary(sortLang)
+        exporter.run()

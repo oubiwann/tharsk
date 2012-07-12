@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import itertools
 import re
+import sys
 import unicodedata
+
+from twisted.python import log, util
 
 from stemming.porter2 import stem
 
@@ -103,3 +106,28 @@ def getWordPermutations(field1):
         newWord = "".join([x for n, x in newParts])
         permutations.append(newWord)
     return permutations
+
+
+class TharskLogObserver(log.FileLogObserver):
+    """
+    """
+    def emit(self, eventDict):
+        text = log.textFromEventDict(eventDict)
+        if text is None:
+            return
+
+        timeStr = self.formatTime(eventDict['time'])
+        fmtDict = {'system': eventDict['system'], 'text': text.replace("\n", "\n\t")}
+        msgStr = log._safeFormat("[%(system)s] %(text)s\n", fmtDict)
+        data = timeStr + " " + msgStr
+        import pdb;pdb.set_trace()
+        util.untilConcludes(self.write, data.decode("utf-8"))
+        util.untilConcludes(self.flush)  # Hoorj!
+
+
+def logger():
+    """
+    To be used with twistd in the following manner::
+        $ twistd -n --logger tharsk.utils.logger tharsk
+    """
+    return TharskLogObserver(sys.stdout).emit

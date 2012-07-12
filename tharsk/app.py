@@ -1,12 +1,17 @@
 import sys
 
 from twisted.application import service, internet
-from twisted.python import usage
+from twisted.python import log, usage
 from twisted.web import server
 
 from klein import resource
 
-from tharsk import meta, routes
+from tharsk import meta, routes, scripts, utils
+
+
+logObserver = utils.TharskLogObserver(sys.stdout)
+
+
 
 
 class SubCommandOptions(usage.Options):
@@ -21,11 +26,8 @@ class WordlistOptions(SubCommandOptions):
     """
     """
     optParameters = [
-        ["dictionary", "d", "pie",
+        ["dictionary", "d", "pie-eng",
          "the 3-letter language code for the dictionary"],
-        ["language", "l", "eng",
-         ("the 3-letter language code; use this language for dispaying the "
-          "terms.")],
          ]
 
 
@@ -33,19 +35,28 @@ class Options(usage.Options):
     """
     """
     optParameters = [
-        ["webport", "p", 9999, "The port to listen for HTTP requests"],
+        ["webport", "p", 8080, "The port to listen for HTTP requests"],
         ]
 
     subCommands = [
         ["wordlist", None, WordlistOptions, "display a wordlist"],
+        ["dictionaries", None, SubCommandOptions, "Stop the server"],
         ["stop", None, SubCommandOptions, "Stop the server"],
         ]
 
     def parseOptions(self, options):
         usage.Options.parseOptions(self, options)
         # check options
+        if not self.subCommand:
+            return
+        log.startLoggingWithObserver(logObserver.emit)
         if self.subCommand == "wordlist":
-            scripts.Wordlist()
+            script = scripts.Wordlist(self)
+            script.run()
+            sys.exit(0)
+        elif self.subCommand == "dictionaries":
+            script = scripts.ListDictionaries()
+            script.run()
             sys.exit(0)
         elif self.subCommand == "stop":
             scripts.StopDaemon()
@@ -58,6 +69,7 @@ def makeService(options):
     port = int(options["webport"])
     site = server.Site(resource())
     application = service.Application(meta.description)
+    application.setComponent(log.ILogObserver, logObserver.emit)
     webService = internet.TCPServer(port, site)
     webService.setServiceParent(application)
     return webService
