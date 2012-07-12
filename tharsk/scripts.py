@@ -107,7 +107,7 @@ class TwistedScript(Script):
         log.msg(result)
 
     def logError(self, failure):
-        log.msg(failure)
+        log.msg("ERROR: ", failure)
 
 
 class ImportProtoCelticDictionary(TwistedScript):
@@ -195,6 +195,7 @@ class ExportProtoCelticDictionary(TwistedScript):
     """
     def __init__(self, sortLang="eng"):
         self.sortLang = sortLang
+        self.errors = ""
 
     def doExport(self):
 
@@ -204,16 +205,13 @@ class ExportProtoCelticDictionary(TwistedScript):
             if len(docs) == 0:
                 log.msg("Query returned no documents.")
             for doc in docs:
-                print doc
+                pcl = doc["pcl"].encode("utf-8")
+                eng = doc["eng"].encode("utf-8")
                 if self.sortLang == "eng":
-                    pcl = doc["pcl"].encode("utf-8")
-                    msg = (u"English: " + doc["eng"]  + u"; Proto-Celtic: " +
-                           pcl)
+                    msg = "English: " + eng + "; Proto-Celtic: " + pcl
                 else:
-                    msg = u"Proto-Celtic: %s; English: %s\n" % (
-                        doc["pcl"].encode("utf-8"), doc["eng"])
-                #log.msg(msg)
-                print msg
+                    msg = "Proto-Celtic: " + pcl + "; English: " + eng
+                log.msg(msg)
 
         def query(database):
             """
