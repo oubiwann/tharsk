@@ -2,4 +2,5 @@
 *.py[co]
 twistd.*
 _trial_temp
+dropin.cache
 deps
