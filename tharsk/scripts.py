@@ -17,6 +17,15 @@ class Script(object):
         pass
 
 
+class ListDictionaries(Script):
+    """
+    """
+    def run(self):
+        print ""
+        for dictionary in const.dictionaries:
+            print "\t%s" % dictionary
+
+
 class ParseProtoCelticWordlist(Script):
     """
     """
@@ -181,9 +190,12 @@ class ImportProtCelticDictionary(TwistedScript):
         super(ImportProtCelticDictionary, self).run()
 
 
-class ExportProtCelticDictionary(TwistedScript):
+class ExportProtoCelticDictionary(TwistedScript):
     """
     """
+    def __init__(self, sortLang="eng"):
+        self.sortLang = sortLang
+
     def doExport(self):
 
         model = collection.ProtoCelticDictionaryV1()
@@ -192,16 +204,20 @@ class ExportProtCelticDictionary(TwistedScript):
             if len(docs) == 0:
                 log.msg("Query returned no documents.")
             for doc in docs:
-                log.msg(
-                    u"English: %s; Proto-Celtic: " % doc["eng"],
-                    doc["pcl"].encode("utf-8"))
+                if self.sortLang == "eng":
+                    msg = u"English: %s; Proto-Celtic: " % (
+                        doc["eng"], doc["pcl"].encode("utf-8"))
+                else:
+                    msg = u"Proto-Celtic: %s; English: " % (
+                        doc["pcl"].encode("utf-8"), doc["eng"])
+                log.msg(msg)
 
         def query(database):
             """
             A Twisted callback function.
             """
             fields = {"eng": 1, "pcl": 1, "_id": 0}
-            d = model.find(fields, sortField="eng")
+            d = model.find(fields, sortField=self.sortField)
             d.addErrback(self.logError)
             d.addCallback(logResults)
             return d
