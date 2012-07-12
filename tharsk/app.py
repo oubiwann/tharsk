@@ -1,10 +1,12 @@
 import sys
 
+from twisted.application import service, internet
 from twisted.python import usage
+from twisted.web import server
 
 from klein import resource
 
-from tharsk import routes
+from tharsk import meta, routes
 
 
 class SubCommandOptions(usage.Options):
@@ -45,6 +47,17 @@ class Options(usage.Options):
         if self.subCommand == "wordlist":
             scripts.Wordlist()
             sys.exit(0)
-        elif self.subCommand == const.STOP:
+        elif self.subCommand == "stop":
             scripts.StopDaemon()
             sys.exit(0)
+
+
+def makeService(options):
+    """
+    """
+    port = int(options["webport"])
+    site = server.Site(resource())
+    application = service.Application(meta.description)
+    webService = internet.TCPServer(port, site)
+    webService.setServiceParent(application)
+    return webService
