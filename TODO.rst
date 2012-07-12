@@ -70,9 +70,7 @@ Version 0.1
 
 * Add a command line tool for searching.
 
-  - convert service to use Twisted plugin
-
-  - enable subcommands for twisted plugin
+  - add stop subcommand
 
   - add subcommand to support listing supported dictionaries with command line
     tool
