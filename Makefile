@@ -98,7 +98,7 @@ proto-celtic-import:
 	script = ImportProtoCelticDictionary();script.run()"
 
 proto-celtic-export:
-	@$(PYTHON) -c "from $(LIB).scripts import ExportProt0CelticDictionary; \
+	@$(PYTHON) -c "from $(LIB).scripts import ExportProtoCelticDictionary; \
 	script = ExportProtoCelticDictionary();script.run()"
 
 proto-celtic-alphabet:
