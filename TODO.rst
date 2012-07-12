@@ -72,9 +72,6 @@ Version 0.1
 
   - add stop subcommand
 
-  - add subcommand to support listing supported dictionaries with command line
-    tool
-
   - add subcommand to support generating word lists with command line tool
 
     . this should include a word-list exporter/displayer
@@ -83,15 +80,15 @@ Version 0.1
 
     . consolidate logic for wordlist exporters
 
-  - add subcommand to support generating word lists with command line tool
+  - add subcommand to support searching dictionaries
 
     . add a search subcommand with options for ordering field
 
-    . fields to include in results
+    . for fields to include in results
 
-    . what language to search
+    . for what language to search
 
-    . whether to use the metaphone index
+    . whether or not to use the metaphone index
 
   - is mapreduce going to be appropriate here?
 
