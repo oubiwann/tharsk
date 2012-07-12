@@ -78,13 +78,24 @@ the command given below. However, beware:
 
 You've been warned. Here's how you do it: ``make init-db``
 
-
 Running the Server
 ==================
 
 #. In the φarsk dir, run the tharsk server: ``make start-prod``
 
 #. When you're done, shut it down: ``make stop-prod``
+
+
+Using the Command Line Tool
+===========================
+
+In order to effectively use the tharsk command-line Twisted plugin, you will
+need to set your Python encoding to UTF-8. Here's how::
+
+  $ export PYTHONIOENCODING=utf-8
+
+If you do not set this variable, you will see numerous encoding/decoding errors
+when you try to execute scripts that display UTF-8 output to the terminal.
 
 
 .. Links
