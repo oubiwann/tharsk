@@ -9,11 +9,6 @@ from klein import resource
 from tharsk import meta, routes, scripts, utils
 
 
-logObserver = utils.TharskLogObserver(sys.stdout)
-
-
-
-
 class SubCommandOptions(usage.Options):
     """
     A base class for subcommand options.
@@ -49,7 +44,6 @@ class Options(usage.Options):
         # check options
         if not self.subCommand:
             return
-        log.startLoggingWithObserver(logObserver.emit)
         if self.subCommand == "wordlist":
             script = scripts.Wordlist(self)
             script.run()
@@ -69,7 +63,6 @@ def makeService(options):
     port = int(options["webport"])
     site = server.Site(resource())
     application = service.Application(meta.description)
-    application.setComponent(log.ILogObserver, logObserver.emit)
     webService = internet.TCPServer(port, site)
     webService.setServiceParent(application)
     return webService
