@@ -34,9 +34,12 @@ class Options(usage.Options):
         ]
 
     subCommands = [
-        ["wordlist", None, WordlistOptions, "display a wordlist"],
-        ["dictionaries", None, SubCommandOptions, "Stop the server"],
-        ["stop", None, SubCommandOptions, "Stop the server"],
+        ["wordlist", None, WordlistOptions,
+         "display a wordlist"],
+        ["dictionaries", None, SubCommandOptions,
+         "list the supported dictionaries"],
+        ["stop", None, SubCommandOptions,
+         "Stop the server"],
         ]
 
     def parseOptions(self, options):
