@@ -68,9 +68,7 @@ Version 0.1
 
   - query the *_keywords_* indices appropriately
 
-* Add a command line tool for searching.
-
-  - add stop subcommand
+* Add a command line tool
 
   - add subcommand to support generating word lists with command line tool
 
