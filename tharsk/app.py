@@ -22,7 +22,8 @@ class WordlistOptions(SubCommandOptions):
     """
     optParameters = [
         ["dictionary", "d", "pie-eng",
-         "the 3-letter language code for the dictionary"],
+         ("the hyphenated language codes for the dictionary; ordering is done "
+          "by the first language code")],
          ]
 
 
