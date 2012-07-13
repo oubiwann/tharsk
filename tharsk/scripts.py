@@ -1,9 +1,11 @@
+import os
+import subprocess
 import sys
 
 from twisted.internet import defer, reactor, threads
 from twisted.python import log
 
-from tharsk import const, utils
+from tharsk import const, meta, utils
 from tharsk.controllers import retrieve
 from tharsk.models import collection
 from tharsk.utils import unicsv
@@ -15,6 +17,21 @@ class Script(object):
     """
     def run(self):
         pass
+
+
+class StopDaemon(Script):
+    """ 
+    """
+    def run(self):
+        pidFile = "twistd.pid"
+        print "Stopping %s services ..." % meta.libraryName
+        if not os.path.exists(pidFile):
+            print "Could not find the server's PID file ..."
+            print "Aborting."
+        else:
+            pid = open(pidFile).read()
+            subprocess.call(["kill", pid])
+            print "Stopped."
 
 
 class ListDictionaries(Script):
