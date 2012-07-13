@@ -229,6 +229,10 @@ class ExportProtoCelticDictionary(TwistedScript):
                 else:
                     msg = "Proto-Celtic: " + pcl + "; English: " + eng
                 log.msg(msg)
+            msg = ("Wordlist results ordered by "
+                   "%s" % const.langCodeMapper[self.sortLang])
+            log.msg(msg)
+            log.msg("Total records found: %s" % len(docs))
 
         def query(database):
             """
