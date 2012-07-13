@@ -76,13 +76,13 @@ css:
 run-dev: css
 	-pyflakes $(LIB)
 	-pep8 $(LIB)
-	$(TWISTD) -n web --class=$(LIB).app.resource
+	$(TWISTD) -n tharsk
 
 start-prod:
-	sudo $(TWISTD) web --port 80 --class=$(LIB).app.resource
+	$(TWISTD) tharsk
 
 stop-prod:
-	sudo kill `sudo cat twistd.pid`
+	$(PYTHON) -c "from $(LIB) import scripts;scripts.StopDaemon().run()"
 
 proto-celtic-parse-wordlist:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlist; \
