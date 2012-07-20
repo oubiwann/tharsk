@@ -96,8 +96,12 @@ def doublemetaphone(st):
                 nxt = ('P', 1)
         elif ch == 'C':
             # various germanic
-            if pos > first + 1 and st[pos - 2] not in vowels and st[pos - 1:pos + 2] == 'ACH' and \
-               st[pos + 2] not in ['I'] and (st[pos + 2] not in ['E'] or st[pos - 2:pos + 4] in ['BACHER', 'MACHER']):
+            if (pos > first + 1
+                and st[pos - 2] not in vowels
+                and st[pos - 1:pos + 2] == 'ACH'
+                and st[pos + 2] not in ['I']
+                and (st[pos + 2] not in ['E']
+                or st[pos - 2:pos + 4] in ['BACHER', 'MACHER'])):
                 nxt = ('K', 2)
             # special case 'CAESAR'
             elif pos == first and st[first:first + 6] == 'CAESAR':
@@ -108,15 +112,21 @@ def doublemetaphone(st):
                 # find 'michael'
                 if pos > first and st[pos:pos + 4] == 'CHAE':
                     nxt = ('K', 'X', 2)
-                elif pos == first and (st[pos + 1:pos + 6] in ['HARAC', 'HARIS'] or \
-                   st[pos + 1:pos + 4] in ["HOR", "HYM", "HIA", "HEM"]) and st[first:first + 5] != 'CHORE':
+                elif (pos == first
+                      and (st[pos + 1:pos + 6] in ['HARAC', 'HARIS']
+                      or st[pos + 1:pos + 4] in ["HOR", "HYM", "HIA", "HEM"])
+                      and st[first:first + 5] != 'CHORE'):
                     nxt = ('K', 2)
-                #germanic, greek, or otherwise 'ch' for 'kh' sound
-                elif st[first:first + 4] in ['VAN ', 'VON '] or st[first:first + 3] == 'SCH' \
-                   or st[pos - 2:pos + 4] in ["ORCHES", "ARCHIT", "ORCHID"] \
-                   or st[pos + 2] in ['T', 'S'] \
-                   or ((st[pos - 1] in ["A", "O", "U", "E"] or pos == first) \
-                   and st[pos + 2] in ["L", "R", "N", "M", "B", "H", "F", "V", "W"]):
+                # germanic, greek, or otherwise 'ch' for 'kh' sound
+                elif (
+                    st[first:first + 4] in ['VAN ', 'VON ']
+                    or st[first:first + 3] == 'SCH'
+                    or st[pos - 2:pos + 4] in ["ORCHES", "ARCHIT", "ORCHID"]
+                    or st[pos + 2] in ['T', 'S']
+                    or (
+                        (st[pos - 1] in ["A", "O", "U", "E"] or pos == first)
+                        and (st[pos + 2] in [
+                            "L", "R", "N", "M", "B", "H", "F", "V", "W"]))):
                     nxt = ('K', 2)
                 else:
                     if pos > first:
