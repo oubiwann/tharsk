@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import itertools
 import re
-import sys
 import unicodedata
-
-from twisted.python import log, util
 
 from stemming.porter2 import stem
 

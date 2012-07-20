@@ -6,7 +6,7 @@ Metaphone algorithm does not produce phonetic representations of an input word
 or name; rather, the output is an intentionally approximate phonetic
 representation. The approximate encoding is necessary to account for the way
 speakers vary their pronunciations and misspell or otherwise vary words and
-names they are trying to spell. 
+names they are trying to spell.
 
 The Double Metaphone phonetic encoding algorithm is the second generation of
 the Metaphone algorithm. Its implementation was described in the June 2000
@@ -226,7 +226,7 @@ def doublemetaphone(st):
             elif st[pos + 1:pos + 3] == 'LI' and not is_slavo_germanic:
                 nxt = ('KL', 'L', 2)
             # -ges-,-gep-,-gel-, -gie- at beginning
-            elif pos == first and (st[pos + 1] == 'Y' \
+            elif pos == first and (st[pos + 1] == 'Y'
                or st[pos + 1:pos + 3] in ["ES", "EP", "EB", "EL", "EY", "IB", "IL", "IN", "IE", "EI", "ER"]):
                 nxt = ('K', 'J', 2)
             # -ger-,  -gy-
@@ -292,7 +292,7 @@ def doublemetaphone(st):
             if st[pos + 1] == 'L':
                 # spanish e.g. 'cabrillo', 'gallegos'
                 if (pos == (last - 2) and st[pos - 1:pos + 3] in ["ILLO", "ILLA", "ALLE"]) \
-                   or ((st[last - 1:last + 1] in ["AS", "OS"] or st[last] in ["A", "O"]) \
+                   or ((st[last - 1:last + 1] in ["AS", "OS"] or st[last] in ["A", "O"])
                    and st[pos - 1:pos + 3] == 'ALLE'):
                     nxt = ('L', ' ', 2)
                 else:
@@ -300,7 +300,7 @@ def doublemetaphone(st):
             else:
                 nxt = ('L', 1)
         elif ch == 'M':
-            if (st[pos + 1:pos + 4] == 'UMB' \
+            if (st[pos + 1:pos + 4] == 'UMB'
                and (pos + 1 == last or st[pos + 2:pos + 4] == 'ER')) \
                or st[pos + 1] == 'M':
                 nxt = ('M', 2)
@@ -435,7 +435,7 @@ def doublemetaphone(st):
         elif ch == 'X':
             # french e.g. breaux
             nxt = (None, )
-            if not(pos == last and (st[pos - 3:pos] in ["IAU", "EAU"] \
+            if not(pos == last and (st[pos - 3:pos] in ["IAU", "EAU"]
                or st[pos - 2:pos] in ['AU', 'OU'])):
                 nxt = ('KS', )
             if st[pos + 1] in ['C', 'X']:

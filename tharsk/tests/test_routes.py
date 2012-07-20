@@ -32,7 +32,8 @@ class RoutesTestCase(unittest.TestCase):
         self.assertEqual(routes.about(None).__class__.__name__, "AboutPage")
 
     def test_contact(self):
-        self.assertEqual(routes.contact(None).__class__.__name__, "ContactPage")
+        self.assertEqual(
+            routes.contact(None).__class__.__name__, "ContactPage")
 
     def test_assets(self):
         self.assertEqual(routes.assets(None).__class__.__name__, "File")

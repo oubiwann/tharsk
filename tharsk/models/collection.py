@@ -1,6 +1,6 @@
 import txmongo.filter
 
-from tharsk import const
+from tharsk import const, exceptions
 from tharsk.models import db
 
 
@@ -39,7 +39,7 @@ class CollectionModel(object):
         return self.filter.sort(self.filter.ASCENDING(sortField))
 
     def find(self, fields={}, sortField="", order="asc", **kwargs):
-        if not kwargs.has_key("filter") and sortField:
+        if "filter" not in kwargs and sortField:
             if order == "asc":
                 kwargs["filter"] = self.getAscendingFilter(
                     fields, sortField)

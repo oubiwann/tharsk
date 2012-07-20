@@ -20,7 +20,7 @@ class Script(object):
 
 
 class StopDaemon(Script):
-    """ 
+    """
     """
     def run(self):
         pidFile = "twistd.pid"

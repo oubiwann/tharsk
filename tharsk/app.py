@@ -1,12 +1,12 @@
 import sys
 
 from twisted.application import service, internet
-from twisted.python import log, usage
+from twisted.python import usage
 from twisted.web import server
 
 from klein import resource
 
-from tharsk import meta, routes, scripts, utils
+from tharsk import meta, routes, scripts
 
 
 class SubCommandOptions(usage.Options):

@@ -2,8 +2,6 @@ from twisted.python import log
 
 import txmongo
 
-from tharsk import const
-
 
 def getConnection():
     """

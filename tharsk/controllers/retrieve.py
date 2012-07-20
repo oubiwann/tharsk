@@ -1,7 +1,5 @@
 from twisted.python import log
 
-from tharsk.models import collection
-
 
 def getAlphabet(model):
     """
