@@ -89,7 +89,7 @@ def doublemetaphone(st):
             if pos == first:  # all init vowels now map to 'A'
                 nxt = ('A', 1)
         elif ch == 'B':
-            #"-mb", e.g", "dumb", already skipped over... see 'M' below
+            # "-mb", e.g., "dumb", already skipped over... see 'M' below
             if st[pos + 1] == 'B':
                 nxt = ('P', 2)
             else:
@@ -501,10 +501,6 @@ def doublemetaphone(st):
                 nxt = nxt + (2, )
             else:
                 nxt = nxt + (1, )
-        # ----------------------------------
-        # --- end checking letters------
-        # ----------------------------------
-        #print str(nxt)
         if len(nxt) == 2:
             if nxt[0]:
                 pri += nxt[0]
@@ -520,3 +516,7 @@ def doublemetaphone(st):
         return (pri, '')
     else:
         return (pri, sec)
+
+
+# for backwards compatibility
+dm = doublemetaphone
