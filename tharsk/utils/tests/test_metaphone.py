@@ -85,6 +85,10 @@ class MetaphoneTestCase(unittest.TestCase):
         result = doublemetaphone("Wewski")
         self.assertEquals(result, ("ASK", "FFSK"))
 
+    def test_variousChinese(self):
+        result = doublemetaphone("zhao")
+        self.assertEquals(result, ("J", ""))
+
     def test_DutchOrigin(self):
         result = doublemetaphone("school")
         self.assertEquals(result, ("SKL", ""))
