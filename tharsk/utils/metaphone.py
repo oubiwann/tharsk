@@ -271,30 +271,40 @@ def doublemetaphone(st):
                 nxt = ('K', 1)
         elif ch == 'H':
             # only keep if first & before vowel or btw. 2 vowels
-            if (pos == first or st[pos - 1] in vowels) and st[pos + 1] in vowels:
+            if (
+                (pos == first or st[pos - 1] in vowels)
+                and st[pos + 1] in vowels):
                 nxt = ('H', 2)
-            else:  # (also takes care of 'HH')
+            # (also takes care of 'HH')
+            else:
                 nxt = (None, 1)
         elif ch == 'J':
             # obvious spanish, 'jose', 'san jacinto'
-            if st[pos:pos + 4] == 'JOSE' or st[first:first + 4] == 'SAN ':
-                if (pos == first and st[pos + 4] == ' ') or st[first:first + 4] == 'SAN ':
+            if (
+                st[pos:pos + 4] == 'JOSE'
+                or st[first:first + 4] == 'SAN '):
+                if (
+                    (pos == first and st[pos + 4] == ' ')
+                    or st[first:first + 4] == 'SAN '):
                     nxt = ('H', )
                 else:
                     nxt = ('J', 'H')
+            # Yankelovich/Jankelowicz
             elif pos == first and st[pos:pos + 4] != 'JOSE':
-                nxt = ('J', 'A')  # Yankelovich/Jankelowicz
+                nxt = ('J', 'A')
             else:
                 # spanish pron. of e.g. 'bajador'
-                if st[pos - 1] in vowels and not is_slavo_germanic \
-                   and st[pos + 1] in ['A', 'O']:
+                if (st[pos - 1] in vowels
+                    and not is_slavo_germanic
+                    and st[pos + 1] in ['A', 'O']):
                     nxt = ('J', 'H')
                 else:
                     if pos == last:
                         nxt = ('J', ' ')
                     else:
-                        if st[pos + 1] not in ["L", "T", "K", "S", "N", "M", "B", "Z"] \
-                           and st[pos - 1] not in ["S", "K", "L"]:
+                        if (st[pos + 1] not in ["L", "T", "K", "S", "N", "M",
+                                                "B", "Z"]
+                            and st[pos - 1] not in ["S", "K", "L"]):
                             nxt = ('J', )
                         else:
                             nxt = (None, )
@@ -310,9 +320,11 @@ def doublemetaphone(st):
         elif ch == 'L':
             if st[pos + 1] == 'L':
                 # spanish e.g. 'cabrillo', 'gallegos'
-                if (pos == (last - 2) and st[pos - 1:pos + 3] in ["ILLO", "ILLA", "ALLE"]) \
-                   or ((st[last - 1:last + 1] in ["AS", "OS"] or st[last] in ["A", "O"])
-                   and st[pos - 1:pos + 3] == 'ALLE'):
+                if ((pos == (last - 2)
+                     and st[pos - 1:pos + 3] in ["ILLO", "ILLA", "ALLE"])
+                    or ((st[last - 1:last + 1] in ["AS", "OS"]
+                         or st[last] in ["A", "O"])
+                        and st[pos - 1:pos + 3] == 'ALLE')):
                     nxt = ('L', ' ', 2)
                 else:
                     nxt = ('L', 2)
@@ -330,12 +342,14 @@ def doublemetaphone(st):
                 nxt = ('N', 2)
             else:
                 nxt = ('N', 1)
-        elif ch == u'\xd1':  # UTF-8 encoding of ﾄ
+        # UTF-8 encoding of ﾄ
+        elif ch == u'\xd1': 
             nxt = ('N', 1)
         elif ch == 'P':
             if st[pos + 1] == 'H':
                 nxt = ('F', 2)
-            elif st[pos + 1] in ['P', 'B']:  # also account for "campbell", "raspberry"
+            # also account for "campbell", "raspberry"
+            elif st[pos + 1] in ['P', 'B']:
                 nxt = ('P', 2)
             else:
                 nxt = ('P', 1)
@@ -346,15 +360,17 @@ def doublemetaphone(st):
                 nxt = ('K', 1)
         elif ch == 'R':
             # french e.g. 'rogier', but exclude 'hochmeier'
-            if pos == last and not is_slavo_germanic \
-               and st[pos - 2:pos] == 'IE' and st[pos - 4:pos - 2] not in ['ME', 'MA']:
+            if (pos == last
+                and not is_slavo_germanic
+                and st[pos - 2:pos] == 'IE'
+                and st[pos - 4:pos - 2] not in ['ME', 'MA']):
                 nxt = ('', 'R')
             else:
-                nxt = ('R', )
+                nxt = ('R',)
             if st[pos + 1] == 'R':
-                nxt = nxt + (2, )
+                nxt = nxt + (2,)
             else:
-                nxt = nxt + (1, )
+                nxt = nxt + (1,)
         elif ch == 'S':
             # special cases 'island', 'isle', 'carlisle', 'carlysle'
             if st[pos - 1:pos + 2] in ['ISL', 'YSL']:
@@ -374,8 +390,9 @@ def doublemetaphone(st):
                     nxt = ('S', 'X', 3)
                 else:
                     nxt = ('S', 3)
-            # german & anglicisations, e.g. 'smith' match 'schmidt', 'snider' match 'schneider'
-            # also, -sz- in slavic language altho in hungarian it is pronounced 's'
+            # german & anglicisations, e.g. 'smith' match 'schmidt', 'snider'
+            # match 'schneider' also, -sz- in slavic language altho in
+            # hungarian it is pronounced 's'
             elif (pos == first and st[pos + 1] in ["M", "N", "L", "W"]) or st[pos + 1] == 'Z':
                 nxt = ('S', 'X')
                 if st[pos + 1] == 'Z':

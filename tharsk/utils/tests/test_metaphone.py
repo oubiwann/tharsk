@@ -67,6 +67,18 @@ class MetaphoneTestCase(unittest.TestCase):
         result = doublemetaphone("biaggi")
         self.assertEquals(result, ("PJ", "PK"))
 
+    def test_variousSpanish(self):
+        result = doublemetaphone("bajador")
+        self.assertEquals(result, ("PJTR", "PHTR"))
+        result = doublemetaphone("cabrillo")
+        self.assertEquals(result, ("KPRL", "KPR "))
+        result = doublemetaphone("gallegos")
+        self.assertEquals(result, ("KLKS", "K KS"))
+
+    def test_variousFrench(self):
+        result = doublemetaphone("rogier")
+        self.assertEquals(result, ("RJ", "RKR"))
+
     def test_ChWords(self):
         result = doublemetaphone("Charac")
         self.assertEquals(result, ("KRK", ""))
@@ -146,3 +158,9 @@ class MetaphoneTestCase(unittest.TestCase):
         self.assertEquals(result, ("MNKR", "MNJR"))
         result = doublemetaphone("dowager")
         self.assertEquals(result, ("TKR", "TJR"))
+
+    def test_PbWords(self):
+        result = doublemetaphone("Campbell")
+        self.assertEquals(result, ("KMPL", ""))
+        result = doublemetaphone("raspberry")
+        self.assertEquals(result, ("RSPR", ""))
