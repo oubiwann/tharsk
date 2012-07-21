@@ -343,7 +343,7 @@ def doublemetaphone(st):
             else:
                 nxt = ('N', 1)
         # UTF-8 encoding of ﾄ
-        elif ch == u'\xd1': 
+        elif ch == u'\xd1':
             nxt = ('N', 1)
         elif ch == 'P':
             if st[pos + 1] == 'H':
