@@ -385,7 +385,8 @@ def doublemetaphone(st):
                 else:
                     nxt = ('X', 2)
             # italian & armenian
-            elif st[pos:pos + 3] in ["SIO", "SIA"] or st[pos:pos + 4] == 'SIAN':
+            elif (st[pos:pos + 3] in ["SIO", "SIA"]
+                  or st[pos:pos + 4] == 'SIAN'):
                 if not is_slavo_germanic:
                     nxt = ('S', 'X', 3)
                 else:
@@ -393,7 +394,9 @@ def doublemetaphone(st):
             # german & anglicisations, e.g. 'smith' match 'schmidt', 'snider'
             # match 'schneider' also, -sz- in slavic language altho in
             # hungarian it is pronounced 's'
-            elif (pos == first and st[pos + 1] in ["M", "N", "L", "W"]) or st[pos + 1] == 'Z':
+            elif (
+                (pos == first and st[pos + 1] in ["M", "N", "L", "W"])
+                or st[pos + 1] == 'Z'):
                 nxt = ('S', 'X')
                 if st[pos + 1] == 'Z':
                     nxt = nxt + (2, )
@@ -403,14 +406,17 @@ def doublemetaphone(st):
                 # Schlesinger's rule
                 if st[pos + 2] == 'H':
                     # dutch origin, e.g. 'school', 'schooner'
-                    if st[pos + 3:pos + 5] in ["OO", "ER", "EN", "UY", "ED", "EM"]:
+                    if st[pos + 3:pos + 5] in ["OO", "ER", "EN", "UY", "ED",
+                                               "EM"]:
                         # 'schermerhorn', 'schenker'
                         if st[pos + 3:pos + 5] in ['ER', 'EN']:
                             nxt = ('X', 'SK', 3)
                         else:
                             nxt = ('SK', 3)
                     else:
-                        if pos == first and st[first + 3] not in vowels and st[first + 3] != 'W':
+                        if (pos == first
+                            and st[first + 3] not in vowels
+                            and st[first + 3] != 'W'):
                             nxt = ('X', 'S', 3)
                         else:
                             nxt = ('X', 3)
@@ -434,8 +440,9 @@ def doublemetaphone(st):
                 nxt = ('X', 3)
             elif st[pos:pos + 2] == 'TH' or st[pos:pos + 3] == 'TTH':
                 # special case 'thomas', 'thames' or germanic
-                if st[pos + 2:pos + 4] in ['OM', 'AM'] or st[first:first + 4] in ['VON ', 'VAN '] \
-                   or st[first:first + 3] == 'SCH':
+                if (st[pos + 2:pos + 4] in ['OM', 'AM']
+                    or st[first:first + 4] in ['VON ', 'VAN ']
+                    or st[first:first + 3] == 'SCH'):
                     nxt = ('T', 2)
                 else:
                     nxt = ('0', 'T', 2)

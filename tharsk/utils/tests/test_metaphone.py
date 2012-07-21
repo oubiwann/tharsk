@@ -79,6 +79,16 @@ class MetaphoneTestCase(unittest.TestCase):
         result = doublemetaphone("rogier")
         self.assertEquals(result, ("RJ", "RKR"))
 
+    def test_DutchOrigin(self):
+        result = doublemetaphone("school")
+        self.assertEquals(result, ("SKL", ""))
+        result = doublemetaphone("schooner")
+        self.assertEquals(result, ("SKNR", ""))
+        result = doublemetaphone("schermerhorn")
+        self.assertEquals(result, ("XRMRRN", "SKRMRRN"))
+        result = doublemetaphone("schenker")
+        self.assertEquals(result, ("XNKR", "SKNKR"))
+
     def test_ChWords(self):
         result = doublemetaphone("Charac")
         self.assertEquals(result, ("KRK", ""))
@@ -164,3 +174,9 @@ class MetaphoneTestCase(unittest.TestCase):
         self.assertEquals(result, ("KMPL", ""))
         result = doublemetaphone("raspberry")
         self.assertEquals(result, ("RSPR", ""))
+
+    def test_ThWords(self):
+        result = doublemetaphone("Thomas")
+        self.assertEquals(result, ("TMS", ""))
+        result = doublemetaphone("Thames")
+        self.assertEquals(result, ("TMS", ""))
