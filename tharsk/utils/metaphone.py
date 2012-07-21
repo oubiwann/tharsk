@@ -459,16 +459,19 @@ def doublemetaphone(st):
             # can also be in middle of word
             if st[pos:pos + 2] == 'WR':
                 nxt = ('R', 2)
-            elif pos == first and (st[pos + 1] in vowels or st[pos:pos + 2] == 'WH'):
+            elif (
+                pos == first
+                and (st[pos + 1] in vowels or st[pos:pos + 2] == 'WH')):
                 # Wasserman should match Vasserman
                 if st[pos + 1] in vowels:
                     nxt = ('A', 'F', 1)
                 else:
                     nxt = ('A', 1)
             # Arnow should match Arnoff
-            elif (pos == last and st[pos - 1] in vowels) \
-               or st[pos - 1:pos + 4] in ["EWSKI", "EWSKY", "OWSKI", "OWSKY"] \
-               or st[first:first + 3] == 'SCH':
+            elif ((pos == last and st[pos - 1] in vowels)
+                   or st[pos - 1:pos + 4] in ["EWSKI", "EWSKY", "OWSKI",
+                                              "OWSKY"]
+                   or st[first:first + 3] == 'SCH'):
                 nxt = ('', 'F', 1)
             # polish e.g. 'filipowicz'
             elif st[pos:pos + 4] in ["WICZ", "WITZ"]:
@@ -517,7 +520,3 @@ def doublemetaphone(st):
         return (pri, '')
     else:
         return (pri, sec)
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
