@@ -143,12 +143,16 @@ def doublemetaphone(st):
             elif st[pos + 1:pos + 4] == 'CIA':
                 nxt = ('X', 3)
             # double 'C', but not if e.g. 'McClellan'
-            elif st[pos:pos + 2] == 'CC' and not (pos == (first + 1) and st[first] == 'M'):
+            elif (
+                st[pos:pos + 2] == 'CC'
+                and not (pos == (first + 1) and st[first] == 'M')):
                 #'bellocchio' but not 'bacchus'
-                if st[pos + 2] in ["I", "E", "H"] and st[pos + 2:pos + 4] != 'HU':
+                if (st[pos + 2] in ["I", "E", "H"]
+                    and st[pos + 2:pos + 4] != 'HU'):
                     # 'accident', 'accede' 'succeed'
-                    if (pos == (first + 1) and st[first] == 'A') or \
-                       st[pos - 1:pos + 4] in ['UCCEE', 'UCCES']:
+                    if (
+                        (pos == (first + 1) and st[first] == 'A')
+                        or st[pos - 1:pos + 4] in ['UCCEE', 'UCCES']):
                         nxt = ('KS', 3)
                     # 'bacci', 'bertucci', other italian
                     else:
@@ -164,16 +168,18 @@ def doublemetaphone(st):
                 else:
                     nxt = ('S', 2)
             else:
-                # name sent in 'mac caffrey', 'mac gregor
+                # name sent in 'mac caffrey', 'mac gregor'
                 if st[pos + 1:pos + 3] in [" C", " Q", " G"]:
                     nxt = ('K', 3)
                 else:
-                    if st[pos + 1] in ["C", "K", "Q"] and st[pos + 1:pos + 3] not in ["CE", "CI"]:
+                    if (st[pos + 1] in ["C", "K", "Q"]
+                        and st[pos + 1:pos + 3] not in ["CE", "CI"]):
                         nxt = ('K', 2)
                     else:  # default for 'C'
                         nxt = ('K', 1)
-        elif ch == u'\xc7':  # will never get here with st.encode('ascii', 'replace') above
-            # \xc7 is UTF-8 encoding of Ç
+        # will never get here with st.encode('ascii', 'replace') above \xc7 is
+        # UTF-8 encoding of Ç
+        elif ch == u'\xc7':
             nxt = ('S', 1)
         elif ch == 'D':
             if st[pos:pos + 2] == 'DG':
@@ -201,12 +207,13 @@ def doublemetaphone(st):
                         else:
                             nxt = ('K', 2)
                 # Parker's rule (with some further refinements) - e.g., 'hugh'
-                elif (pos > (first + 1) and st[pos - 2] in ['B', 'H', 'D']) \
-                   or (pos > (first + 2) and st[pos - 3] in ['B', 'H', 'D']) \
-                   or (pos > (first + 3) and st[pos - 3] in ['B', 'H']):
+                elif ((pos > (first + 1) and st[pos - 2] in ['B', 'H', 'D'])
+                      or (pos > (first + 2) and st[pos - 3] in ['B', 'H', 'D'])
+                      or (pos > (first + 3) and st[pos - 3] in ['B', 'H'])):
                     nxt = (None, 2)
                 else:
-                    # e.g., 'laugh', 'McLaughlin', 'cough', 'gough', 'rough', 'tough'
+                    # e.g., 'laugh', 'McLaughlin', 'cough', 'gough', 'rough',
+                    # 'tough'
                     if pos > (first + 2) and st[pos - 1] == 'U' \
                        and st[pos - 3] in ["C", "G", "L", "R", "T"]:
                         nxt = ('F', 2)
@@ -214,11 +221,15 @@ def doublemetaphone(st):
                         if pos > first and st[pos - 1] != 'I':
                             nxt = ('K', 2)
             elif st[pos + 1] == 'N':
-                if pos == (first + 1) and st[first] in vowels and not is_slavo_germanic:
+                if pos == ((first + 1)
+                           and st[first] in vowels
+                           and not is_slavo_germanic):
                     nxt = ('KN', 'N', 2)
                 else:
                     # not e.g. 'cagney'
-                    if st[pos + 2:pos + 4] != 'EY' and st[pos + 1] != 'Y' and not is_slavo_germanic:
+                    if (st[pos + 2:pos + 4] != 'EY'
+                        and st[pos + 1] != 'Y'
+                        and not is_slavo_germanic):
                         nxt = ('N', 'KN', 2)
                     else:
                         nxt = ('KN', 2)
@@ -226,19 +237,27 @@ def doublemetaphone(st):
             elif st[pos + 1:pos + 3] == 'LI' and not is_slavo_germanic:
                 nxt = ('KL', 'L', 2)
             # -ges-,-gep-,-gel-, -gie- at beginning
-            elif pos == first and (st[pos + 1] == 'Y'
-               or st[pos + 1:pos + 3] in ["ES", "EP", "EB", "EL", "EY", "IB", "IL", "IN", "IE", "EI", "ER"]):
+            elif (pos == first
+                  and (st[pos + 1] == 'Y'
+                  or st[pos + 1:pos + 3] in ["ES", "EP", "EB", "EL", "EY",
+                                             "IB", "IL", "IN", "IE", "EI",
+                                             "ER"])):
                 nxt = ('K', 'J', 2)
             # -ger-,  -gy-
-            elif (st[pos + 1:pos + 3] == 'ER' or st[pos + 1] == 'Y') \
-               and st[first:first + 6] not in ["DANGER", "RANGER", "MANGER"] \
-               and st[pos - 1] not in ['E', 'I'] and st[pos - 1:pos + 2] not in ['RGY', 'OGY']:
+            elif (
+                (st[pos + 1:pos + 3] == 'ER' or st[pos + 1] == 'Y')
+                and st[first:first + 6] not in ["DANGER", "RANGER", "MANGER"]
+                and st[pos - 1] not in ['E', 'I']
+                and st[pos - 1:pos + 2] not in ['RGY', 'OGY']):
                 nxt = ('K', 'J', 2)
             # italian e.g, 'biaggi'
-            elif st[pos + 1] in ['E', 'I', 'Y'] or st[pos - 1:pos + 3] in ["AGGI", "OGGI"]:
+            elif (
+                st[pos + 1] in ['E', 'I', 'Y']
+                or st[pos - 1:pos + 3] in ["AGGI", "OGGI"]):
                 # obvious germanic
-                if st[first:first + 4] in ['VON ', 'VAN '] or st[first:first + 3] == 'SCH' \
-                   or st[pos + 1:pos + 3] == 'ET':
+                if (st[first:first + 4] in ['VON ', 'VAN ']
+                    or st[first:first + 3] == 'SCH'
+                    or st[pos + 1:pos + 3] == 'ET'):
                     nxt = ('K', 2)
                 else:
                     # always soft if french ending
