@@ -50,15 +50,6 @@ Version 0.1
   - change the alphabet, based on whether it's the english version or the other
     version
 
-  - figure out how to custom-order the non-ASCII letters
-
-    . for each letter in the alphabet, do a check to see what that letter
-      reduces do (utils.normalizeUnicode), make that the key in a dict, and
-      append actual letters to the list value for that key
-
-    . when rendering the alphabet, sort the keys, sort the list of values, and
-      print the sorted values for each key
-
   - fill the content of the tabs with paged/batched dictioary data
 
 * Add support for full-text search
