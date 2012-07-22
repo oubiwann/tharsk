@@ -141,23 +141,29 @@ class DictionaryFragment(BaseFragment):
           </div> <!-- /tabbable -->
         """
         def generateTabsAndContent(results):
+            """
+            results is a dictionary whose keys are normalized ASCII chars and
+            whose values are the original (possible unicode) chars that map to
+            the ASCII ones.
+            """
             tabs = []
             contents = []
-            for letter in results:
-                if not letter:
+            for asciiLetter in sorted(results.keys()):
+                if not asciiLetter:
                     continue
-                tab = tags.li(
-                    tags.a(
-                        letter.upper(),
-                        href="#l%s" % letter,
-                        **{"data-toggle": "tab"})
-                    )
-                tabs.append(tab)
-                content = tags.div(
-                    tags.p("holding content"),
-                    class_="tab-pane",
-                    id="l%s" % letter)
-                contents.append(content)
+                for letter in sorted(results[asciiLetter]):
+                    tab = tags.li(
+                        tags.a(
+                            letter.upper(),
+                            href="#l%s" % letter,
+                            **{"data-toggle": "tab"})
+                        )
+                    tabs.append(tab)
+                    content = tags.div(
+                        tags.p("holding content"),
+                        class_="tab-pane",
+                        id="l%s" % letter)
+                    contents.append(content)
 
             return tags.div(
                 tags.ul(tabs, class_="nav nav-tabs"),
