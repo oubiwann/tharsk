@@ -55,6 +55,18 @@ class UtilsTestCase(unittest.TestCase):
         results = utils.normalizeUnicode(text)
         self.assertEquals(results, "OcouaaeithouAaenouaaeeioouth")
 
+    def test_sortAlphabet(self):
+        text = "abdegijklmnorstuvwāēěīūǎφ"
+        results = utils.sortAlphabet(text)
+        expected = "ABDEGIJKLMNORSTTHUVW"
+        self.assertEquals("".join(sorted(results.keys())), expected)
+        self.assertEquals(sorted(results["A"]), [u'a', u'\u0101', u'\u01ce'])
+        self.assertEquals(sorted(results["E"]), [u'e', u'\u0113', u'\u011b'])
+        self.assertEquals(sorted(results["I"]), [u'i', u'\u012b'])
+        self.assertEquals(sorted(results["O"]), [u'o'])
+        self.assertEquals(sorted(results["U"]), [u'u', u'\u016b'])
+        self.assertEquals(sorted(results["TH"]), [u'\u03c6'])
+
     def test_getPermutationsInitial(self):
         word = "*(s)tano"
         result = utils.getWordPermutations(word)

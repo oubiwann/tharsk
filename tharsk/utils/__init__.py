@@ -28,7 +28,10 @@ def toUnicode(text):
         try:
             text = unicode(text)
         except UnicodeDecodeError:
-            text = unicode(text.decode("utf-8"))
+            try:
+                text = unicode(text.decode("utf-8"))
+            except Exception, err:
+                import pdb;pdb.set_trace()
     return text
 
 
@@ -37,15 +40,31 @@ def normalizeUnicode(text):
     text = re.sub(u"[Ó]", u"O", text)
     text = re.sub(u"[ç]", u"c", text)
     text = re.sub(u"[û]", u"u", text)
-    text = re.sub(u"[ðþ]", u"th", text)
-    text = re.sub(u"[àäáâā]", u"a", text)
-    text = re.sub(u"[ûüùú]", u"u", text)
+    text = re.sub(u"[ðþφ]", u"th", text)
+    text = re.sub(u"[àäáâāāǎ]", u"a", text)
+    text = re.sub(u"[ûüùúāū]", u"u", text)
     text = re.sub(u"[ôóõòö]", u"o", text)
-    text = re.sub(u"[èéê]", u"e", text)
-    text = re.sub(u"[ìÏíîĩīǐȋî]", u"i", text)
+    text = re.sub(u"[èéêēě]", u"e", text)
+    text = re.sub(u"[ìÏíîĩīǐȋîī]", u"i", text)
     text = re.sub(u"[ñ]", u"n", text)
     text = re.sub(u"[æ]", u"ae", text)
     return unicodedata.normalize("NFKD", text)
+
+
+def sortAlphabet(alphabet):
+    """
+    Pass a string value, representing the unique list of characters in an
+    alphabeta.
+
+    Return a dictionary of ASCII keys with sorted ASCII and Unicode letters as
+    values for those keys (in a list).
+    """
+    sortedData = {}
+    for letter in toUnicode(alphabet):
+        normalized = normalizeUnicode(letter).upper()
+        sortedData.setdefault(normalized, [])
+        sortedData[normalized].append(letter)
+    return sortedData
 
 
 def getStems(wordList, skipWords=[], caseInsensitive=True):

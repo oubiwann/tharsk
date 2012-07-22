@@ -131,6 +131,7 @@ start-mongo:
 init-db: proto-celtic-import gaelic-import
 
 check:
+	rm -rf ./_trial_temp
 	@$(TRIAL) $(LIB)
 
 python:
