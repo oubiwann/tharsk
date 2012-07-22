@@ -13,17 +13,18 @@ def getAlphabet(model):
             letter = getInitialLetter(word[1:])
         return letter
 
-    def getInitialLetters(docs):
+    def getAlphabetData(docs):
         letters = set()
         for doc in docs:
             letters.add(getInitialLetter(doc[model.langCode]))
-        return sorted(list(letters))
+
+        return utils.sortAlphabet("".join(letters))
 
     def query(database):
         fields = {model.langCode: 1}
         d = model.find(fields, sortField=model.langCode)
         d.addErrback(log.err)
-        d.addCallback(getInitialLetters)
+        d.addCallback(getAlphabetData)
         return d
 
     d = model.getDB()
