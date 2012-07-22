@@ -32,6 +32,8 @@ additional libraries:
 
 * `stemming`_
 
+* `metaphone`_
+
 * `pdfminer`_
 
 * `BeautifulSoup`_
@@ -103,6 +105,7 @@ when you try to execute scripts that display UTF-8 output to the terminal.
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _MongoDB: http://www.mongodb.org/downloads
 .. _stemming: http://pypi.python.org/pypi/stemming/1.0
+.. _metaphone: https://github.com/oubiwann/metaphone
 .. _pdfminer: http://pypi.python.org/pypi/pdfminer/20110515
 .. _TODO: tharsk/blob/master/TODO.rst
 .. _BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/
