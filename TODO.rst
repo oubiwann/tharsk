@@ -47,13 +47,20 @@ Version 0.1
 
 * Add a "Dictionaries" section in the top left
 
-  - add a vertical A-Z tab list for entries
+  - change the alphabet, based on whether it's the english version or the other
+    version
+
+  - figure out how to custom-order the non-ASCII letters
+
+  - fill the content of the tabs with paged/batched dictioary data
 
 * Add support for full-text search
 
   - initial support is in place
 
   - it needs to be tested (searching for words via stemming)
+
+  - re-do indexing with support for metaphone
 
 * Populate controllers.retrieve
 
