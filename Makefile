@@ -56,6 +56,7 @@ $(BIN_DIR)/recess $(BIN_DIR)/uglifyjs $(BIN_DIR)/jshint $(BIN_DIR)/lessc
 	sudo $(PIP) install pdfminer
 	sudo $(PIP) install stemming
 	sudo $(PIP) install BeautifulSoup
+	sudo $(PIP) install https://github.com/oubiwann/metaphone/zipball/master
 
 install: install-deps
 
