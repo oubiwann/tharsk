@@ -117,11 +117,37 @@ class DictionaryFragment(BaseFragment):
 
     @renderer
     def dictionaryTabs(self, request, tag):
+
+        def generateTabsAndContent(results):
+            tabs = []
+            contents = []
+            for letter in results:
+                if not letter:
+                    continue
+                tab = tags.li(
+                    tags.a(
+                        letter.upper(),
+                        href="#l%s" % letter,
+                        **{"data-toggle": "tab"})
+                    )
+                tabs.append(tab)
+                content = tags.div(
+                    tags.p("holding content"),
+                    class_="tab-pane",
+                    id="l%s" % letter)
+                contents.append(content)
+
+            return tags.div(
+                tags.ul(tabs, class_="nav nav-tabs"),
+                tags.div(contents, class_="tab-content"),
+                class_="tabbable tabs-left")
+
         dictId = os.path.basename(request.path)
         model = collection.dictionaryFactoryV1(dictId)
         d = retrieve.getAlphabet(model)
+        d.addCallback(generateTabsAndContent)
+        return d
         # XXX
-        # 1) look at how deferreds word with klein/t.w.templates
         # 2) iterate through the results, creating the appropriate divs
         # 3) figure out how to identify the current letter (active tab)
         # 4) figure out how to get the next page of dictionary items while
