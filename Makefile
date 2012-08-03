@@ -128,7 +128,7 @@ start-mongo:
 	sudo chown $(USER) /usr/local/var/mongodb
 	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
 
-init-db: proto-celtic-import gaelic-import
+init-db: proto-celtic-import gaelic-import pie-import
 
 check:
 	rm -rf ./_trial_temp
