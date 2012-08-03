@@ -42,8 +42,8 @@ These will be installed for you when you run ``make install-deps`` (see below
 for more info).
 
 
-Name
-----
+The Name
+--------
 
 The following names were considered for the project (taken from the first
 word list imported into the application, Proto-Celtic):
@@ -99,6 +99,22 @@ need to set your Python encoding to UTF-8. Here's how::
 If you do not set this variable, you will see numerous encoding/decoding errors
 when you try to execute scripts that display UTF-8 output to the terminal.
 
+The same tool that you run tharsk from is used to parse and execute commands
+from a system shell. For instance::
+
+  $ twistd tharsk dictionaries
+
+This will list the supported dictionaries.
+
+To find out what the list of supported tharsk subcommands are, simply use the
+``--help`` parameter::
+
+  $ twistd tharsk --help
+
+Some subcommands will have additional options, and those are also available via
+the ``help`` parameter::
+
+  $ twistd tharsk wordlist --help
 
 .. Links
 .. _Node.js: http://nodejs.org/#download
