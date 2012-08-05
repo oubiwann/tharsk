@@ -27,6 +27,18 @@ class WordlistOptions(SubCommandOptions):
          ]
 
 
+class AlphabetlistOptions(SubCommandOptions):
+    """
+    """
+    optParameters = [
+        ["dictionary", "d", "pie-eng",
+         ("the hyphenated language codes for the dictionary; ordering is done "
+          "by the first language code")],
+        ["language", "a", "pie",
+         ("the three-letter code whose alphabet is desired")],
+         ]
+
+
 class Options(usage.Options):
     """
     """
@@ -37,6 +49,8 @@ class Options(usage.Options):
     subCommands = [
         ["wordlist", None, WordlistOptions,
          "display a wordlist"],
+        ["alphabet", None, AlphabetlistOptions,
+         "display the alphabet for the given dictionary and language code"],
         ["dictionaries", None, SubCommandOptions,
          "list the supported dictionaries"],
         ["stop", None, SubCommandOptions,
@@ -54,6 +68,10 @@ class Options(usage.Options):
             sys.exit(0)
         elif self.subCommand == "dictionaries":
             script = scripts.ListDictionaries()
+            script.run()
+            sys.exit(0)
+        elif self.subCommand == "alphabet":
+            script = scripts.ListAlphabet(self)
             script.run()
             sys.exit(0)
         elif self.subCommand == "stop":
