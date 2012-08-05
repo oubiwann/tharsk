@@ -6,7 +6,8 @@ from twisted.web import server
 
 from klein import resource
 
-from tharsk import meta, routes, scripts
+from tharsk import meta, routes
+from tharsk.scripts import async, sync
 
 
 class SubCommandOptions(usage.Options):
@@ -63,19 +64,20 @@ class Options(usage.Options):
         if not self.subCommand:
             return
         if self.subCommand == "wordlist":
-            script = scripts.Wordlist(self)
+            script = async.Wordlist(self)
             script.run()
             sys.exit(0)
         elif self.subCommand == "dictionaries":
-            script = scripts.ListDictionaries()
+            script = sync.ListDictionaries()
             script.run()
             sys.exit(0)
         elif self.subCommand == "alphabet":
-            script = scripts.ListAlphabet(self)
+            script = async.ListAlphabet(self)
             script.run()
             sys.exit(0)
         elif self.subCommand == "stop":
-            scripts.StopDaemon()
+            script = sync.StopDaemon()
+            script.run()
             sys.exit(0)
 
 
