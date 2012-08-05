@@ -110,6 +110,9 @@ class ParsePIEWordlist(Script):
 class TwistedScript(Script):
     """
     """
+    def __init__(self, options=None):
+        self.options = options
+
     def run(self):
         log.startLogging(sys.stdout)
         log.msg("Running the script ...")
@@ -265,6 +268,7 @@ class ListProtoCelticAlphabet(TwistedScript):
             log.msg("Proto-Celtic alphabet: %s" % letters)
 
         model = collection.ProtoCelticDictionaryV1()
+        # XXX add support for getting the English alphabet for this dictionry
         d = retrieve.getAlphabet(model)
         d.addCallback(logResults)
         return d
@@ -275,12 +279,23 @@ class ListProtoCelticAlphabet(TwistedScript):
         super(ListProtoCelticAlphabet, self).run()
 
 
+class ListAlphabet(TwistedScript):
+    """
+    """
+    def run(self):
+        dictionary = self.options.subOptions["dictionary"]
+        language = self.options.subOptions["language"]
+        if "pie" in dictionary:
+            if language == "pie":
+                script = ListProtoCelticAlphabet()
+            elif language == "eng":
+                pass
+        return script.run()
+
+
 class Wordlist(TwistedScript):
     """
     """
-    def __init__(self, options):
-        self.options = options
-
     def run(self):
         dictionary = self.options.subOptions["dictionary"]
         sortLang, other = dictionary.split("-")
