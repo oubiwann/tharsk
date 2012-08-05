@@ -82,6 +82,10 @@ run-dev: css
 start-prod:
 	$(TWISTD) tharsk
 
+# XXX the targets below which have tharsk commands/subcommands need to be
+# updated to use those, and not import the Python ones directly.
+#
+# XXX Those that don't have a subcommand, need to have one!
 stop-prod:
 	$(PYTHON) -c "from $(LIB) import scripts;scripts.StopDaemon().run()"
 
@@ -127,6 +131,9 @@ start-mongo:
 	sudo mkdir -p /usr/local/var/mongodb
 	sudo chown $(USER) /usr/local/var/mongodb
 	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
+
+tail-mongo-log:
+	tail -f /usr/local/var/log/mongodb/output.log
 
 init-db: proto-celtic-import gaelic-import pie-import
 
