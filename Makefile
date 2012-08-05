@@ -87,7 +87,7 @@ start-prod:
 #
 # XXX Those that don't have a subcommand, need to have one!
 stop-prod:
-	$(PYTHON) -c "from $(LIB) import scripts;scripts.StopDaemon().run()"
+	$(TWISTD) tharsk stop
 
 proto-celtic-parse-wordlist:
 	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlist; \
