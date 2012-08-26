@@ -5,6 +5,8 @@ import unicodedata
 
 from stemming.porter2 import stem
 
+import metaphone
+
 from tharsk import const
 
 
@@ -96,6 +98,16 @@ def getUnicodeStems(wordList, skipWords=[], caseInsensitive=True):
         normalized = [normalizeUnicode(x).encode("utf-8") for x in parts]
         newWordList.extend(parts + normalized)
     return getStems(list(set(newWordList)))
+
+
+def getMetaphones(wordList):
+    metaphones = []
+    if isinstance(wordList, basestring):
+        wordList = wordList.split()
+    for word in wordList:
+        metaphones.extend(list(metaphone.doublemetaphone(
+            normalizeUnicode(word))))
+    return sorted([x for x in set(metaphones) if x])
 
 
 def getPermutations(iterable):

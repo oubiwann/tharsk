@@ -55,6 +55,26 @@ class UtilsTestCase(unittest.TestCase):
         results = utils.normalizeUnicode(text)
         self.assertEquals(results, "OcouaaeithouAaenouaaeeioouth")
 
+    def test_getMetaphonesWord(self):
+        text = "Baxter"
+        results = utils.getMetaphones(text)
+        self.assertEquals(results, ['PKSTR'])
+
+    def test_getMetaphonesUnicodeWord(self):
+        text = "φrāko"
+        results = utils.getMetaphones(text)
+        self.assertEquals(results, ['0RK', 'TRK'])
+
+    def test_getMetaphonesSentence(self):
+        text = "This is Baxter's favorite seat"
+        results = utils.getMetaphones(text)
+        self.assertEquals(results, ['0S', 'AS', 'FFRT', 'PKSTRRS', 'ST', 'TS'])
+
+    def test_getMetaphonesMultipleWords(self):
+        text = ["This", "is", "Baxter's", "favorite", "seat"]
+        results = utils.getMetaphones(text)
+        self.assertEquals(results, ['0S', 'AS', 'FFRT', 'PKSTRRS', 'ST', 'TS'])
+
     def test_sortAlphabet(self):
         text = "abdegijklmnorstuvwāēěīūǎφ"
         results = utils.sortAlphabet(text)
