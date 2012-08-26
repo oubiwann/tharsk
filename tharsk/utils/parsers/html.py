@@ -11,7 +11,7 @@ from tharsk.utils.parsers import mixins
 class CSVConverter(mixins.CustomCSVFormatter):
     """
     """
-    fields = ("", "")
+    fields = tuple()
 
     def __init__(self, filename):
         self.writer = unicsv.UnicodeWriter(filename, self.fields)
@@ -77,7 +77,12 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = collection.ScottishGaelicDictionaryV1.fields
+
+    def __init__(self, *args, **kwargs):
+        self.converterClass.fields = (
+            collection.ScottishGaelicDictionaryV1.fields)
+        super(GaelicEtymologicalDictionaryScraper, self).__init__(
+            *args, **kwargs)
 
     def run(self, doPrint=False):
         self.converter.writer.writeheader()
@@ -86,20 +91,28 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
             dd = dt.findNextSibling()
             self.stripTags(dd)
             gla = self.fixUp(dt.getText(" "))
+            glaStems = self.getStems(gla, withUnicode=True)
             eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
+            engStems = self.getStems(eng)
+            try:
+                glaPhones = utils.getMetaphones(glaStems)
+                engPhones = utils.getMetaphones(engStems)
+            except Exception, err:
+                import pdb;pdb.set_trace()
             row = {
+
                 self.converter.fields[0]: gla,
                 self.converter.fields[1]: eng,
                 self.converter.fields[2]: "",
-                self.converter.fields[3]: self.getStems(
-                    gla, withUnicode=True, asString=True),
-                self.converter.fields[4]: self.getStems(eng, asString=True),
+                self.converter.fields[3]: ", ".join(glaStems),
+                self.converter.fields[4]: ", ".join(engStems),
+                self.converter.fields[5]: ", ".join(glaPhones),
+                self.converter.fields[6]: ", ".join(engPhones),
                 }
             try:
                 self.converter.writer.writerow(row)
-            except:
-                import pdb
-                pdb.set_trace()
+            except Exception, err:
+                import pdb;pdb.set_trace()
 
 
 class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
@@ -136,7 +149,7 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
                 engStems = self.getStems(eng)
                 try:
                     piePhones = utils.getMetaphones(
-                        set(pieStems + pieTerms + pieSeeAlsos)
+                        set(pieStems + pieTerms + pieSeeAlsos))
                     engPhones = utils.getMetaphones(engStems)
                 except Exception, err:
                     import pdb;pdb.set_trace()
