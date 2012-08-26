@@ -52,12 +52,15 @@ class HTMLScraper(object):
             open(self.inFilename).read(), **kwargs)
 
     @staticmethod
-    def getStems(html, asString=False):
+    def getStems(html, withUnicode=False, asString=False):
+        stemmer = utils.getStems
+        if withUnicode:
+            stemmer = utils.getUnicodeStems
         parsed = BeautifulSoup(html)
         text = parsed.getText(" ")
         goodStems = []
         skipWords = ["is", "an", "the", "and", "but", "a", "i"]
-        for stem in utils.getStems(text.lower().split(), skipWords=skipWords):
+        for stem in stemmer(text.lower().split(), skipWords=skipWords):
             if len(stem) == 1:
                 continue
             goodStems.append(stem)
@@ -65,6 +68,9 @@ class HTMLScraper(object):
         if asString:
             result = ",".join(result)
         return result
+
+    def run(self):
+        raise NotImplementedError()
 
 
 class GaelicEtymologicalDictionaryScraper(HTMLScraper):
@@ -81,12 +87,14 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
             self.stripTags(dd)
             gla = self.fixUp(dt.getText(" "))
             eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
-            row = {self.converter.fields[0]: gla,
-                   self.converter.fields[1]: eng,
-                   self.converter.fields[2]: "",
-                   self.converter.fields[3]: self.getStems(gla, asString=True),
-                   self.converter.fields[4]: self.getStems(eng, asString=True),
-                   }
+            row = {
+                self.converter.fields[0]: gla,
+                self.converter.fields[1]: eng,
+                self.converter.fields[2]: "",
+                self.converter.fields[3]: self.getStems(
+                    gla, withUnicode=True, asString=True),
+                self.converter.fields[4]: self.getStems(eng, asString=True),
+                }
             try:
                 self.converter.writer.writerow(row)
             except:
@@ -121,16 +129,25 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
             self.stripTags(definition)
             # put it all together
             for pie in pieTerms:
-                pieStems = self.getStems(pie)
-                [pieStems.extend(self.getStems(x)) for x in pieSeeAlsos]
+                pieStems = self.getStems(pie, withUnicode=True)
+                [pieStems.extend(self.getStems(x, withUnicode=True))
+                 for x in pieSeeAlsos]
                 eng = unicode(self.fixUp(str(definition)).decode("utf-8"))
+                engStems = self.getStems(eng)
+                try:
+                    piePhones = utils.getMetaphones(
+                        set(pieStems + pieTerms + pieSeeAlsos)
+                    engPhones = utils.getMetaphones(engStems)
+                except Exception, err:
+                    import pdb;pdb.set_trace()
                 row = {
                     self.converter.fields[0]: pie,
                     self.converter.fields[1]: eng,
                     self.converter.fields[2]: ", ".join(pieSeeAlsos),
                     self.converter.fields[3]: ", ".join(pieStems),
-                    self.converter.fields[4]: self.getStems(
-                        eng, asString=True),
+                    self.converter.fields[4]: ", ".join(engStems),
+                    self.converter.fields[5]: ", ".join(piePhones),
+                    self.converter.fields[6]: ", ".join(engPhones),
                     }
                 try:
                     self.converter.writer.writerow(row)
