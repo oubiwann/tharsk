@@ -67,7 +67,9 @@ class ProtoCelticDictionaryV1(CollectionModel):
         const.langMapper["English"],
         "see-also",
         "%s-keywords" % const.langMapper["Proto-Celtic"],
-        "%s-keywords" % const.langMapper["English"]
+        "%s-keywords" % const.langMapper["English"],
+        "%s-metaphone" % const.langMapper["Proto-Celtic"],
+        "%s-metaphone" % const.langMapper["English"],
         )
 
 
@@ -81,7 +83,9 @@ class ScottishGaelicDictionaryV1(CollectionModel):
         const.langMapper["English"],
         "see-also",
         "%s-keywords" % const.langMapper["Scottish Gaelic"],
-        "%s-keywords" % const.langMapper["English"]
+        "%s-keywords" % const.langMapper["English"],
+        "%s-metaphone" % const.langMapper["Scottish Gaelic"],
+        "%s-metaphone" % const.langMapper["English"],
         )
 
 
@@ -95,7 +99,9 @@ class ProtoIndoEuropeanDictionaryV1(CollectionModel):
         const.langMapper["English"],
         "see-also",
         "%s-keywords" % const.langMapper["Proto-Indo-European"],
-        "%s-keywords" % const.langMapper["English"]
+        "%s-keywords" % const.langMapper["English"],
+        "%s-metaphone" % const.langMapper["Proto-Indo-European"],
+        "%s-metaphone" % const.langMapper["English"],
         )
 
 
