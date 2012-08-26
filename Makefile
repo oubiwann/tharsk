@@ -14,6 +14,9 @@ TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
 TRIAL ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/trial
 LESSC ?= $(BIN_DIR)/lessc
 
+get-targets:
+	@egrep ':$$' Makefile|egrep -v '^\$$'|sed -e 's/://g'
+
 clean:
 	rm -rf dist/ build/ MANIFEST *.egg-info
 	rm -rf _trial_temp/ CHECK_THIS_BEFORE_UPLOAD.txt twistd.log
