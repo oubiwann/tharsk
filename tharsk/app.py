@@ -25,7 +25,7 @@ class WordlistOptions(SubCommandOptions):
         ["dictionary", "d", "pie-eng",
          ("the hyphenated language codes for the dictionary; ordering is done "
           "by the first language code")],
-         ]
+     ]
 
 
 class AlphabetlistOptions(SubCommandOptions):
@@ -37,7 +37,7 @@ class AlphabetlistOptions(SubCommandOptions):
           "by the first language code")],
         ["language", "a", "pie",
          ("the three-letter code whose alphabet is desired")],
-         ]
+     ]
 
 
 class Options(usage.Options):
@@ -45,18 +45,20 @@ class Options(usage.Options):
     """
     optParameters = [
         ["webport", "p", 8080, "The port to listen for HTTP requests"],
-        ]
+    ]
 
     subCommands = [
         ["wordlist", None, WordlistOptions,
          "display a wordlist"],
         ["alphabet", None, AlphabetlistOptions,
          "display the alphabet for the given dictionary and language code"],
+        ["languages", None, SubCommandOptions,
+         "list the supported languages"],
         ["dictionaries", None, SubCommandOptions,
          "list the supported dictionaries"],
         ["stop", None, SubCommandOptions,
          "Stop the server"],
-        ]
+    ]
 
     def parseOptions(self, options):
         usage.Options.parseOptions(self, options)
@@ -65,6 +67,10 @@ class Options(usage.Options):
             return
         if self.subCommand == "wordlist":
             script = async.Wordlist(self)
+            script.run()
+            sys.exit(0)
+        elif self.subCommand == "languages":
+            script = sync.ListLanguages()
             script.run()
             sys.exit(0)
         elif self.subCommand == "dictionaries":

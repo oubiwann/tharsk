@@ -1,3 +1,4 @@
+import itertools
 import os
 import subprocess
 
@@ -21,6 +22,19 @@ class StopDaemon(base.Script):
             pid = open(pidFile).read()
             subprocess.call(["kill", pid])
             print "Stopped."
+
+
+class ListLanguages(base.Script):
+    """
+    """
+    def run(self):
+        print ""
+        langs = set(list(
+            itertools.chain(*[x.split("-") for x in const.dictionaries])))
+        for lang in sorted(langs):
+            if lang == "eng":
+                continue
+            print "\t%s (%s)" % (lang, const.langCodeMapper[lang])
 
 
 class ListDictionaries(base.Script):
