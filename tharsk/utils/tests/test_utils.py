@@ -71,14 +71,14 @@ class UtilsTestCase(unittest.TestCase):
         self.assertEquals(results, ['0S', 'AS', 'FFRT', 'PKSTRRS', 'ST', 'TS'])
 
     def test_getMetaphonesMultipleWords(self):
-        text = ["This", "is", "Baxter's", "favorite", "seat"]
-        results = utils.getMetaphones(text)
+        words = ["This", "is", "Baxter's", "favorite", "seat"]
+        results = utils.getMetaphones(words)
         self.assertEquals(results, ['0S', 'AS', 'FFRT', 'PKSTRRS', 'ST', 'TS'])
 
     def test_sortAlphabet(self):
         text = "abdegijklmnorstuvwāēěīūǎφ"
         results = utils.sortAlphabet(text)
-        expected = "ABDEGIJKLMNORSTTHUVW"
+        expected = u"ABDEGIJKLMNORSTTHUVW"
         self.assertEquals("".join(sorted(results.keys())), expected)
         self.assertEquals(sorted(results["A"]), [u'a', u'\u0101', u'\u01ce'])
         self.assertEquals(sorted(results["E"]), [u'e', u'\u0113', u'\u011b'])
