@@ -5,14 +5,7 @@ TODO
 Tasks
 =====
 
-* Change the getStems calls in the PIE scraper to getUnicodeStems
-
-  - check to make sure that the Proto-Celtic and gaelic dictionary scrapers are
-    doing the right thing with that, too
-
-  - Proto-Celtic has been updated to generate metaphones and unicode stems
-
-  - PIE scraper has been updated to add unicode keywords and metaphones
+*
 
 
 Version 0.1
