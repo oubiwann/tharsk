@@ -13,9 +13,6 @@ from tharsk.utils import unicsv
 class TwistedScript(base.Script):
     """
     """
-    def __init__(self, options=None):
-        self.options = options
-
     def run(self):
         log.startLogging(sys.stdout)
         log.msg("Running the script ...")
