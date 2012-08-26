@@ -62,13 +62,15 @@ Version 0.1
   - move code out of ExportProtCelticDictionary (script) and into a general
     form for displaying english-order word-lists
 
-* Create import script for MacBain's .csv file.
+* Create import script for MacBain's .csv file (async)
 
 * Add a search method to the base CollectionModel
 
   - stem search terms (inputs)
 
   - query the *_keywords_* indices appropriately
+
+  - query the *_metaphones_* indices appropriately
 
 * Add a command line tool
 
@@ -90,8 +92,6 @@ Version 0.1
 
     . whether or not to use the metaphone index
 
-  - is mapreduce going to be appropriate here?
-
 
 Version 0.2
 ===========
@@ -102,9 +102,9 @@ Version 0.2
 
   - http://www.utexas.edu/cola/centers/lrc/ielex/PokornyMaster-X.html
 
-  - parse the HTML
+  - DONE: parse the HTML
 
-  - convert to .csv
+  - DONE: convert to .csv
 
   - Create import script for the .csv file.
 
