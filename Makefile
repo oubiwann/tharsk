@@ -84,40 +84,40 @@ stop-prod:
 	$(TWISTD) tharsk stop
 
 proto-celtic-parse-wordlist:
-	@$(PYTHON) -c "from $(LIB).scripts import ParseProtoCelticWordlist; \
+	@$(PYTHON) -c "from $(LIB).scripts.sync import ParseProtoCelticWordlist; \
 	script = ParseProtoCelticWordlist();script.run()"
 #uniq > ./sources/pcl-eng.csv
 
 proto-celtic-add-keywords:
-	@$(PYTHON) -c "from $(LIB).scripts import AddProtoCelticKeywordsScript; \
+	@$(PYTHON) -c "from $(LIB).scripts.sync import AddProtoCelticKeywords; \
 	script = AddProtoCelticKeywords();script.run()"
 
 proto-celtic-import:
-	@$(PYTHON) -c "from $(LIB).scripts import ImportProtoCelticDictionary; \
+	@$(PYTHON) -c "from $(LIB).scripts.async import ImportProtoCelticDictionary; \
 	script = ImportProtoCelticDictionary();script.run()"
 
 proto-celtic-export:
-	@$(PYTHON) -c "from $(LIB).scripts import ExportProtoCelticDictionary; \
+	@$(PYTHON) -c "from $(LIB).scripts.async import ExportProtoCelticDictionary; \
 	script = ExportProtoCelticDictionary();script.run()"
 
 proto-celtic-alphabet:
-	@$(PYTHON) -c "from $(LIB).scripts import ListProtoCelticAlphabet; \
+	@$(PYTHON) -c "from $(LIB).scripts.async import ListProtoCelticAlphabet; \
 	script = ListProtoCelticAlphabet();script.run()"
 
 gaelic-parse-dictionary:
-	@$(PYTHON) -c "from $(LIB).scripts import ParseGaelicDictionary; \
+	@$(PYTHON) -c "from $(LIB).scripts.sync import ParseGaelicDictionary; \
 	script = ParseGaelicDictionary();script.run()"
 
 gaelic-import:
-	@$(PYTHON) -c "from $(LIB).scripts import ImportGaelicDictionary; \
+	@$(PYTHON) -c "from $(LIB).scripts.async import ImportGaelicDictionary; \
 	script = ImportGaelicDictionary();script.run()"
 
 pie-parse-wordlist:
-	@$(PYTHON) -c "from $(LIB).scripts import ParsePIEWordlist; \
+	@$(PYTHON) -c "from $(LIB).scripts.sync import ParsePIEWordlist; \
 	script = ParsePIEWordlist();script.run()"
 
 pie-import:
-	@$(PYTHON) -c "from $(LIB).scripts import ImportPIEWordlist; \
+	@$(PYTHON) -c "from $(LIB).scripts.async import ImportPIEWordlist; \
 	script = ImportPIEWordlist();script.run()"
 
 start-mongo:
