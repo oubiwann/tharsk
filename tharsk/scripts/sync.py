@@ -59,11 +59,20 @@ class AddProtoCelticKeywords(base.Script):
         writer = unicsv.UnicodeWriter(self.outFilename, fieldnames)
         writer.writeheader()
         for row in reader:
+            pclOrig = row["pcl"].split()
+            engOrig = row["eng"].split()
+            pcl = utils.getUnicodeStems(pclOrig)
+            eng = utils.getStems(engOrig)
             row["see-also"] = ""
-            row["pcl-keywords"] = ",".join(
-                utils.getUnicodeStems(row["pcl"].split()))
-            row["eng-keywords"] = ",".join(
-                utils.getStems(row["eng"].split()))
+            row["pcl-keywords"] = ",".join(utils.getUnicodeStems(pcl))
+            row["eng-keywords"] = ",".join(utils.getStems(eng))
+            pcl = pcl + pclOrig
+            eng = eng + engOrig
+            try:
+                row["pcl-metaphone"] = ",".join(utils.getMetaphones(pcl))
+                row["eng-metaphone"] = ",".join(utils.getMetaphones(eng))
+            except Exception, err:
+                import pdb;pdb.set_trace()
             writer.writerow(row)
         print "Saved results to %s." % self.outFilename
 
