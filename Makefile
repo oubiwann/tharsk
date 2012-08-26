@@ -4,8 +4,6 @@ BASE_DIR = $(shell pwd)
 USER = $(shell echo $$USER)
 DEPS_DIR = $(BASE_DIR)/deps
 BOOTSTRAP_DIR = $(DEPS_DIR)/bootstrap
-KLEIN_DIR = $(DEPS_DIR)/klein
-TXMONGO_DIR = $(DEPS_DIR)/txmongo
 ASSETS_DIR = $(BASE_DIR)/assets
 TEMPLATES_DIR = $(BASE_DIR)/templates
 PIP ?= pip-2.7
@@ -25,17 +23,8 @@ clean:
 $(DEPS_DIR):
 	mkdir $(DEPS_DIR)
 
-$(KLEIN_DIR):
-	git clone https://github.com/twisted/klein.git $(KLEIN_DIR)
-	sudo $(PIP) install $(KLEIN_DIR)
-
 $(BOOTSTRAP_DIR):
 	git clone https://github.com/twitter/bootstrap.git $(BOOTSTRAP_DIR)
-
-$(TXMONGO_DIR):
-	git clone https://github.com/fiorix/mongo-async-python-driver.git \
-	$(TXMONGO_DIR)
-	sudo $(PIP) install $(TXMONGO_DIR)
 
 $(BIN_DIR)/recess:
 	cd $(DEPS_DIR) && \
@@ -53,12 +42,14 @@ $(BIN_DIR)/lessc:
 	cd $(DEPS_DIR) && \
 	sudo npm install -g less
 
-install-deps: $(DEPS_DIR) $(KLEIN_DIR) $(BOOTSTRAP_DIR) $(TXMONGO_DIR) \
+install-deps: $(DEPS_DIR) $(BOOTSTRAP_DIR) \
 $(BIN_DIR)/recess $(BIN_DIR)/uglifyjs $(BIN_DIR)/jshint $(BIN_DIR)/lessc
 	cd $(BOOTSTRAP_DIR) && make
 	sudo $(PIP) install pdfminer
 	sudo $(PIP) install stemming
 	sudo $(PIP) install BeautifulSoup
+	sudo $(PIP) install https://github.com/twisted/klein/zipball/master
+	sudo $(PIP) install https://github.com/fiorix/mongo-async-python-driver/zipball/master
 	sudo $(PIP) install https://github.com/oubiwann/metaphone/zipball/master
 
 install: install-deps
