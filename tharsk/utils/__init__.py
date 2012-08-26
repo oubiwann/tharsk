@@ -43,17 +43,20 @@ def normalizeUnicode(text):
     text = re.sub(u"[ç]", u"c", text)
     text = re.sub(u"[û]", u"u", text)
     text = re.sub(u"[ðþφΦ]", u"th", text)
-    text = re.sub(u"[àäáâāāǎā]", u"a", text)
-    text = re.sub(u"[ûüùúāūǔu̯ǔ]", u"u", text)
-    text = re.sub(u"[ôóõòöōō]", u"o", text)
-    text = re.sub(u"[èéêēě]", u"e", text)
-    text = re.sub(u"[ìÏíîĩīǐȋîīi̯]", u"i", text)
+    text = re.sub(u"[àäáâǎāā̆ā́]", u"a", text)
+    text = re.sub(u"[ûüùúūu̯ȗ]", u"u", text)
+    text = re.sub(u"[ôóõòöōō̆]", u"o", text)
+    text = re.sub(u"[èéêēěḗĕē̆ə]", u"e", text)
+    text = re.sub(u"[ìÏíîĩīǐȋi̯]", u"i", text)
     text = re.sub(u"[ñ]", u"n", text)
     text = re.sub(u"[æ]", u"ae", text)
-    text = re.sub(u"[m̥n̥]", u"ng", text)
+    text = re.sub(u"m̥", u"m", text)
+    text = re.sub(u"[n̥ṇ]", u"ng", text)
     text = re.sub(u"h₂", u"a", text)
     text = re.sub(u"kʷ", u"kw", text)
-    text = re.sub(u"ṛ", u"r", text)
+    text = re.sub(u"[ṛr̥ŕŕ̥]", u"r", text)
+    text = re.sub(u"g̑", u"g", text)
+    text = re.sub(u"k̑", u"k", text)
     text = re.sub(u"i°", u"i", text)
     return unicodedata.normalize("NFKD", text)
 
@@ -92,7 +95,7 @@ def getStems(wordList, skipWords=[], caseInsensitive=True):
 
 def getUnicodeStems(wordList, skipWords=[], caseInsensitive=True):
     """
-    A dumb stemmer for Proto-Celtic words.
+    A stemmer wrapper for words with Unicode characters in them.
 
     Returns unicode.
     """
@@ -102,7 +105,9 @@ def getUnicodeStems(wordList, skipWords=[], caseInsensitive=True):
         parts = [word] + word.split("-")
         normalized = [normalizeUnicode(x).encode("utf-8") for x in parts]
         newWordList.extend(parts + normalized)
-    return getStems(list(set(newWordList)))
+    return getStems(
+        list(set(newWordList)), skipWords=skipWords,
+        caseInsensitive=caseInsensitive)
 
 
 def getMetaphones(wordList):
