@@ -8,11 +8,27 @@ class CollectionModel(object):
     """
     """
     dbName = "tharsk"
+    title = ""
     name = ""
     langCode = ""
+    translateTitle = "English"
     fields = tuple()
     _db = None
     filter = txmongo.filter
+
+    def __init__(self):
+        self.langCode = const.langMapper[self.title]
+        self.translateCode = const.langMapper[self.translateTitle]
+        self.name = "%s_dictionary" % self.langCode
+        self.fields = (
+            const.langMapper[self.title],
+            const.langMapper[self.translateTitle],
+            "see-also",
+            "%s-keywords" % const.langMapper[self.title],
+            "%s-keywords" % const.langMapper[self.translateTitle],
+            "%s-metaphone" % const.langMapper[self.title],
+            "%s-metaphone" % const.langMapper[self.translateTitle],
+            )
 
     @property
     def db(self):
@@ -60,49 +76,19 @@ class CollectionModel(object):
 class ProtoCelticDictionaryV1(CollectionModel):
     """
     """
-    langCode = const.langMapper["Proto-Celtic"]
-    name = "%s_dictionary" % langCode
-    fields = (
-        const.langMapper["Proto-Celtic"],
-        const.langMapper["English"],
-        "see-also",
-        "%s-keywords" % const.langMapper["Proto-Celtic"],
-        "%s-keywords" % const.langMapper["English"],
-        "%s-metaphone" % const.langMapper["Proto-Celtic"],
-        "%s-metaphone" % const.langMapper["English"],
-        )
+    title = "Proto-Celtic"
 
 
 class ScottishGaelicDictionaryV1(CollectionModel):
     """
     """
-    langCode = const.langMapper["Scottish Gaelic"]
-    name = "%s_dictionary" % langCode
-    fields = (
-        const.langMapper["Scottish Gaelic"],
-        const.langMapper["English"],
-        "see-also",
-        "%s-keywords" % const.langMapper["Scottish Gaelic"],
-        "%s-keywords" % const.langMapper["English"],
-        "%s-metaphone" % const.langMapper["Scottish Gaelic"],
-        "%s-metaphone" % const.langMapper["English"],
-        )
+    title = "Scottish Gaelic"
 
 
 class ProtoIndoEuropeanDictionaryV1(CollectionModel):
     """
     """
-    langCode = const.langMapper["Proto-Indo-European"]
-    name = "%s_dictionary" % langCode
-    fields = (
-        const.langMapper["Proto-Indo-European"],
-        const.langMapper["English"],
-        "see-also",
-        "%s-keywords" % const.langMapper["Proto-Indo-European"],
-        "%s-keywords" % const.langMapper["English"],
-        "%s-metaphone" % const.langMapper["Proto-Indo-European"],
-        "%s-metaphone" % const.langMapper["English"],
-        )
+    title = "Proto-Indo-European"
 
 
 def dictionaryFactoryV1(identifier):
