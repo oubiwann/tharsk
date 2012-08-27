@@ -126,12 +126,18 @@ class UpdateSource(base.Script):
         action = self.options.subOptions["action"]
         language = self.options.subOptions["language"]
         if action == "parse-wordlist":
+            # Parsing the pcl sources does not generate the keywords in the
+            # .csv, and has to be done in a second step (for now).
             if language == "pcl":
-                parser = ParseProtoCelticWordlist()
+                parser = AddProtoCelticKeywords()
+            # Note that the gla and pie parsers create the .csv with keywords
+            # and metaphones in them.
             elif language == "gla":
                 parser = ParseGaelicDictionary()
             elif language == "pie":
                 parser = ParsePIEWordlist()
             parser.run()
         elif action == "add-keywords":
-            pass
+            if language == "pcl":
+                adder = AddProtoCelticKeywords()
+                adder.run()
