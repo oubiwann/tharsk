@@ -32,6 +32,20 @@ class UpdateSourceOptions(SubCommandOptions):
     ]
 
 
+class UpdateDBOptions(SubCommandOptions):
+    """
+    """
+    optParameters = [
+        ["language", "l", None,
+         ("the language code whose dictionary you want to update; "
+          "see 'twistd tharsk language' for the 3-letter codes of the "
+          "supported languages")],
+        ["action", "a", None,
+         ("the type of update action to perform; valid options are "
+          "'import' and 'export'")],
+    ]
+
+
 class WordlistOptions(SubCommandOptions):
     """
     """
@@ -72,6 +86,8 @@ class Options(usage.Options):
          "list the supported dictionaries"],
         ["stop", None, SubCommandOptions,
          "Stop the server"],
+        ["update-db", None, UpdateDBOptions,
+         "update one of the language databases"],
         ["update-source", None, UpdateSourceOptions,
          "update one of the language source files"],
     ]

@@ -238,3 +238,27 @@ class WordlistDispatch(TwistedScript):
         elif mainLang == "pcl":
             exporter = ExportProtoCelticDictionary(sortLang)
         exporter.run()
+
+
+class UpdateDBDispatch(TwistedScript):
+    """
+    """
+    def run(self):
+        action = self.options.subOptions["action"]
+        language = self.options.subOptions["language"]
+        if action == "import":
+            if language == "pcl":
+                importer = ImportProtoCelticDictionary()
+            elif language == "gla":
+                importer = ImportScottishGaelicDictionary()
+            elif language == "pie":
+                importer = ImportProtoIndoEuropeanDictionary()
+            return importer.run()
+        elif action == "export":
+            if language == "pcl":
+                exporter = ExportProtoCelticDictionary()
+            elif language == "gla":
+                exporter = ExportScottishGaelicDictionary()
+            elif language == "pie":
+                exporter = ExportProtoIndoEuropeanDictionary()
+            return exporter.run()
