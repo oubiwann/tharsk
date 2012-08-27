@@ -119,7 +119,7 @@ class ParsePIEWordlist(base.Script):
         print "Saved results to %s." % self.outFilename
 
 
-class UpdateSource(base.Script):
+class UpdateSourceDispatch(base.Script):
     """
     """
     def run(self):
@@ -136,8 +136,8 @@ class UpdateSource(base.Script):
                 parser = ParseGaelicDictionary()
             elif language == "pie":
                 parser = ParsePIEWordlist()
-            parser.run()
+            return parser.run()
         elif action == "add-keywords":
             if language == "pcl":
                 adder = AddProtoCelticKeywords()
-                adder.run()
+                return adder.run()
