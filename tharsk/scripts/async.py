@@ -111,13 +111,15 @@ class ImportProtoCelticDictionary(TwistedScript):
         super(ImportProtoCelticDictionary, self).run()
 
 
-class DropProtoCelticDictionary(TwistedScript):
+class DropCollection(TwistedScript):
     """
     """
+    modelClass = None
+
     def doDrop(self):
 
         # instantiate the collection model
-        model = collection.ProtoCelticDictionaryV1()
+        model = self.modelClass()
 
         def printResult(result):
             if bool(result["ok"]) and not bool(result["err"]):
@@ -130,7 +132,7 @@ class DropProtoCelticDictionary(TwistedScript):
             d.addCallback(printResult)
             return d
 
-        # get the database and load the data from a csv reader
+        # get the database and drop the collection (defined in the model)
         d = model.getDB()
         d.addCallback(dropCollection)
         d.addErrback(self.logError)
@@ -139,7 +141,25 @@ class DropProtoCelticDictionary(TwistedScript):
     def run(self):
         d = self.doDrop()
         d.addCallback(self.stop)
-        super(DropProtoCelticDictionary, self).run()
+        super(DropCollection, self).run()
+
+
+class DropProtoCelticDictionary(DropCollection):
+    """
+    """
+    modelClass = collection.ProtoCelticDictionaryV1
+
+
+class DropScottishGaelicDictionary(DropCollection):
+    """
+    """
+    modelClass = collection.ScottishGaelicDictionaryV1
+
+
+class DropProtoIndoEuropeanDictionary(DropCollection):
+    """
+    """
+    modelClass = collection.ProtoIndoEuropeanDictionaryV1
 
 
 class ExportProtoCelticDictionary(TwistedScript):

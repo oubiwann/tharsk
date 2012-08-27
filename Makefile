@@ -118,6 +118,9 @@ gaelic-import:
 gaelic-alphabet:
 	$(TWISTD) tharsk alphabet --dictionary=gla-eng --language=gla
 
+gaelic-drop:
+	$(TWISTD) tharsk update-db --action=drop --language=gla
+
 pie-parse-wordlist:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=pie
 
@@ -127,6 +130,9 @@ pie-import:
 
 pie-alphabet:
 	$(TWISTD) tharsk alphabet --dictionary=pie-eng --language=pie
+
+pie-drop:
+	$(TWISTD) tharsk update-db --action=drop --language=pie
 
 $(MONGO_BASE):
 	sudo mkdir -p $(MONGO_DATA)

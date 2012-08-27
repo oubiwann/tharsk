@@ -5,7 +5,12 @@ TODO
 Tasks
 =====
 
-* Test inserting, dropping, inserting, dropping, etc.
+* Refactor ImportProtoCelticDictionary into a base class, like was done for
+  DropProtoCelticDictionary
+
+* Then create imports for the remaining dictionaries
+
+* Do the same for the export code
 
 
 Version 0.1
