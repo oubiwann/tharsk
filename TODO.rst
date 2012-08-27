@@ -14,6 +14,9 @@ Tasks
 
 * TODO: Do the same for the export code
 
+* Fix alphabet rendering... it doesn't look right (seems like it's only doing
+  ASCII...)
+
 
 Version 0.1
 ===========
