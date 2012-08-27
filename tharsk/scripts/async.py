@@ -158,42 +158,73 @@ class ExportProtoCelticDictionary(TwistedScript):
         super(ExportProtoCelticDictionary, self).run()
 
 
-class ListProtoCelticAlphabet(TwistedScript):
+class BaseListAlphabet(TwistedScript):
     """
     """
+    modelClass = None
+    resultLang = None
+
     def getAlphabet(self):
 
-        def logResults(letters):
-            letters = "".join([x.encode("utf-8") for x in letters])
-            log.msg("Proto-Celtic alphabet: %s" % letters)
+        def logResults(letters, model):
+            letters = " ".join([x.encode("utf-8") for x in letters])
+            log.msg("%s alphabet: %s" % (model.title, letters))
 
-        model = collection.ProtoCelticDictionaryV1()
         # XXX add support for getting the English alphabet for this dictionry
+        model = self.modelClass()
         d = retrieve.getAlphabet(model)
-        d.addCallback(logResults)
+        d.addCallback(logResults, model)
         return d
 
     def run(self):
         d = self.getAlphabet()
         d.addCallback(self.stop)
-        super(ListProtoCelticAlphabet, self).run()
+        super(BaseListAlphabet, self).run()
 
 
-class ListAlphabet(TwistedScript):
+class ListProtoCelticAlphabet(BaseListAlphabet):
+    """
+    """
+    modelClass = collection.ProtoCelticDictionaryV1
+
+
+class ListProtoIndoEuropeanAlphabet(BaseListAlphabet):
+    """
+    """
+    modelClass = collection.ProtoIndoEuropeanDictionaryV1
+
+
+class ListScottishGaelicAlphabet(BaseListAlphabet):
+    """
+    """
+    modelClass = collection.ScottishGaelicDictionaryV1
+
+
+class ListAlphabetDispatch(TwistedScript):
     """
     """
     def run(self):
         dictionary = self.options.subOptions["dictionary"]
         language = self.options.subOptions["language"]
-        if "pie" in dictionary:
-            if language == "pie":
+        if "pcl" in dictionary:
+            if language == "pcl":
                 script = ListProtoCelticAlphabet()
-            elif language == "eng":
-                pass
+            else:
+                script.resultLang = script.translationTitle
+        elif "pie" in dictionary:
+            if language == "pie":
+                script = ListProtoIndoEuropeanAlphabet()
+            else:
+                script.resultLang = script.translationTitle
+        elif "gla" in dictionary:
+            if language == "gla":
+                script = ListScottishGaelicAlphabet()
+            else:
+                script.resultLang = script.translationTitle
         return script.run()
 
 
-class Wordlist(TwistedScript):
+class WordlistDispatch(TwistedScript):
     """
     """
     def run(self):
