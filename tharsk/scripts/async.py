@@ -49,7 +49,8 @@ class ImportProtoCelticDictionary(TwistedScript):
 
         def createIndices(ids):
             log.msg("Inserted %s documents." % len(ids))
-            indexedFields = ["pcl_keywords", "eng_keywords"]
+            indexedFields = ["pcl_keywords", "eng_keywords",
+                             "pcl_metaphone", "eng_metaphone"]
             deferreds = []
             for fieldName in indexedFields:
                 keyList = model.filter.ASCENDING(fieldName)
@@ -108,6 +109,37 @@ class ImportProtoCelticDictionary(TwistedScript):
         d = self.doImport()
         d.addCallback(self.stop)
         super(ImportProtoCelticDictionary, self).run()
+
+
+class DropProtoCelticDictionary(TwistedScript):
+    """
+    """
+    def doDrop(self):
+
+        # instantiate the collection model
+        model = collection.ProtoCelticDictionaryV1()
+
+        def printResult(result):
+            if bool(result["ok"]) and not bool(result["err"]):
+                log.msg("Successfully dropped collection '%s'." % model.name)
+                log.msg("Deleted %s documents." % result["n"])
+
+        def dropCollection(database):
+            d = model.collection.drop(safe=True)
+            d.addErrback(log.msg)
+            d.addCallback(printResult)
+            return d
+
+        # get the database and load the data from a csv reader
+        d = model.getDB()
+        d.addCallback(dropCollection)
+        d.addErrback(self.logError)
+        return d
+
+    def run(self):
+        d = self.doDrop()
+        d.addCallback(self.stop)
+        super(DropProtoCelticDictionary, self).run()
 
 
 class ExportProtoCelticDictionary(TwistedScript):
@@ -262,3 +294,11 @@ class UpdateDBDispatch(TwistedScript):
             elif language == "pie":
                 exporter = ExportProtoIndoEuropeanDictionary()
             return exporter.run()
+        elif action == "drop":
+            if language == "pcl":
+                dropper = DropProtoCelticDictionary()
+            elif language == "gla":
+                dropper = DropScottishGaelicDictionary()
+            elif language == "pie":
+                dropper = DropProtoIndoEuropeanDictionary()
+            return dropper.run()

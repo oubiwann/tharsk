@@ -42,7 +42,7 @@ class UpdateDBOptions(SubCommandOptions):
           "supported languages")],
         ["action", "a", None,
          ("the type of update action to perform; valid options are "
-          "'import' and 'export'")],
+          "'import', 'export' and 'drop'")],
     ]
 
 
@@ -119,6 +119,10 @@ class Options(usage.Options):
             sys.exit(0)
         elif self.subCommand == "update-source":
             script = sync.UpdateSourceDispatch(self)
+            script.run()
+            sys.exit(0)
+        elif self.subCommand == "update-db":
+            script = async.UpdateDBDispatch(self)
             script.run()
             sys.exit(0)
 

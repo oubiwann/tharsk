@@ -105,6 +105,9 @@ proto-celtic-export:
 proto-celtic-alphabet:
 	$(TWISTD) tharsk alphabet --dictionary=pcl-eng --language=pcl
 
+proto-celtic-drop:
+	$(TWISTD) tharsk update-db --action=drop --language=pcl
+
 gaelic-parse-dictionary:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=gla
 
