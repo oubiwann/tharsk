@@ -11,9 +11,11 @@ PYTHON ?= python2.7
 TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
 TRIAL ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/trial
 LESSC ?= $(BIN_DIR)/lessc
-MONGO_ETC ?= /usr/local/etc/mongod.conf
-MONGO_LOG ?= /usr/local/var/log/mongodb
-MONGO_DATA ?= /usr/local/var/mongodb
+MONGO_BASE ?= /usr/local/mongodb
+MONGO_ETC ?= $(MONGO_BASE)/etc
+MONGO_CONF ?= $(MONGO_ETC)/mongodb.conf
+MONGO_LOG ?= $(MONGO_BASE)/log
+MONGO_DATA ?= $(MONGO_BASE)/data
 
 get-targets:
 	@egrep ':$$' Makefile|egrep -v '^\$$'|sed -e 's/://g'
@@ -94,8 +96,7 @@ proto-celtic-add-keywords:
 	$(TWISTD) tharsk update-source --action=add-keywords --language=pcl
 
 proto-celtic-import:
-	@$(PYTHON) -c "from $(LIB).scripts.async import ImportProtoCelticDictionary; \
-	script = ImportProtoCelticDictionary();script.run()"
+	$(TWISTD) tharsk update-db --action=import --language=pcl
 
 proto-celtic-export:
 	@$(PYTHON) -c "from $(LIB).scripts.async import ExportProtoCelticDictionary; \
@@ -124,14 +125,21 @@ pie-import:
 pie-alphabet:
 	$(TWISTD) tharsk alphabet --dictionary=pie-eng --language=pie
 
-start-mongo:
-	echo "User: $(USER)"
+$(MONGO_BASE):
 	sudo mkdir -p $(MONGO_DATA)
-	sudo chown $(USER) $(MONGO_DATA)
-	$(BIN_DIR)/mongod run --config $(MONGO_ETC)
+	sudo mkdir -p $(MONGO_LOG)
+	sudo mkdir -p $(MONGO_ETC)
+	sudo chown -R $(USER) $(MONGO_BASE)
+	cp contrib/mongodb.conf $(MONGO_CONF)
+
+start-mongo: $(MONGO_BASE)
+	$(BIN_DIR)/mongod run --config $(MONGO_CONF)
+
+destroy-data:
+	rm -rfv $(MONGO_BASE)
 
 tail-mongo-log:
-	tail -f $(MONGO_LOG)/output.log
+	tail -f $(MONGO_LOG)/mongodb.log
 
 init-db: proto-celtic-import gaelic-import pie-import
 
