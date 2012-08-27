@@ -5,12 +5,12 @@ TODO
 Tasks
 =====
 
-* Refactor ImportProtoCelticDictionary into a base class, like was done for
+* DONE: Refactor ImportProtoCelticDictionary into a base class, like was done for
   DropProtoCelticDictionary
 
-* Then create imports for the remaining dictionaries
+* INPROGRESS: Then create imports for the remaining dictionaries
 
-* Do the same for the export code
+* TODO: Do the same for the export code
 
 
 Version 0.1
