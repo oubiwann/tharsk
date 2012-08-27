@@ -82,7 +82,7 @@ class Options(usage.Options):
         if not self.subCommand:
             return
         if self.subCommand == "word-list":
-            script = async.Wordlist(self)
+            script = async.WordlistDispatch(self)
             script.run()
             sys.exit(0)
         elif self.subCommand == "languages":
@@ -94,7 +94,7 @@ class Options(usage.Options):
             script.run()
             sys.exit(0)
         elif self.subCommand == "alphabet":
-            script = async.ListAlphabet(self)
+            script = async.ListAlphabetDispatch(self)
             script.run()
             sys.exit(0)
         elif self.subCommand == "stop":
@@ -102,7 +102,7 @@ class Options(usage.Options):
             script.run()
             sys.exit(0)
         elif self.subCommand == "update-source":
-            script = sync.UpdateSource(self)
+            script = sync.UpdateSourceDispatch(self)
             script.run()
             sys.exit(0)
 
