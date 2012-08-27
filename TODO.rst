@@ -5,10 +5,12 @@ TODO
 Tasks
 =====
 
-* DONE: Refactor ImportProtoCelticDictionary into a base class, like was done for
-  DropProtoCelticDictionary
+* DONE: Refactor ImportProtoCelticDictionary into a base class, like was done
+  for DropProtoCelticDictionary
 
 * INPROGRESS: Then create imports for the remaining dictionaries
+
+  - TODO: trap the InvalidDocument pymongo error on doc insert
 
 * TODO: Do the same for the export code
 
