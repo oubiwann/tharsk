@@ -87,6 +87,16 @@ You've been warned. Here's how you do it: ``make init-db``
 Running the Server
 ==================
 
+For development, you'll need to start up the MongoDB server::
+
+  $ make start-mongo
+
+And then you can fire up the front-end::
+
+  $ make run-dev
+
+For production, you can use these:
+
 #. In the φarsk dir, run the tharsk server: ``make start-prod``
 
 #. When you're done, shut it down: ``make stop-prod``
