@@ -102,8 +102,7 @@ proto-celtic-export:
 	script = ExportProtoCelticDictionary();script.run()"
 
 proto-celtic-alphabet:
-	@$(PYTHON) -c "from $(LIB).scripts.async import ListProtoCelticAlphabet; \
-	script = ListProtoCelticAlphabet();script.run()"
+	$(TWISTD) tharsk alphabet --dictionary=pcl-eng --language=pcl
 
 gaelic-parse-dictionary:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=gla
@@ -112,12 +111,18 @@ gaelic-import:
 	@$(PYTHON) -c "from $(LIB).scripts.async import ImportGaelicDictionary; \
 	script = ImportGaelicDictionary();script.run()"
 
+gaelic-alphabet:
+	$(TWISTD) tharsk alphabet --dictionary=gla-eng --language=gla
+
 pie-parse-wordlist:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=pie
 
 pie-import:
 	@$(PYTHON) -c "from $(LIB).scripts.async import ImportPIEWordlist; \
 	script = ImportPIEWordlist();script.run()"
+
+pie-alphabet:
+	$(TWISTD) tharsk alphabet --dictionary=pie-eng --language=pie
 
 start-mongo:
 	echo "User: $(USER)"
