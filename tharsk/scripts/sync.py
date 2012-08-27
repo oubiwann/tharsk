@@ -117,3 +117,21 @@ class ParsePIEWordlist(base.Script):
             self.inFilename, self.outFilename)
         scraper.run()
         print "Saved results to %s." % self.outFilename
+
+
+class UpdateSource(base.Script):
+    """
+    """
+    def run(self):
+        action = self.options.subOptions["action"]
+        language = self.options.subOptions["language"]
+        if action == "parse-wordlist":
+            if language == "pcl":
+                parser = ParseProtoCelticWordlist()
+            elif language == "gla":
+                parser = ParseGaelicDictionary()
+            elif language == "pie":
+                parser = ParsePIEWordlist()
+            parser.run()
+        elif action == "add-keywords":
+            pass

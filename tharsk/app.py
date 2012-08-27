@@ -18,6 +18,20 @@ class SubCommandOptions(usage.Options):
     """
 
 
+class UpdateSourceOptions(SubCommandOptions):
+    """
+    """
+    optParameters = [
+        ["language", "l", None,
+         ("the language code whose source files you want to update; "
+          "see 'twistd tharsk language' for the 3-letter codes of the "
+          "supported languages")],
+        ["action", "a", None,
+         ("the type of update action to perform; valid options are "
+          "'parse-wordlist' and 'add-keywords'")],
+    ]
+
+
 class WordlistOptions(SubCommandOptions):
     """
     """
@@ -48,7 +62,7 @@ class Options(usage.Options):
     ]
 
     subCommands = [
-        ["wordlist", None, WordlistOptions,
+        ["word-list", None, WordlistOptions,
          "display a wordlist"],
         ["alphabet", None, AlphabetlistOptions,
          "display the alphabet for the given dictionary and language code"],
@@ -58,6 +72,8 @@ class Options(usage.Options):
          "list the supported dictionaries"],
         ["stop", None, SubCommandOptions,
          "Stop the server"],
+        ["update-source", None, UpdateSourceOptions,
+         "update one of the language source files"],
     ]
 
     def parseOptions(self, options):
@@ -65,7 +81,7 @@ class Options(usage.Options):
         # check options
         if not self.subCommand:
             return
-        if self.subCommand == "wordlist":
+        if self.subCommand == "word-list":
             script = async.Wordlist(self)
             script.run()
             sys.exit(0)
@@ -83,6 +99,10 @@ class Options(usage.Options):
             sys.exit(0)
         elif self.subCommand == "stop":
             script = sync.StopDaemon()
+            script.run()
+            sys.exit(0)
+        elif self.subCommand == "update-source":
+            script = sync.UpdateSource(self)
             script.run()
             sys.exit(0)
 
