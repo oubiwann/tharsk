@@ -5,7 +5,7 @@ TODO
 Tasks
 =====
 
-*
+* Test inserting, dropping, inserting, dropping, etc.
 
 
 Version 0.1
