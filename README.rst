@@ -4,6 +4,10 @@
 
 An open source, interactive Proto-Indo-European search tool.
 
+φarsk is built using `Python`_, `Twisted`_ (for async networking), the simple
+web framework `Klein`_ (an implementation of `Bottle`_ for `Twisted`_),
+`Bootstrap`_, and `MongoDB`_.
+
 Project
 =======
 
@@ -19,10 +23,6 @@ Features currently underdevelopment can be viewed in the `TODO`_ file.
 Dependencies
 ------------
 This project has the following dependencies:
-
-* `Python`_
-
-* `Twisted`_
 
 * `Node.js`_ (for `Bootstrap`_)
 
@@ -123,6 +123,8 @@ the ``help`` parameter::
 .. Links
 .. _Python: http://python.org/
 .. _Twisted: http://twistedmatrix.com/
+.. _Klein: https://github.com/twisted/klein
+.. _Bottle: http://bottlepy.org/docs/dev/
 .. _Node.js: http://nodejs.org/#download
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _MongoDB: http://www.mongodb.org/downloads
