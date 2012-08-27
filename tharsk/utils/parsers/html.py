@@ -124,7 +124,6 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
     def run(self, doPrint=False):
         self.converter.writer.writeheader()
         rowTags = self.getParsedHTML(convertEntities=False).findAll("tr")
-        print len(rowTags)
         for tr in rowTags:
             cells = tr.findAll("td")
             if len(cells) == 0:
