@@ -30,15 +30,17 @@ class TwistedScript(base.Script):
         log.msg("ERROR: ", failure)
 
 
-class ImportProtoCelticDictionary(TwistedScript):
+class AddCollection(TwistedScript):
     """
     """
-    csvFile = "./sources/pcl-eng-keywords.csv"
+    modelClass = None
+    csvFile = ""
+    indexFields = ["%s_keywords", "%s_metaphone"]
 
     def doImport(self):
 
         # instantiate the collection model
-        model = collection.ProtoCelticDictionaryV1()
+        model = self.modelClass()
 
         def checkIndices(listResult):
             for result in listResult:
@@ -49,8 +51,9 @@ class ImportProtoCelticDictionary(TwistedScript):
 
         def createIndices(ids):
             log.msg("Inserted %s documents." % len(ids))
-            indexedFields = ["pcl_keywords", "eng_keywords",
-                             "pcl_metaphone", "eng_metaphone"]
+            indexedFields = (
+                [x % model.langCode for x in self.indexFields] +
+                [x % model.translateCode for x in self.indexFields])
             deferreds = []
             for fieldName in indexedFields:
                 keyList = model.filter.ASCENDING(fieldName)
@@ -61,6 +64,9 @@ class ImportProtoCelticDictionary(TwistedScript):
             d.addCallback(checkIndices)
             return d
 
+        def _prepData(row, key):
+            return [x.strip() for x in row[key].split(",")]
+
         def insertData(csvReader):
             data = []
             counter = 0
@@ -68,8 +74,14 @@ class ImportProtoCelticDictionary(TwistedScript):
             for row in csvReader:
                 counter += 1
                 rowData = row
-                rowData["pcl-keywords"] = row["pcl-keywords"].split(",")
-                rowData["eng-keywords"] = row["eng-keywords"].split(",")
+                rowData["%s-keywords" % model.langCode] = _prepData(
+                    row, "%s-keywords" % model.langCode)
+                rowData["%s-keywords" % model.translateCode] = _prepData(
+                    row, "%s-keywords" % model.translateCode)
+                rowData["%s-metaphone" % model.langCode] = _prepData(
+                    row, "%s-metaphone" % model.langCode)
+                rowData["%s-metaphone" % model.translateCode] = _prepData(
+                    row, "%s-metaphone" % model.translateCode)
                 data.append(rowData)
             log.msg("Finished iterating the CSV file (read %s rows)." % (
                 counter,))
@@ -87,7 +99,6 @@ class ImportProtoCelticDictionary(TwistedScript):
             return d
 
         def dropIndexes(noValue):
-            d = model.collection
             d = model.collection.drop_indexes()
             d.addErrback(log.err)
             d.addCallback(loadData)
@@ -108,7 +119,28 @@ class ImportProtoCelticDictionary(TwistedScript):
     def run(self):
         d = self.doImport()
         d.addCallback(self.stop)
-        super(ImportProtoCelticDictionary, self).run()
+        super(AddCollection, self).run()
+
+
+class ImportProtoCelticDictionary(AddCollection):
+    """
+    """
+    csvFile = "./sources/pcl-eng-keywords.csv"
+    modelClass = collection.ProtoCelticDictionaryV1
+
+
+class ImportScottishGaelicDictionary(AddCollection):
+    """
+    """
+    csvFile = "./sources/macbains.csv"
+    modelClass = collection.ScottishGaelicDictionaryV1
+
+
+class ImportProtoIndoEuropeanDictionary(AddCollection):
+    """
+    """
+    csvFile = "./sources/pokorny-pie.csv"
+    modelClass = collection.ProtoIndoEuropeanDictionaryV1
 
 
 class DropCollection(TwistedScript):

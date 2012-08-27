@@ -112,8 +112,7 @@ gaelic-parse-dictionary:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=gla
 
 gaelic-import:
-	@$(PYTHON) -c "from $(LIB).scripts.async import ImportGaelicDictionary; \
-	script = ImportGaelicDictionary();script.run()"
+	$(TWISTD) tharsk update-db --action=import --language=gla
 
 gaelic-alphabet:
 	$(TWISTD) tharsk alphabet --dictionary=gla-eng --language=gla
@@ -125,8 +124,7 @@ pie-parse-wordlist:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=pie
 
 pie-import:
-	@$(PYTHON) -c "from $(LIB).scripts.async import ImportPIEWordlist; \
-	script = ImportPIEWordlist();script.run()"
+	$(TWISTD) tharsk update-db --action=import --language=pie
 
 pie-alphabet:
 	$(TWISTD) tharsk alphabet --dictionary=pie-eng --language=pie
