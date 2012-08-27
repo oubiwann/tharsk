@@ -20,6 +20,10 @@ Dependencies
 ------------
 This project has the following dependencies:
 
+* `Python`_
+
+* `Twisted`_
+
 * `Node.js`_ (for `Bootstrap`_)
 
 * `MongoDB`_
@@ -117,6 +121,8 @@ the ``help`` parameter::
   $ twistd tharsk wordlist --help
 
 .. Links
+.. _Python: http://python.org/
+.. _Twisted: http://twistedmatrix.com/
 .. _Node.js: http://nodejs.org/#download
 .. _Bootstrap: http://twitter.github.com/bootstrap/
 .. _MongoDB: http://www.mongodb.org/downloads
