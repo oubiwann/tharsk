@@ -49,7 +49,7 @@ class AlphabetlistOptions(SubCommandOptions):
         ["dictionary", "d", "pie-eng",
          ("the hyphenated language codes for the dictionary; ordering is done "
           "by the first language code")],
-        ["language", "a", "pie",
+        ["language", "l", "pie",
          ("the three-letter code whose alphabet is desired")],
      ]
 
