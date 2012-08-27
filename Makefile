@@ -11,6 +11,9 @@ PYTHON ?= python2.7
 TWISTD ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/twistd
 TRIAL ?= /Library/Frameworks/Python.framework/Versions/2.7/bin/trial
 LESSC ?= $(BIN_DIR)/lessc
+MONGO_ETC ?= /usr/local/etc/mongod.conf
+MONGO_LOG ?= /usr/local/var/log/mongodb
+MONGO_DATA ?= /usr/local/var/mongodb
 
 get-targets:
 	@egrep ':$$' Makefile|egrep -v '^\$$'|sed -e 's/://g'
@@ -84,13 +87,11 @@ stop-prod:
 	$(TWISTD) tharsk stop
 
 proto-celtic-parse-wordlist:
-	@$(PYTHON) -c "from $(LIB).scripts.sync import ParseProtoCelticWordlist; \
-	script = ParseProtoCelticWordlist();script.run()"
+	$(TWISTD) tharsk update-source --action=parse-wordlist --language=pcl
 #uniq > ./sources/pcl-eng.csv
 
 proto-celtic-add-keywords:
-	@$(PYTHON) -c "from $(LIB).scripts.sync import AddProtoCelticKeywords; \
-	script = AddProtoCelticKeywords();script.run()"
+	$(TWISTD) tharsk update-source --action=add-keywords --language=pcl
 
 proto-celtic-import:
 	@$(PYTHON) -c "from $(LIB).scripts.async import ImportProtoCelticDictionary; \
@@ -105,16 +106,14 @@ proto-celtic-alphabet:
 	script = ListProtoCelticAlphabet();script.run()"
 
 gaelic-parse-dictionary:
-	@$(PYTHON) -c "from $(LIB).scripts.sync import ParseGaelicDictionary; \
-	script = ParseGaelicDictionary();script.run()"
+	$(TWISTD) tharsk update-source --action=parse-wordlist --language=gla
 
 gaelic-import:
 	@$(PYTHON) -c "from $(LIB).scripts.async import ImportGaelicDictionary; \
 	script = ImportGaelicDictionary();script.run()"
 
 pie-parse-wordlist:
-	@$(PYTHON) -c "from $(LIB).scripts.sync import ParsePIEWordlist; \
-	script = ParsePIEWordlist();script.run()"
+	$(TWISTD) tharsk update-source --action=parse-wordlist --language=pie
 
 pie-import:
 	@$(PYTHON) -c "from $(LIB).scripts.async import ImportPIEWordlist; \
@@ -122,12 +121,12 @@ pie-import:
 
 start-mongo:
 	echo "User: $(USER)"
-	sudo mkdir -p /usr/local/var/mongodb
-	sudo chown $(USER) /usr/local/var/mongodb
-	$(BIN_DIR)/mongod run --config /usr/local/etc/mongod.conf
+	sudo mkdir -p $(MONGO_DATA)
+	sudo chown $(USER) $(MONGO_DATA)
+	$(BIN_DIR)/mongod run --config $(MONGO_ETC)
 
 tail-mongo-log:
-	tail -f /usr/local/var/log/mongodb/output.log
+	tail -f $(MONGO_LOG)/output.log
 
 init-db: proto-celtic-import gaelic-import pie-import
 
