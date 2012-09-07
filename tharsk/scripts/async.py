@@ -97,6 +97,7 @@ class AddCollection(TwistedScript):
                 counter,))
             try:
                 d = model.collection.insert(data)
+                d.addErrback(self.logError)
                 d.addCallback(createIndices)
                 return d
             except InvalidDocument, err:
@@ -112,6 +113,7 @@ class AddCollection(TwistedScript):
             d = threads.deferToThread(
                 lambda: unicsv.UnicodeReader(self.csvFile))
             d.addCallback(insertData)
+            d.addErrback(self.logError)
             return d
 
         def dropIndexes(noValue):
