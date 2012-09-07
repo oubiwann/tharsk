@@ -132,6 +132,16 @@ pie-alphabet:
 pie-drop:
 	$(TWISTD) tharsk update-db --action=drop --language=pie
 
+import-all:
+	$(TWISTD) tharsk update-db --action=import --language=pcl
+	$(TWISTD) tharsk update-db --action=import --language=gla
+	$(TWISTD) tharsk update-db --action=import --language=pie
+
+drop-all:
+	$(TWISTD) tharsk update-db --action=drop --language=pcl
+	$(TWISTD) tharsk update-db --action=drop --language=gla
+	$(TWISTD) tharsk update-db --action=drop --language=pie
+
 $(MONGO_BASE):
 	sudo mkdir -p $(MONGO_DATA)
 	sudo mkdir -p $(MONGO_LOG)
