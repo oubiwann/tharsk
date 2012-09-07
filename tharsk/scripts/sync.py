@@ -1,4 +1,5 @@
 import itertools
+import json
 import os
 import subprocess
 
@@ -69,7 +70,7 @@ class AddProtoCelticKeywords(base.Script):
     def run(self):
         super(AddProtoCelticKeywords, self).run()
         reader = unicsv.UnicodeReader(self.inFilename)
-        fieldnames = collection.ProtoCelticDictionaryV1.fields
+        fieldnames = collection.ProtoCelticDictionaryV1().fields
         writer = unicsv.UnicodeWriter(self.outFilename, fieldnames)
         writer.writeheader()
         for row in reader:
@@ -78,13 +79,13 @@ class AddProtoCelticKeywords(base.Script):
             pcl = utils.getUnicodeStems(pclOrig)
             eng = utils.getStems(engOrig)
             row["see-also"] = ""
-            row["pcl-keywords"] = ",".join(utils.getUnicodeStems(pcl))
-            row["eng-keywords"] = ",".join(utils.getStems(eng))
+            row["pcl-keywords"] = json.dumps(utils.getUnicodeStems(pcl))
+            row["eng-keywords"] = json.dumps(utils.getStems(eng))
             pcl = pcl + pclOrig
             eng = eng + engOrig
             try:
-                row["pcl-metaphone"] = ",".join(utils.getMetaphones(pcl))
-                row["eng-metaphone"] = ",".join(utils.getMetaphones(eng))
+                row["pcl-metaphone"] = json.dumps(utils.getMetaphones(pcl))
+                row["eng-metaphone"] = json.dumps(utils.getMetaphones(eng))
             except Exception, err:
                 import pdb;pdb.set_trace()
             writer.writerow(row)

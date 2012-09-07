@@ -165,11 +165,11 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
                 row = {
                     self.converter.fields[0]: pie,
                     self.converter.fields[1]: eng,
-                    self.converter.fields[2]: ", ".join(pieSeeAlsos),
-                    self.converter.fields[3]: ", ".join(pieStems),
-                    self.converter.fields[4]: ", ".join(engStems),
-                    self.converter.fields[5]: ", ".join(piePhones),
-                    self.converter.fields[6]: ", ".join(engPhones),
+                    self.converter.fields[2]: json.dumps(pieSeeAlsos),
+                    self.converter.fields[3]: json.dumps(pieStems),
+                    self.converter.fields[4]: json.dumps(engStems),
+                    self.converter.fields[5]: json.dumps(piePhones),
+                    self.converter.fields[6]: json.dumps(engPhones),
                     }
                 try:
                     self.converter.writer.writerow(row)
