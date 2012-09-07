@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from BeautifulSoup import BeautifulSoup
 from BeautifulSoup import BeautifulStoneSoup
 
@@ -6,6 +8,10 @@ from tharsk import utils
 from tharsk.models import collection
 from tharsk.utils import unicsv
 from tharsk.utils.parsers import mixins
+
+
+def stripAllHTML(html):
+    return ''.join(BeautifulSoup(html).findAll(text=True))
 
 
 class CSVConverter(mixins.CustomCSVFormatter):
@@ -90,9 +96,9 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
         for dt in termsTags:
             dd = dt.findNextSibling()
             self.stripTags(dd)
-            gla = self.fixUp(dt.getText(" "))
+            gla = stripAllHTML(self.fixUp(dt.getText(" ")))
             glaStems = self.getStems(gla, withUnicode=True)
-            eng = unicode(self.fixUp(str(dd)).decode("utf-8"))
+            eng = stripAllHTML(unicode(self.fixUp(str(dd)).decode("utf-8")))
             engStems = self.getStems(eng)
             try:
                 glaPhones = utils.getMetaphones(glaStems)
@@ -103,10 +109,10 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
                 self.converter.fields[0]: gla,
                 self.converter.fields[1]: eng,
                 self.converter.fields[2]: "",
-                self.converter.fields[3]: ", ".join(glaStems),
-                self.converter.fields[4]: ", ".join(engStems),
-                self.converter.fields[5]: ", ".join(glaPhones),
-                self.converter.fields[6]: ", ".join(engPhones),
+                self.converter.fields[3]: json.dumps(glaStems),
+                self.converter.fields[4]: json.dumps(engStems),
+                self.converter.fields[5]: json.dumps(glaPhones),
+                self.converter.fields[6]: json.dumps(engPhones),
                 }
             try:
                 self.converter.writer.writerow(row)

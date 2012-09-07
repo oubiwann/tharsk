@@ -1,7 +1,10 @@
+import json
 import sys
 
 from twisted.internet import defer, reactor, threads
 from twisted.python import log
+
+from txmongo._pymongo.errors import InvalidDocument
 
 from tharsk import const
 from tharsk.controllers import retrieve
@@ -65,7 +68,14 @@ class AddCollection(TwistedScript):
             return d
 
         def _prepData(row, key):
-            return [x.strip() for x in row[key].split(",")]
+            return json.loads(row[key])
+
+        def insertError(failure, data):
+            check = failure.trap(InvalidDocument)
+            if check == InvalidDocument:
+                log.msg("ERROR!")
+                log.msg("Problem document: %s" % data)
+            return failure
 
         def insertData(csvReader):
             data = []
@@ -85,10 +95,16 @@ class AddCollection(TwistedScript):
                 data.append(rowData)
             log.msg("Finished iterating the CSV file (read %s rows)." % (
                 counter,))
-            d = model.collection.insert(data)
-            d.addErrback(self.logError)
-            d.addCallback(createIndices)
-            return d
+            try:
+                d = model.collection.insert(data)
+                d.addCallback(createIndices)
+                return d
+            except InvalidDocument, err:
+                log.msg("ERROR: %s" % err)
+                for datum in data:
+                    if None in datum:
+                        print datum
+                pass
 
         def loadData(response):
             if response["ok"] == 1:
