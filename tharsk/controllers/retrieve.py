@@ -19,7 +19,6 @@ def getAlphabet(model):
         letters = set()
         for doc in docs:
             letters.add(getInitialLetter(doc[model.langCode]))
-
         return utils.sortAlphabet("".join(letters))
 
     def query(database):
