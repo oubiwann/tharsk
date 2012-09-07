@@ -108,7 +108,7 @@ proto-celtic-alphabet:
 proto-celtic-drop:
 	$(TWISTD) tharsk update-db --action=drop --language=pcl
 
-gaelic-parse-dictionary:
+gaelic-parse-wordlist:
 	$(TWISTD) tharsk update-source --action=parse-wordlist --language=gla
 
 gaelic-import:
@@ -134,13 +134,13 @@ pie-drop:
 
 import-all:
 	$(TWISTD) tharsk update-db --action=import --language=pcl
-	$(TWISTD) tharsk update-db --action=import --language=gla
 	$(TWISTD) tharsk update-db --action=import --language=pie
+	$(TWISTD) tharsk update-db --action=import --language=gla
 
 drop-all:
 	$(TWISTD) tharsk update-db --action=drop --language=pcl
-	$(TWISTD) tharsk update-db --action=drop --language=gla
 	$(TWISTD) tharsk update-db --action=drop --language=pie
+	$(TWISTD) tharsk update-db --action=drop --language=gla
 
 $(MONGO_BASE):
 	sudo mkdir -p $(MONGO_DATA)
