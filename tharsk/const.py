@@ -50,6 +50,8 @@ dictionaries = [
     "%s-%s" % (langMapper["English"], langMapper["Proto-Celtic"]),
     "%s-%s" % (langMapper["Proto-Celtic"], langMapper["English"]),
     "%s-%s" % (langMapper["Scottish Gaelic"], langMapper["English"]),
+    "%s-%s" % (langMapper["English"], langMapper["Proto-Indo-European"]),
+    "%s-%s" % (langMapper["Proto-Indo-European"], langMapper["English"]),
     ]
 
 
