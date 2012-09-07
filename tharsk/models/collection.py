@@ -89,9 +89,12 @@ class ProtoIndoEuropeanDictionaryV1(CollectionModel):
 
 
 def dictionaryFactoryV1(identifier):
-    if ProtoCelticDictionaryV1.langCode in identifier:
-        return ProtoCelticDictionaryV1()
-    elif ScottishGaelicDictionaryV1.langCode in identifier:
-        return ScottishGaelicDictionaryV1()
-    elif ScottishGaelicDictionaryV1.langCode in identifier:
-        return ScottishGaelicDictionaryV1()
+    pcl = ProtoCelticDictionaryV1()
+    pie = ProtoIndoEuropeanDictionaryV1()
+    gla = ScottishGaelicDictionaryV1()
+    if pcl.langCode in identifier:
+        return pcl
+    elif pie.langCode in identifier:
+        return pie
+    elif gla.langCode in identifier:
+        return gla
