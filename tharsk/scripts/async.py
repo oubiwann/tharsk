@@ -212,7 +212,7 @@ class DropProtoIndoEuropeanDictionary(DropCollection):
     modelClass = collection.ProtoIndoEuropeanDictionaryV1
 
 
-class ExportProtoCelticDictionary(TwistedScript):
+class ExportCollection(TwistedScript):
     """
     """
     def __init__(self, sortLang="eng"):
@@ -221,7 +221,7 @@ class ExportProtoCelticDictionary(TwistedScript):
 
     def doExport(self):
 
-        model = collection.ProtoCelticDictionaryV1()
+        model = self.modelClass()
 
         def logResults(docs):
             if len(docs) == 0:
@@ -258,6 +258,24 @@ class ExportProtoCelticDictionary(TwistedScript):
         d = self.doExport()
         d.addCallback(self.stop)
         super(ExportProtoCelticDictionary, self).run()
+
+
+class ExportProtoCelticDictionary(ExportCollection):
+    """
+    """
+    modelClass = collection.ProtoCelticDictionaryV1
+
+
+class ExportProtoIndoEuropeanDictionary(ExportCollection):
+    """
+    """
+    modelClass = collection.ProtoIndoEuropeanDictionaryV1
+
+
+class ExportScottishGaelicDictionary(ExportCollection):
+    """
+    """
+    modelClass = collection.ScottishGaelicDictionaryV1
 
 
 class BaseListAlphabet(TwistedScript):
