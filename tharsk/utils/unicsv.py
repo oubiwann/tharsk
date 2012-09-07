@@ -62,13 +62,14 @@ class UnicodeWriter(object):
     A CSV writer which will write rows to CSV file "f",
     which is encoded in the given encoding.
     """
-    def __init__(self, filename, fieldnames, dialect=csv.excel,
+    def __init__(self, filename, fieldnames, dialect='excel',
                  encoding="utf-8", **kwds):
         f = open(filename, "w")
         # Redirect output to a queue
         self.queue = cStringIO.StringIO()
         self.writer = csv.DictWriter(
-            self.queue, fieldnames, dialect=dialect, **kwds)
+            self.queue, fieldnames, dialect=dialect, quoting=csv.QUOTE_ALL,
+            **kwds)
         self.stream = f
         self.encoder = codecs.getincrementalencoder(encoding)()
 
