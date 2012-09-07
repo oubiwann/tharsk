@@ -8,12 +8,8 @@ class CollectionModel(object):
     """
     """
     dbName = "tharsk"
-    name = ""
     title = ""
-    langCode = ""
     translateTitle = "English"
-    translateCode = ""
-    fields = tuple()
     _db = None
     filter = txmongo.filter
 

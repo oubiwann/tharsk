@@ -80,7 +80,7 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
 
     def __init__(self, *args, **kwargs):
         self.converterClass.fields = (
-            collection.ScottishGaelicDictionaryV1.fields)
+            collection.ScottishGaelicDictionaryV1().fields)
         super(GaelicEtymologicalDictionaryScraper, self).__init__(
             *args, **kwargs)
 
@@ -100,7 +100,6 @@ class GaelicEtymologicalDictionaryScraper(HTMLScraper):
             except Exception, err:
                 import pdb;pdb.set_trace()
             row = {
-
                 self.converter.fields[0]: gla,
                 self.converter.fields[1]: eng,
                 self.converter.fields[2]: "",
@@ -119,7 +118,12 @@ class ProtoIndoEuropeanWordlistScraper(HTMLScraper):
     """
     """
     converterClass = CSVConverter
-    converterClass.fields = collection.ProtoIndoEuropeanDictionaryV1.fields
+
+    def __init__(self, *args, **kwargs):
+        self.converterClass.fields = (
+            collection.ProtoIndoEuropeanDictionaryV1().fields)
+        super(ProtoIndoEuropeanWordlistScraper, self).__init__(
+            *args, **kwargs)
 
     def run(self, doPrint=False):
         self.converter.writer.writeheader()
