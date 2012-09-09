@@ -128,7 +128,7 @@ To find out what the list of supported tharsk subcommands are, simply use the
 Some subcommands will have additional options, and those are also available via
 the ``help`` parameter::
 
-  $ twistd tharsk wordlist --help
+  $ twistd tharsk word-list --help
 
 .. Links
 .. _Python: http://python.org/
